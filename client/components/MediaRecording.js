@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
-import { drawCanvas } from '../client/drawingUtilities';
+import { drawCanvas } from '../drawingUtilities';
 import Webcam from 'react-webcam';
 
 export default function MediaRecordingCanvasMoveNet() {
