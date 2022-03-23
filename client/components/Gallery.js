@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 //import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {me} from '../store/auth';
-//import our fetch thunks from the store based on the schemas to retrieve users projects (fetchProjects())
+import { fetchProjectGallery } from '../store/projectGallery';
 
 const Gallery = () => {
   const userId = useSelector((state) => {
@@ -12,7 +12,7 @@ const Gallery = () => {
 
   useEffect(() => {
     const run = async () => {
-      const Allprojects = await fetchProjects(userId); //this doesnt exist yet we need to write the store
+      const Allprojects = await fetchProjectGallery(userId); //this doesnt exist yet we need to write the store
     };
     run();
   }, [userId]);
