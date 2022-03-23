@@ -7,15 +7,14 @@ import Webcam from "react-webcam";
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
-  // const [recordedChunks, setRecordedChunks] = useState([]);
+  const [recordedChunks, setRecordedChunks] = useState([]);
 
   const webcamRef = useRef(null); //this is an object with the current property that is readable and assignable
   const canvasRef = useRef(null); //box //option 1 is we make a parent like merle said and these two components as children and pass the props down from the parent.
-  // const mediaRecorderRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
   //---------------------------
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const mediaRecorderCanvasRef = useRef(null);
-  // const contextRef = useRef(null);
   //---------------------------
 
   //could also use axios in onclick funcs from the front end or wherever. We dont need redux to send the token to the server but, migrating to fsa use redux its already configured.
@@ -73,14 +72,14 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }
 
-  // const handleDataAvailable = useCallback(
-  //   ({ data }) => {
-  //     if (data.size > 0) {
-  //       setRecordedChunks((prev) => prev.concat(data));
-  //     }
-  //   },
-  //   [setRecordedChunks] //our overall data array that will go in the blob.
-  // );
+  const handleDataAvailable = useCallback(
+    ({ data }) => {
+      if (data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(data));
+      }
+    },
+    [setRecordedChunks] //our overall data array that will go in the blob.
+  );
 
   //---------------------------
   // Canvas data handling
@@ -98,17 +97,16 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     console.log("capturing");
-    //   mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-    //     mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
-    //   });
-    //   mediaRecorderRef.current.addEventListener(
-    //     "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
-    //     handleDataAvailable
-    //   );
-    //   mediaRecorderRef.current.start(); //this will rerun every time one of the things in the array changes
+    mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
+      mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
+    });
+    mediaRecorderRef.current.addEventListener(
+      "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
+      handleDataAvailable
+    );
+    mediaRecorderRef.current.start(); //this will rerun every time one of the things in the array changes
     //---------------------------
     const canvasStream = canvasRef.current.captureStream();
-    console.log('canvasRef.current', canvasRef.current)
     // canvas stream
     mediaRecorderCanvasRef.current = new MediaRecorder(canvasStream, {
       mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
@@ -121,38 +119,38 @@ export default function MediaRecordingCanvasMoveNet() {
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
     //---------------------------
-  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable]);
+  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable, mediaRecorderRef, handleDataAvailable]);
 
   const handleStopCaptureClick = useCallback(() => {
-    //   mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stop();
     setCapturing(false);
     //-------------------
     mediaRecorderCanvasRef.current.stop();
     //______________________
     console.log("stop capturing");
-  }, [mediaRecorderCanvasRef, setCapturing]); //why did we take the other refs out?
+  }, [mediaRecorderCanvasRef, setCapturing, mediaRecorderRef]); //why did we take the other refs out?
 
-  // const handleDownload = useCallback(() => {
-  //   if (recordedChunks.length) {
-  //     const blob = new Blob(recordedChunks, {
-  //       type: "video/webm",
-  //     });
-  //     const url = URL.createObjectURL(blob);
-  //     const a = document.createElement("a");
-  //     document.body.appendChild(a);
-  //     a.style = "display: none";
-  //     a.href = url;
-  //     a.download = "react-webcam-stream-capture.webm";
-  //     a.click();
-  //     window.URL.revokeObjectURL(url);
-  //     setRecordedChunks([]);
-  //   }
-  // }, [recordedChunks]);
+  const handleDownload = useCallback(() => {
+    if (recordedChunks.length) {
+      const blob = new Blob(recordedChunks, {
+        type: "video/webm",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+      a.download = "react-webcam-stream-capture.webm";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      setRecordedChunks([]);
+    }
+  }, [recordedChunks]);
 
   //---------------------------------
   // Canvas download
   const handleCanvasDownload = useCallback(() => {
-    console.log('recordedCanvasChunks', recordedCanvasChunks)
+    console.log("recordedCanvasChunks", recordedCanvasChunks);
     if (recordedCanvasChunks.length) {
       const blob = new Blob(recordedCanvasChunks, {
         type: "video/webm",
@@ -208,7 +206,14 @@ export default function MediaRecordingCanvasMoveNet() {
           <button onClick={handleStartCaptureClick}>Start Capture</button>
         )}
         {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasDownload}>Download</button>
+          <button
+            onClick={() => {
+              handleCanvasDownload();
+              handleDownload();
+            }}
+          >
+            Download
+          </button>
         )}
       </div>
     </>
