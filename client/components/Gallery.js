@@ -2,41 +2,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 //import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-//import our fetch thunks from the store based on the scheemas to retrieve users projects (fetchProjects())
+import {me} from '../store/auth';
+//import our fetch thunks from the store based on the schemas to retrieve users projects (fetchProjects())
 
 const Gallery = () => {
+  const userId = useSelector((state) => {
+    return state.auth.id; //name of reducer,value returned is that part of the state
+  });
+
   useEffect(() => {
     const run = async () => {
-      const Allprojects = await fetchProjects(); //this doesnt exist yet we need to write the store
+      const Allprojects = await fetchProjects(userId); //this doesnt exist yet we need to write the store
     };
     run();
-  }, []);
+  }, [userId]);
+
 
   const user = useSelector((state) => {
-    return state.user;
+    return state.auth; //name of reducer,value returned is that part of the state
   });
 
   const projects = useSelector((state) => {
-    return state.projects;
+    return state.projects; //need to write this reducer still
   });
 
   const dispatch = useDispatch();
-
   useEffect(
-    (id) => {
-      dispatch(fetchProjects());
-      dispatch(deleteProject(id)); //I think this is wrong but I'm not sure
+    (userId) => {
+      dispatch(fetchProjects(userId)); //still need to be written
+      dispatch(deleteProject(userId)); //This can potentially be used in a click handler or something too
     },
     [dispatch]
   );
 
-  //this is how I would write the regular dispatch I need to research the hook more
-  // const mapDispatchToProps = (dispatch, { history }) => ({
-  //   loadProjects: () => dispatch(fetchProjects()),
-  //   deleteProject: (id) => dispatch(deleteproject(id, history)),
-  // });
-
-  //figure out how to check if its the correct user. reference grace shopper
   return (
     <>
       <div className='gallery_container'></div>
