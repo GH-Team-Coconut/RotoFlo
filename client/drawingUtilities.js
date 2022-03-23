@@ -5,10 +5,10 @@ export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, angleArray
   canvasRef.current.height = videoHeight;
   //poses gives array of all 17 points as keys w/ objects (y, x, score, name)
 
-  drawKeypoints(poses[0].keypoints, canvasRef);
+  // drawKeypoints(poses[0].keypoints, canvasRef);
   // poses[0].keypoints ----> this is an array containing 17 objects
-  drawSkeleton(poses[0].keypoints, canvasRef, angleArray);
-  // drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints);
+  // drawSkeleton(poses[0].keypoints, canvasRef, angleArray);
+  drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
 }
 
 export function drawKeypoint(keypoint, canvasRef) {
@@ -73,8 +73,8 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
       const randomX = generateRandomLocal(currKey.x - 50, currKey.x + 50);
       const randomY = generateRandomLocal(currKey.y - 50, currKey.y + 50);
       ctx.arc(randomX, randomY, 5, 0, 2 * Math.PI);
-      ctx.fillStyle = 'pink';
-      ctx.fill();
+      ctx.strokeStyle = 'pink';
+      ctx.stroke();
     }
   }
 }
