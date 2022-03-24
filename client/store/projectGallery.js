@@ -4,6 +4,8 @@ const TOKEN = 'token';
 
 const SET_PROJECT_GALLERY = 'SET_PROJECT_GALLERY';
 const DELETE_PROJECT = 'DELETE_PROJECT';
+const SAVE_AND_DOWNLOAD = 'SAVE_AND_DOWNLOAD';
+
 
 export const setProjectGallery = (gallery) => {
   return {
@@ -15,6 +17,13 @@ export const setProjectGallery = (gallery) => {
 export const _deleteProject = (project) => {
   return {
     type: DELETE_PROJECT,
+    project,
+  };
+};
+
+export const _saveAndDownload = (project) => {
+  return {
+    type: SAVE_AND_DOWNLOAD,
     project,
   };
 };
@@ -64,6 +73,10 @@ export const deleteProject = (projectId) => {
     }
   };
 };
+
+export const saveAndDownload =()=> {}
+//needs to make request to project table in db to save the info and needs to include userid and
+//runs download function get teams help on this.
 
 const initialState = [];
 

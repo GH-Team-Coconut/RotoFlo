@@ -3,7 +3,6 @@ import axios from 'axios';
 const TOKEN = 'token';
 
 const SET_PROJECT = 'SET_PROJECT';
-const SAVE_AND_DOWNLOAD = 'SAVE_AND_DOWNLOAD';
 
 export const setProject = (project) => {
   return {
@@ -39,7 +38,7 @@ export const fetchProject = (projectId) => {
   };
 };
 
-const initialState = [];
+const initialState = {};
 
 export default function galleryReducer(state = initialState, action) {
   switch (action.type) {
