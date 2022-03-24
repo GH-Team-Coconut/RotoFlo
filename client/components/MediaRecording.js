@@ -15,8 +15,8 @@ export default function MediaRecordingCanvasMoveNet() {
   const mediaRecorderVideoRef = useRef(null);
   const mediaRecorderCanvasRef = useRef(null);
   //--------
-  const mediaRecorderCombineRef = useRef(null); 
-  const [recordedCombineChunks, setRecordedCombineChunks] = useState([]);
+  // const mediaRecorderCombineRef = useRef(null); 
+  // const [recordedCombineChunks, setRecordedCombineChunks] = useState([]);
 
   //could also use axios in onclick funcs from the front end or wherever. We dont need redux to send the token to the server but, migrating to fsa use redux its already configured.
 
@@ -92,15 +92,15 @@ export default function MediaRecordingCanvasMoveNet() {
     [setRecordedCanvasChunks] //our overall data array that will go in the blob.
   );
 
-   // Canvas data handling
-   const handleCombinedDataAvailable = useCallback(
-    ({ data }) => {
-      if (data.size > 0) {
-        setRecordedCombineChunks((prev) => prev.concat(data));
-      }
-    },
-    [setRecordedCombineChunks] //our overall data array that will go in the blob.
-  );
+   // Combine data handling
+  //  const handleCombinedDataAvailable = useCallback(
+  //   ({ data }) => {
+  //     if (data.size > 0) {
+  //       setRecordedCombineChunks((prev) => prev.concat(data));
+  //     }
+  //   },
+  //   [setRecordedCombineChunks] //our overall data array that will go in the blob.
+  // );
 
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
@@ -119,89 +119,51 @@ export default function MediaRecordingCanvasMoveNet() {
       mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
     });
     //---- combined media stream 
-    mediaRecorderCombineRef.current = new MediaStream({...mediaRecorderCanvasRef.current, ...mediaRecorderVideoRef.current})
-    mediaRecorderCombineRef.current.addEventListener("dataavailable", 
-    handleCombinedDataAvailable
-    ); 
-    // //video event listner: compliling blob data in handleData...
-    // mediaRecorderVideoRef.current.addEventListener(
-    //   "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
-    //   handleVideoDataAvailable
-    // );
-    // // Canvas event listener: compliling blob data in handleData...
-    // mediaRecorderCanvasRef.current.addEventListener(
-    //   "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
-    //   handleCanvasDataAvailable
-    // );
+    // mediaRecorderCombineRef.current = new MediaStream({...mediaRecorderCanvasRef.current, ...mediaRecorderVideoRef.current})
+    // mediaRecorderCombineRef.current.addEventListener("dataavailable", 
+    // handleCombinedDataAvailable
+    // ); 
+    //video event listner: compliling blob data in handleData...
+    mediaRecorderVideoRef.current.addEventListener(
+      "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
+      handleVideoDataAvailable
+    );
+    // Canvas event listener: compliling blob data in handleData...
+    mediaRecorderCanvasRef.current.addEventListener(
+      "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
+      handleCanvasDataAvailable
+    );
 
-    // //Video start
-    // mediaRecorderVideoRef.current.start(); //this will rerun every time one of the things in the array changes
-    // //Canvas start
-    // mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-    mediaRecorderCombineRef.current.start(); 
+    //Video start
+    mediaRecorderVideoRef.current.start(); //this will rerun every time one of the things in the array changes
+    //Canvas start
+    mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
+
+    // mediaRecorderCombineRef.current.start(); 
   }, [
     setCapturing,
     mediaRecorderCanvasRef,
     handleCanvasDataAvailable,
     mediaRecorderVideoRef,
     handleVideoDataAvailable,
-    mediaRecorderCombineRef
+
   ]);
 
   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
-    // // media instance for video stop
-    // mediaRecorderVideoRef.current.stop();
-    // // media instance for video stop
-    // mediaRecorderCanvasRef.current.stop();
+    // media instance for video stop
+    mediaRecorderVideoRef.current.stop();
+    // media instance for video stop
+    mediaRecorderCanvasRef.current.stop();
     //--------
-     mediaRecorderCombineRef.current.stop();
+    //  mediaRecorderCombineRef.current.stop();
     console.log("stop capturing");
-  }, [mediaRecorderCombineRef, setCapturing, ]); //why did we take the other refs out?
+  }, [mediaRecorderVideoRef, mediaRecorderCanvasRef, setCapturing, ]); //why did we take the other refs out?
 
-  // // Video download
-  // const handleVideoDownload = useCallback(() => {
-  //   if (recordedVideoChunks.length) {
-  //     const blob = new Blob(recordedVideoChunks, {
-  //       type: "video/webm",
-  //     });
-  //     const url = URL.createObjectURL(blob);
-  //     const a = document.createElement("a");
-  //     document.body.appendChild(a);
-  //     a.style = "display: none";
-  //     a.href = url;
-  //     a.download = "react-webcam-stream-capture.webm";
-  //     a.click();
-  //     window.URL.revokeObjectURL(url);
-  //     setRecordedVideoChunks([]);
-  //   }
-  // }, [recordedVideoChunks]);
-
-  // // Canvas download
-  // const handleCanvasDownload = useCallback(() => {
-  //   console.log("recordedCanvasChunks", recordedCanvasChunks);
-  //   if (recordedCanvasChunks.length) {
-  //     const blob = new Blob(recordedCanvasChunks, {
-  //       type: "video/webm",
-  //     });
-  //     const url = URL.createObjectURL(blob);
-  //     const a = document.createElement("a");
-  //     document.body.appendChild(a);
-  //     a.style = "display: none";
-  //     a.href = url;
-  //     a.download = "react-canvas-stream-capture.webm";
-  //     a.click();
-  //     window.URL.revokeObjectURL(url);
-  //     setRecordedCanvasChunks([]);
-  //   }
-  // }, [recordedCanvasChunks]);
-  
-  // ---------
-  // Canvas download
-  const handleCombineDownload = useCallback(() => {
-    console.log("recordedCombineChunks", recordedCombineChunks);
-    if (recordedCombineChunks.length) {
-      const blob = new Blob(recordedCombineChunks, {
+  // Video download
+  const handleVideoDownload = useCallback(() => {
+    if (recordedVideoChunks.length) {
+      const blob = new Blob(recordedVideoChunks, {
         type: "video/webm",
       });
       const url = URL.createObjectURL(blob);
@@ -209,12 +171,51 @@ export default function MediaRecordingCanvasMoveNet() {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = "react-combined-stream-capture.webm";
+      a.download = "react-webcam-stream-capture.webm";
       a.click();
       window.URL.revokeObjectURL(url);
-      setRecordedCombineChunks([]);
+      setRecordedVideoChunks([]);
     }
-  }, [recordedCombineChunks]);
+  }, [recordedVideoChunks]);
+
+  // Canvas download
+  const handleCanvasDownload = useCallback(() => {
+    console.log("recordedCanvasChunks", recordedCanvasChunks);
+    if (recordedCanvasChunks.length) {
+      const blob = new Blob(recordedCanvasChunks, {
+        type: "video/webm",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = url;
+      a.download = "react-canvas-stream-capture.webm";
+      a.click();
+      window.URL.revokeObjectURL(url);
+      setRecordedCanvasChunks([]);
+    }
+  }, [recordedCanvasChunks]);
+  
+  // ---------
+  // Combined download
+  // const handleCombineDownload = useCallback(() => {
+  //   console.log("recordedCombineChunks", recordedCombineChunks);
+  //   if (recordedCombineChunks.length) {
+  //     const blob = new Blob(recordedCombineChunks, {
+  //       type: "video/webm",
+  //     });
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     document.body.appendChild(a);
+  //     a.style = "display: none";
+  //     a.href = url;
+  //     a.download = "react-combined-stream-capture.webm";
+  //     a.click();
+  //     window.URL.revokeObjectURL(url);
+  //     setRecordedCombineChunks([]);
+  //   }
+  // }, [recordedCombineChunks]);
 
   getPoses();
 
@@ -253,9 +254,12 @@ export default function MediaRecordingCanvasMoveNet() {
         ) : (
           <button onClick={handleStartCaptureClick}>Start Capture</button>
         )}
-        {recordedCombineChunks.length > 0 && (
+        {recordedVideoChunks.length > 0 && (
           <button
-            onClick={handleCombineDownload}
+            onClick={ () => {
+               handleCanvasDownload();
+               handleVideoDownload();
+              }}
           >
             Download
           </button>
@@ -265,6 +269,3 @@ export default function MediaRecordingCanvasMoveNet() {
   );
 }
 
-// () => {
-//   handleCanvasDownload();
-//   handleVideoDownload();
