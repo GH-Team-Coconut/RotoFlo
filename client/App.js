@@ -16,7 +16,3 @@ const App = () => {
 
 export default App
 
-//will also include:
-//navbar
-//gallery
-//login

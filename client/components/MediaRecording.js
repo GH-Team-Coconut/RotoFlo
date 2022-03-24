@@ -3,6 +3,8 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { drawCanvas } from '../drawingUtilities';
 import Webcam from 'react-webcam';
+import Axios from 'axios';
+import { uploadMedia } from './Cloud';
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -14,7 +16,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const mediaRecorderRef = useRef(null);
 
   //could also use axios in onclick funcs from the front end or wherever. We dont need redux to send the token to the server but, migrating to fsa use redux its already configured.
-  
+
   //write a solid read me, include gifs of how the project works and shows what it can do, and make the final presentation very polished.
 
   //useSelector and useDispatch replace the connect part of redux. mapstate is like useSelector and useDispatch is more like mapDispatch to props
@@ -68,18 +70,18 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }
 
-    const handleDataAvailable = useCallback(
-      ({ data }) => {
-        if (data.size > 0) {
-          setRecordedChunks((prev) => prev.concat(data));
-        }
-      },
-      [setRecordedChunks] //our overall data array that will go in the blob.
-    );
+  const handleDataAvailable = useCallback(
+    ({ data }) => {
+      if (data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(data));
+      }
+    },
+    [setRecordedChunks] //our overall data array that will go in the blob.
+  );
 
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
-    console.log('capturing')
+    console.log('capturing');
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
       mimeType: 'video/webm', //read only property multipurpose internet mail extension. type of document basically. ascii.
     });
@@ -93,7 +95,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleStopCaptureClick = useCallback(() => {
     mediaRecorderRef.current.stop();
     setCapturing(false);
-    console.log('stop capturing')
+    console.log('stop capturing');
   }, [mediaRecorderRef, setCapturing]); //why did we take the other refs out?
 
   const handleDownload = useCallback(() => {
@@ -101,6 +103,7 @@ export default function MediaRecordingCanvasMoveNet() {
       const blob = new Blob(recordedChunks, {
         type: 'video/webm',
       });
+      uploadMedia(blob);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       document.body.appendChild(a);
@@ -117,43 +120,43 @@ export default function MediaRecordingCanvasMoveNet() {
 
   return (
     <>
-    <div>
-      <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-        <Webcam
-          id='webcam'
-          ref={webcamRef}
-          audio={false}
-          style={{
-            transform: 'scaleX(-1)',
-            filter: 'FlipH',
-            position: 'absolute',
-            height: '75%',
-            width: '75%',
-            objectFit: 'cover',
-          }}
-        />
-        <canvas
-          id='canvas'
-          ref={canvasRef}
-          style={{
-            transform: 'scaleX(-1)',
-            filter: 'FlipH',
-            position: 'absolute',
-            height: '75%',
-            width: '75%',
-            objectFit: 'cover',
-          }}
-        />
+      <div>
+        <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+          <Webcam
+            id='webcam'
+            ref={webcamRef}
+            audio={false}
+            style={{
+              transform: 'scaleX(-1)',
+              filter: 'FlipH',
+              position: 'absolute',
+              height: '75%',
+              width: '75%',
+              objectFit: 'cover',
+            }}
+          />
+          <canvas
+            id='canvas'
+            ref={canvasRef}
+            style={{
+              transform: 'scaleX(-1)',
+              filter: 'FlipH',
+              position: 'absolute',
+              height: '75%',
+              width: '75%',
+              objectFit: 'cover',
+            }}
+          />
+        </div>
+        {capturing ? (
+          <button onClick={handleStopCaptureClick}>Stop Capture</button>
+        ) : (
+          <button onClick={handleStartCaptureClick}>Start Capture</button>
+        )}
+        {recordedChunks.length > 0 && (
+          <button onClick={handleDownload}>Download</button>
+        )}
       </div>
-      {capturing ? (
-        <button onClick={handleStopCaptureClick}>Stop Capture</button>
-      ) : (
-        <button onClick={handleStartCaptureClick}>Start Capture</button>
-      )}
-      {recordedChunks.length > 0 && (
-        <button onClick={handleDownload}>Download</button>
-      )}
-    </div>
     </>
   );
 }
