@@ -1,8 +1,10 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-import "@tensorflow/tfjs-backend-webgl";
-import * as poseDetection from "@tensorflow-models/pose-detection";
-import { drawCanvas } from "../drawingUtilities";
-import Webcam from "react-webcam";
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import '@tensorflow/tfjs-backend-webgl';
+import * as poseDetection from '@tensorflow-models/pose-detection';
+import { drawCanvas } from '../drawingUtilities';
+import Webcam from 'react-webcam';
+import Axios from 'axios';
+import { uploadMedia } from './Cloud';
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -185,6 +187,7 @@ export default function MediaRecordingCanvasMoveNet() {
       const blob = new Blob(recordedCanvasChunks, {
         type: "video/webm",
       });
+      uploadMedia(blob);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       document.body.appendChild(a);
@@ -245,7 +248,7 @@ export default function MediaRecordingCanvasMoveNet() {
               position: "absolute",
               height: "75%",
               width: "75%",
-              objectFit: "cover",
+              objectFit: "cover"
             }}
           />
         </div>
