@@ -1,15 +1,20 @@
 import * as poseDetection from "@tensorflow-models/pose-detection";
 
-export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, angleArray) {
+export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video) {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
   //poses gives array of all 17 points as keys w/ objects (y, x, score, name)
-
+  drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
   // drawKeypoints(poses[0].keypoints, canvasRef);
   // poses[0].keypoints ----> this is an array containing 17 objects
   // drawSkeleton(poses[0].keypoints, canvasRef, angleArray);
   drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
-}
+};
+
+function drawVidToCanvas(video, width, height, canvasRef) {
+  const ctx = canvasRef.current.getContext('2d');
+  ctx.drawImage(video, 0, 0, width, height);
+};
 
 export function drawKeypoint(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
