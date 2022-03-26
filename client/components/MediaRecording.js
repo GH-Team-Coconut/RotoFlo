@@ -4,7 +4,7 @@ import * as poseDetection from '@tensorflow-models/pose-detection';
 import { drawCanvas } from '../drawingUtilities';
 import Webcam from 'react-webcam';
 import Axios from 'axios';
-import { uploadMedia } from './Cloud';
+import { uploadMedia } from '../cloud';
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -14,7 +14,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mediaRecorderCanvasRef = useRef(null);
- 
+
   //write a solid read me, include gifs of how the project works and shows what it can do, and make the final presentation very polished.
   //useSelector and useDispatch replace the connect part of redux. mapstate is like useSelector and useDispatch is more like mapDispatch to props
   // "cram-jammed" - Merle
@@ -100,7 +100,7 @@ export default function MediaRecordingCanvasMoveNet() {
     setCapturing(false);
     mediaRecorderCanvasRef.current.stop();
     console.log("stop capturing");
-  }, [mediaRecorderCanvasRef, setCapturing]); 
+  }, [mediaRecorderCanvasRef, setCapturing]);
 
   // Canvas download
   const handleCanvasDownload = useCallback(() => {
