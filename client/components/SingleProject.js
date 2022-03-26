@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProject } from '../store/singleProject'; //write this
-import { _deleteProject } from '../store/projectGallery'
+import { deleteProject } from '../store/projectGallery'
 import { Link } from 'react-router-dom';
 
 const SingleProject = () => {
@@ -18,7 +18,7 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId)); //still need to be written
-      dispatch(_deleteProject(projectId));
+      dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 
@@ -38,7 +38,7 @@ const SingleProject = () => {
                 type='submit'
                 className='project_delete_btn'
                 value={project.id}
-                onClick={(event) => _deleteProject(event.target.value)}
+                onClick={(event) => deleteProject(event.target.value)}
               >
                 Delete project
               </button>

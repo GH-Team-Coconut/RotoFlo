@@ -1,6 +1,6 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Project, Roto, Video} } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -11,19 +11,42 @@ async function seed() {
   console.log('db synced!')
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
-  ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
-  }
+    const Cody = await User.create({ username: 'cody', password: '123' })
+    const Murphy = await User.create({ username: 'murphy', password: '123' })
+    const Merle = await User.create({ username: 'merle', password: '123' })
+
+
+  //Creating Projects
+  const MerleDance = await Project.create({
+    title: 'Hot Girl Shit'
+  });
+  // const coffee = await Project.create({
+  //   title: 'Coffee mmmm'
+  // });
+
+  //creating Videos
+  const HotGirlShit = await Video.create({
+    videoUrl:'https://res.cloudinary.com/rotoflo/video/upload/v1648308475/rxkwlwzygaakk9bclga1.mkv'
+  })
+
+  const PinkBubble = await Roto.create({
+    styleName: 'pinkBubble'
+  })
+
+  Merle.setProject(MerleDance);
+  MerleDance.setVideo(HotGirlShit);
+  MerleDance.setRoto(PinkBubble);
+
+
+  // console.log(`seeded ${users.length} users`)
+  // console.log(`seeded successfully`)
+  // return {
+  //   users: {
+  //     cody: users[0],
+  //     murphy: users[1]
+  //   }
+  // }
 }
 
 /*

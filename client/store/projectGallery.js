@@ -4,7 +4,7 @@ const TOKEN = 'token';
 
 const SET_PROJECT_GALLERY = 'SET_PROJECT_GALLERY';
 const DELETE_PROJECT = 'DELETE_PROJECT';
-const SAVE_AND_DOWNLOAD = 'SAVE_AND_DOWNLOAD';
+const SAVE_PROJECT = 'SAVE_PROJECT';
 
 
 export const setProjectGallery = (gallery) => {
@@ -23,7 +23,7 @@ export const _deleteProject = (project) => {
 
 export const _saveAndDownload = (project) => {
   return {
-    type: SAVE_AND_DOWNLOAD,
+    type: SAVE_PROJECT,
     project,
   };
 };
