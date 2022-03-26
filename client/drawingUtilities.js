@@ -7,8 +7,8 @@ export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video) {
   drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
   // drawKeypoints(poses[0].keypoints, canvasRef);
   // poses[0].keypoints ----> this is an array containing 17 objects
-  // drawSkeleton(poses[0].keypoints, canvasRef, angleArray);
-  drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
+  drawSkeleton(poses[0].keypoints, canvasRef);
+  // drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
 };
 
 function drawVidToCanvas(video, width, height, canvasRef) {
@@ -107,21 +107,11 @@ export function drawSkeleton(keypoints, canvasRef, angleArray) {
   ctx.strokeStyle = 'White';
   ctx.lineWidth = 2;
 
+  drawKeypoints(keypoints, canvasRef)
+
   poseDetection.util.getAdjacentPairs('MoveNet').forEach(([i, j]) => {
     const kp1 = keypoints[i];
     const kp2 = keypoints[j];
-    // const firstX = kp1.x;
-    // const firstY = kp1.y;
-    // const secondX = kp2.x;
-    // const secondY = kp2.y;
-    // const name = kp1.name + kp2.name;
-    // const adjacentPairAngle = Math.abs(
-    //   (Math.atan((firstY - secondY) / (firstX - secondX)) * 180) / Math.PI
-    // );
-
-    // if (kp1.score > 0.5 && kp2.score > 0.5) {
-    //   angleArray.push({ [name]: [adjacentPairAngle, kp1.score, kp2.score] });
-    // }
 
     // If score is null, just show the keypoint.
     const score1 = kp1.score != null ? kp1.score : 1;
