@@ -17,7 +17,3 @@ const App = () => {
 }
 
 export default App
-
-//will also include:
-//gallery
-//login
