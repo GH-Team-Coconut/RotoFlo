@@ -22,5 +22,8 @@ module.exports = {
   db,
   models: {
     User,
+    Project,
+    Roto,
+    Video
   },
 }
