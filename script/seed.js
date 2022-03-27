@@ -18,14 +18,23 @@ async function seed() {
     const Cody = await User.create({ username: 'cody', password: '123' });
     const Murphy = await User.create({ username: 'murphy', password: '123' });
     const Merle = await User.create({ username: 'merle', password: '123' });
+    const Leah = await User.create({ username: 'leah', password: '123' });
 
     //Creating Projects
     const MerleDanceProject = await Project.create({
       title: 'Hot Girl Shit',
     });
-    // const coffee = await Project.create({
-    //   title: 'Coffee mmmm'
-    // });
+    const LeahDanceProject = await Project.create({
+      title: 'Coffee mmmm'
+    });
+
+    const YerBubbles = await Project.create({
+      title: "Yer Bubbles"
+    })
+
+    const SpookyDance = await Project.create({
+      title: 'Spoooooky'
+    })
 
     //creating Videos
     const HotGirlShit = await Video.create({
@@ -33,23 +42,44 @@ async function seed() {
         'https://res.cloudinary.com/rotoflo/video/upload/v1648308475/rxkwlwzygaakk9bclga1.mkv',
     });
 
+    const Coffee = await Video.create({
+      videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1647882718/ibktfhzhieglvsivecnn.mov'
+    })
+
+    const LeahBubbles = await Video.create({
+      videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1648228496/lvc8vxlvlpy32a4wvepu.mkv'
+    })
+
+    const SpookyLeah = await Video.create({
+      videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1648159174/fzcuixjfbbqjh09qnwr1.mkv'
+    })
+
+    //Creating Rotos
     const PinkBubble = await Roto.create({
       styleName: 'pinkBubble',
     });
 
+    const None = await Roto.create({
+      styleName: 'none'
+    })
+
+    //Creating associations
     await MerleDanceProject.setUser(Merle);
     await MerleDanceProject.setVideo(HotGirlShit);
     await MerleDanceProject.setRoto(PinkBubble);
 
-    // console.log(`seeded ${users.length} users`)
-    // console.log(`seeded successfully`)
-    // return {
-    //   users: {
-    //     cody: users[0],
-    //     murphy: users[1]
-    //   }
-    // }
-    console.log(Object.keys(Project.prototype));
+    await LeahDanceProject.setUser(Leah);
+    await LeahDanceProject.setVideo(Coffee);
+    await LeahDanceProject.setRoto(None);
+
+    await YerBubbles.setUser(Leah);
+    await YerBubbles.setVideo(LeahBubbles);
+    await YerBubbles.setRoto(PinkBubble);
+
+    await SpookyDance.setUser(Leah);
+    await SpookyDance.setVideo(SpookyLeah);
+    await SpookyDance.setRoto(None);
+
   } catch (err) {
     console.log(err);
   }
