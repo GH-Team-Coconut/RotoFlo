@@ -32,12 +32,14 @@ export const fetchProjectGallery = () => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
-      const { data: projectGallery } = await axios.get(`/api/gallery`, {
+      console.log('token from localstorage in thunk', token)
+      const { data: gallery } = await axios.get(`/api/gallery`, {
         headers: {
           authorization: token,
         },
       });
-      dispatch(setProjectGallery(projectGallery));
+      console.log("datttaaaaaaaaaaaaaaaaaaaaaaa", gallery)
+      dispatch(setProjectGallery(gallery));
     } catch (error) {
       console.error(
         'you know what... I think this is a you problem. Yep. Yep it is. Check your fetchProjectGallery thunkity thunk.'
