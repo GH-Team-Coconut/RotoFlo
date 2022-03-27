@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchProjectGallery, _deleteProject } from '../store/projectGallery';
+import { fetchProjectGallery, _deleteProject } from '../store/gallery';
 
 const Gallery = () => {
 
@@ -13,33 +13,33 @@ const Gallery = () => {
     return state.projects; //this reads from the redux store
   });
 
-  const projectId = useSelector((state) => {
-    return state.project.id;
-  });
+  // const projectId = useSelector((state) => {
+  //   return state.project.id;
+  // });
 
   const dispatch = useDispatch();
 
   useEffect(
     () => {
       if(userId){
-        dispatch(fetchProjectGallery(userId));
+        dispatch(fetchProjectGallery());
          //This can potentially be used in a click handler or something too
       }
     },
-    [dispatch, userId, projectId]
+    [dispatch, userId]
   );
 
-  useEffect(
-    () => {
-      if(projectId){
-        dispatch(_deleteProject(projectId));
-      }
-    },
-    [dispatch, userId, projectId]
-  );
+  // useEffect(
+  //   () => {
+  //     if(projectId){
+  //       dispatch(_deleteProject(projectId));
+  //     }
+  //   },
+  //   [dispatch, userId, projectId]
+  // );
 
   return (
-    <>
+    <div>
       <div className='gallery_container'></div>
       <div className='gallery'>
         {projects.map((project) => (
@@ -59,7 +59,7 @@ const Gallery = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

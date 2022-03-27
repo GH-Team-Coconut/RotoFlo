@@ -3,7 +3,7 @@ import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import auth from './auth'
-import galleryReducer from './projectGallery'
+import galleryReducer from './gallery'
 
 const reducer = combineReducers({ auth, projects: galleryReducer })
 const middleware = composeWithDevTools(

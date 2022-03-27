@@ -77,13 +77,5 @@ router.delete("/:userId", async (req, res, next) => {
   }
 });
 
-// router.get("/:userId/gallery", async (req, res, next) => {
-//   try{
-//     const gallery = await User
 
-
-//   } catch (err){
-//     next(err)
-//   }
-// });
 module.exports = router;
