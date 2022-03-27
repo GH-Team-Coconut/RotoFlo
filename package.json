@@ -19,11 +19,17 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@mediapipe/pose": "^0.5.1635988162",
     "@tensorflow-models/pose-detection": "^2.0.0",
     "@tensorflow/tfjs-backend-webgl": "^3.15.0",
     "@tensorflow/tfjs-converter": "^3.14.0",
     "@tensorflow/tfjs-core": "^3.15.0",
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.4",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.26.1",
     "bcrypt": "^5.0.0",
+    "cloudinary-react": "^1.7.1",
     "compression": "^1.7.3",
     "express": "^4.17.3",
     "history": "^4.9.0",
@@ -35,12 +41,7 @@
     "react-scripts": "5.0.0",
     "react-webcam": "^7.0.0",
     "sequelize": "^6.3.5",
-    "web-vitals": "^2.1.4",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.26.1",
-    "cloudinary-react": "^1.7.1"
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
