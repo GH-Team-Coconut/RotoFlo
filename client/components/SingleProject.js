@@ -2,24 +2,24 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProject } from "../store/singleProject"; //write this
 import { deleteProject } from "../store/gallery";
-import { Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
+
 
 const SingleProject = () => {
   const project = useSelector((state) => {
     return state.project; //this reads from the redux store so make a separate project key from that sub reducer aight
   });
 
-  const projectId = useSelector((state) => {
-    // console.log(state);
-    return state.project.id;
-  });
+  const { projectId } = useParams(); 
+
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (projectId) {
+      console.log(projectId)
       dispatch(fetchProject(projectId));
-      dispatch(deleteProject(projectId));
+      // dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 
