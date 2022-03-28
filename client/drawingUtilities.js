@@ -5,6 +5,7 @@ export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, fil
   canvasRef.current.height = videoHeight;
 
   drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
+  geometricFilter(poses[0].keypoints, canvasRef);
   if(filter === "skeleton"){
   drawSkeleton(poses[0].keypoints, canvasRef);
   console.log('drawSkeleton running')
@@ -12,7 +13,7 @@ export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, fil
   if(filter ==="pink-bubbles"){
   drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
   console.log('pink-bubbles running')
-}
+  }
 };
 
 function drawVidToCanvas(video, width, height, canvasRef) {
@@ -34,6 +35,181 @@ export function drawKeypoint(keypoint, canvasRef) {
     circle.arc(keypoint.x, keypoint.y, 4, 0, 2 * Math.PI);
     ctx.fill(circle);
     ctx.stroke(circle);
+  }
+}
+
+ function drawKeypointInGeo(keypoint, canvasRef) {
+  //keypoint argument is a singular point --> (y, x, score, name)
+  const ctx = canvasRef.current.getContext("2d");
+  //ctx = methods you get in 2D
+
+  // If score is null, just show the keypoint.
+  const confidence = keypoint.score != null ? keypoint.score : 1;
+  const scoreThreshold = 0.3 || 0;
+
+  if (confidence >= scoreThreshold) {
+    const circle = new Path2D();
+    circle.arc(keypoint.x, keypoint.y, 6, 0, 2 * Math.PI);
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "white";
+    ctx.fill(circle);
+    ctx.stroke(circle);
+  }
+}; 
+
+function geometricFilter(keypoints, canvasRef) {
+  const ctx = canvasRef.current.getContext("2d");
+  const gkp1 = {
+    name: "above-head",
+    x: keypoints[0].x,
+    y: keypoints[0].y - 50,
+    score: keypoints[0].score,
+  };
+  const gkp2 = {
+    name: "right-shoulder",
+    x: keypoints[6].x,
+    y: keypoints[6].y,
+    score: keypoints[6].score,
+  };
+  const gkp3 = {
+    name: "left-shoulder",
+    x: keypoints[5].x,
+    y: keypoints[5].y,
+    score: keypoints[5].score,
+  };
+  const gkp4 = {
+    name: "outer-left-elbow",
+    x: keypoints[7].x - 50,
+    y: keypoints[7].y - 10,
+    score: keypoints[7].score,
+  };
+  const gkp5 = {
+    name: "left-elbow",
+    x: keypoints[7].x,
+    y: keypoints[7].y,
+    score: keypoints[7].score,
+  };
+  const gkp6 = {
+    name: "right-wrist",
+    x: keypoints[10].x,
+    y: keypoints[10].y,
+    score: keypoints[10].score,
+  };
+  const gkp7 = {
+    name: "off-center-belly",
+    x: keypoints[12].x - 5,
+    y: keypoints[12].y - 10,
+    score: keypoints[12].score,
+  };
+  const gkp8 = {
+    name: "left-wrist",
+    x: keypoints[9].x,
+    y: keypoints[9].y,
+    score: keypoints[9].score,
+  };
+  const gkp9 = {
+    name: "left-fingertip-area",
+    x: keypoints[9].x - 10,
+    y: keypoints[9].y + 20,
+    score: keypoints[9].score,
+  };
+  const gkp10 = {
+    name: "outer-left-thigh",
+    x: keypoints[13].x + 30,
+    y: keypoints[13].y - 40,
+    score: keypoints[13].score,
+  };
+  const gkp11 = {
+    name: "below-crotch",
+    x: keypoints[0].x,
+    y: keypoints[0].y + 300,
+    score: keypoints[0].score,
+  };
+  const gkp12 = {
+    name: "outer-right-calf",
+    x: keypoints[14].x + 20,
+    y: keypoints[14].y - 20,
+    score: keypoints[14].score,
+  };
+  const gkp13 = {
+    name: "left-knee",
+    x: keypoints[13].x,
+    y: keypoints[13].y,
+    score: keypoints[13].score,
+  };
+  const gkp14 = {
+    name: "right-ankle",
+    x: keypoints[16].x,
+    y: keypoints[16].y,
+    score: keypoints[16].score,
+  };
+  const gkp15 = {
+    name: "left-ankle",
+    x: keypoints[15].x,
+    y: keypoints[15].y,
+    score: keypoints[15].score,
+  };
+  const arrayOfVerticies = [
+    gkp1,
+    gkp2,
+    gkp3,
+    gkp4,
+    gkp5,
+    gkp6,
+    gkp6,
+    gkp7,
+    gkp8,
+    gkp9,
+    gkp10,
+    gkp11,
+    gkp12,
+    gkp13,
+    gkp14,
+    gkp15,
+  ];
+  drawLineFromTo(canvasRef, gkp1, gkp4);
+  drawLineFromTo(canvasRef, gkp1, gkp5);
+  drawLineFromTo(canvasRef, gkp1, gkp6);
+  drawLineFromTo(canvasRef, gkp1, gkp7);
+  drawLineFromTo(canvasRef, gkp2, gkp12);
+  drawLineFromTo(canvasRef, gkp3, gkp5);
+  drawLineFromTo(canvasRef, gkp3, gkp7);
+  drawLineFromTo(canvasRef, gkp5, gkp7);
+  drawLineFromTo(canvasRef, gkp4, gkp5);
+  drawLineFromTo(canvasRef, gkp4, gkp9);
+  drawLineFromTo(canvasRef, gkp6, gkp7);
+  drawLineFromTo(canvasRef, gkp6, gkp12);
+  drawLineFromTo(canvasRef, gkp7, gkp10);
+  drawLineFromTo(canvasRef, gkp7, gkp11);
+  drawLineFromTo(canvasRef, gkp7, gkp12);
+  drawLineFromTo(canvasRef, gkp7, gkp13);
+  drawLineFromTo(canvasRef, gkp7, gkp14);
+  drawLineFromTo(canvasRef, gkp8, gkp10);
+  drawLineFromTo(canvasRef, gkp9, gkp10);
+  drawLineFromTo(canvasRef, gkp10, gkp13);
+  drawLineFromTo(canvasRef, gkp10, gkp15);
+  drawLineFromTo(canvasRef, gkp11, gkp14);
+  drawLineFromTo(canvasRef, gkp11, gkp13);
+  drawLineFromTo(canvasRef, gkp11, gkp15);
+  drawLineFromTo(canvasRef, gkp12, gkp14);
+  drawLineFromTo(canvasRef, gkp13, gkp15);
+  for (let i = 0; i < arrayOfVerticies.length; i++) {
+    drawKeypointInGeo(arrayOfVerticies[i], canvasRef);
+  }
+}
+
+function drawLineFromTo(canvasRef, kpStart, kpEnd) {
+  const ctx = canvasRef.current.getContext("2d");
+  const score1 = kpStart.score != null ? kpStart.score : 1;
+  const score2 = kpEnd.score != null ? kpEnd.score : 1;
+  const scoreThreshold = 0.2;
+  if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
+    ctx.beginPath(); // Start a new path
+    ctx.moveTo(kpStart.x, kpStart.y); // Move the pen to (30, 50)
+    ctx.lineTo(kpEnd.x, kpEnd.y); // Draw a line to (150, 100)
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 3;
+    ctx.stroke(); // Render the path
   }
 }
 
@@ -64,7 +240,6 @@ export function drawKeypoints(keypoints, canvasRef) {
   }
 }
 
-// *********************** MICA ANIMATIONS ******************************
 export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext('2d');
 
@@ -87,23 +262,6 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
     }
   }
 }
-
-//   function theoreticallyCreateUpwardFloatingDotTrails(
-// 	ctx,
-// 	x,
-// 	y,
-// 	r,
-// 	color,
-// 	canvas
-//   ) {
-// 	requestAnimationFrame(theoreticallyCreateUpwardFloatingDotTrails);
-// 	ctx.clearRect(0, 0, canvas.height, canvas.width); // might need some clarification on what to pass in
-// 	ctx.beginPath();
-// 	ctx.arc(x, y, r, 0, 2 * Math.PI);
-// 	ctx.fillStyle = color;
-// 	ctx.fill();
-// 	x++
-//   }
 
 export function drawSkeleton(keypoints, canvasRef, angleArray) {
   const ctx = canvasRef.current.getContext('2d');
