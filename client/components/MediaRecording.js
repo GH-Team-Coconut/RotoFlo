@@ -10,6 +10,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
+  const [filter, setFilter] = useState('')
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -40,6 +41,7 @@ export default function MediaRecordingCanvasMoveNet() {
   let allPoses = {};
 
   async function getPoses() {
+    console.log("I RAN getPOSES()")
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -55,13 +57,23 @@ export default function MediaRecordingCanvasMoveNet() {
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
+      //set filter
+      // const filter = state.filter
+      //get this from hook/state and add it as an arguement to line 66
+
       if (detector) {
         let poses = await detector.estimatePoses(video);
         requestAnimationFrame(getPoses);
-        drawCanvas(poses, videoWidth, videoHeight, canvasRef, video);
+        drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter);
         allPoses.poses = poses;
       }
     }
+  }
+
+  const onChangeHandler = (event) => {
+    const filter = event.target.value
+    console.log('event.target', filter)
+    setFilter(filter)
   }
 
   // Canvas data handling
@@ -122,9 +134,10 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }, [recordedCanvasChunks]);
 
-  getPoses();
+  getPoses(filter);
 
   return (
+    //define filter
     <>
       <div>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
@@ -154,6 +167,10 @@ export default function MediaRecordingCanvasMoveNet() {
             }}
           />
         </div>
+        <select id="filters" name="filters" onChange={onChangeHandler}>
+          <option value="pink-bubbles">pink bubbles</option>
+          <option value="skeleton">skeleton</option>
+        </select>
         {capturing ? (
           <button onClick={handleStopCaptureClick}>Stop Capture</button>
         ) : (

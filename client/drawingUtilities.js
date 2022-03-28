@@ -1,14 +1,18 @@
 import * as poseDetection from "@tensorflow-models/pose-detection";
 
-export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video) {
+export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter) {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
-  //poses gives array of all 17 points as keys w/ objects (y, x, score, name)
+
   drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
-  // drawKeypoints(poses[0].keypoints, canvasRef);
-  // poses[0].keypoints ----> this is an array containing 17 objects
+  if(filter === "skeleton"){
   drawSkeleton(poses[0].keypoints, canvasRef);
-  // drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
+  console.log('drawSkeleton running')
+  }
+  if(filter ==="pink-bubbles"){
+  drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
+  console.log('pink-bubbles running')
+}
 };
 
 function drawVidToCanvas(video, width, height, canvasRef) {
