@@ -4,19 +4,36 @@ const {
 } = require("../db");
 const { requireToken } = require("./security");
 
-router.get("/gallery", requireToken, async (req, res, next) => {
+router.get("/", requireToken, async (req, res, next) => {
   try {
     if (!req.user) {
       throw new Error("Unauthorized");
     }
-    console.log('user id in api **********************', req.user.id)
     const gallery = await Project.findAll({
       where: {
-        userId: req.user.id
-      }
-      // include: [Video],
+        userId: req.user.id,
+      },
+      include: [Video],
     });
-    res.send(gallery)
+    res.send(gallery);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:projectId", requireToken, async (req, res, next) => {
+  try {
+    if (!req.user) {
+      throw new Error("Unauthorized");
+    }
+    const project = await Project.findOne({
+      where: {
+        id: req.params.projectId,
+        userId: req.user.id,
+      },
+      include: [Video],
+    });
+    res.send(project);
   } catch (err) {
     next(err);
   }
