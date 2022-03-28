@@ -6,12 +6,15 @@ export function drawCanvas(
   videoHeight,
   canvasRef,
   video,
-  filter
+  filter,
+  webcamState
 ) {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
 
-  drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
+  if (webcamState === "on") {
+    drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
+  }
   if (filter === "skeleton") {
     drawSkeleton(poses[0].keypoints, canvasRef);
     console.log("drawSkeleton running");
@@ -19,7 +22,6 @@ export function drawCanvas(
   if (filter === "pink-bubbles") {
     drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
     console.log("pink-bubbles running");
-  }
   if (filter === "geometric") {
     geometricFilter(poses[0].keypoints, canvasRef);
   }

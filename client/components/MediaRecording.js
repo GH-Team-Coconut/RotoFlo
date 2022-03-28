@@ -3,7 +3,7 @@ import "@tensorflow/tfjs-backend-webgl";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import { drawCanvas } from "../drawingUtilities";
 import Webcam from "react-webcam";
-import Axios from "axios";
+
 import { uploadMedia } from "../cloud";
 
 export default function MediaRecordingCanvasMoveNet() {
@@ -11,6 +11,8 @@ export default function MediaRecordingCanvasMoveNet() {
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [filter, setFilter] = useState("");
+  const [webcamOnOff, setWebcamOnOff] = useState("on");
+
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -41,7 +43,6 @@ export default function MediaRecordingCanvasMoveNet() {
   let allPoses = {};
 
   async function getPoses() {
-    console.log("I RAN getPOSES()");
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -60,7 +61,15 @@ export default function MediaRecordingCanvasMoveNet() {
       if (detector) {
         let poses = await detector.estimatePoses(video);
         requestAnimationFrame(getPoses);
-        drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter);
+        drawCanvas(
+          poses,
+          videoWidth,
+          videoHeight,
+          canvasRef,
+          video,
+          filter,
+          webcamOnOff
+        );
         allPoses.poses = poses;
       }
     }
@@ -68,9 +77,14 @@ export default function MediaRecordingCanvasMoveNet() {
 
   const onChangeHandler = (event) => {
     const filter = event.target.value;
-    console.log("event.target", filter);
     setFilter(filter);
   };
+
+  const webcamChangeHandler = (event) => {
+    const webcamState = event.target.value;
+    setWebcamOnOff(webcamState);
+  };
+
 
   // Canvas data handling
   const handleCanvasDataAvailable = useCallback(
@@ -163,6 +177,14 @@ export default function MediaRecordingCanvasMoveNet() {
           <option value="pink-bubbles">pink bubbles</option>
           <option value="skeleton">skeleton</option>
           <option value="geometric">geometric</option>
+        </select>
+        <select
+          id="webcamOnOff"
+          name="webcamOnOff"
+          onChange={webcamChangeHandler}
+        >
+          <option value="on">Webcam On</option>
+          <option value="off">Webcam Off</option>
         </select>
         {capturing ? (
           <button onClick={handleStopCaptureClick}>Stop Capture</button>
