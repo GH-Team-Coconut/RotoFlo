@@ -1,16 +1,17 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import '@tensorflow/tfjs-backend-webgl';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import { drawCanvas } from '../drawingUtilities';
-import Webcam from 'react-webcam';
-import Axios from 'axios';
-import { uploadMedia } from '../cloud';
+import React, { useRef, useState, useCallback, useEffect } from "react";
+import "@tensorflow/tfjs-backend-webgl";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import { drawCanvas } from "../drawingUtilities";
+import Webcam from "react-webcam";
+// import Axios from 'axios';
+import { uploadMedia } from "../cloud";
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
-  const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState("");
+  const [webcamOnOff, setWebcamOnOff] = useState("on");
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -41,7 +42,6 @@ export default function MediaRecordingCanvasMoveNet() {
   let allPoses = {};
 
   async function getPoses() {
-    console.log("I RAN getPOSES()")
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -58,23 +58,34 @@ export default function MediaRecordingCanvasMoveNet() {
       webcamRef.current.video.height = videoHeight;
 
       //set filter
-      // const filter = state.filter
       //get this from hook/state and add it as an arguement to line 66
 
       if (detector) {
         let poses = await detector.estimatePoses(video);
         requestAnimationFrame(getPoses);
-        drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter);
+        drawCanvas(
+          poses,
+          videoWidth,
+          videoHeight,
+          canvasRef,
+          video,
+          filter,
+          webcamOnOff
+        );
         allPoses.poses = poses;
       }
     }
   }
 
   const onChangeHandler = (event) => {
-    const filter = event.target.value
-    console.log('event.target', filter)
-    setFilter(filter)
-  }
+    const filter = event.target.value;
+    setFilter(filter);
+  };
+
+  const webcamChangeHandler = (event) => {
+    const webcamState = event.target.value;
+    setWebcamOnOff(webcamState);
+  };
 
   // Canvas data handling
   const handleCanvasDataAvailable = useCallback(
@@ -102,11 +113,7 @@ export default function MediaRecordingCanvasMoveNet() {
     );
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-  }, [
-    setCapturing,
-    mediaRecorderCanvasRef,
-    handleCanvasDataAvailable,
-  ]);
+  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable]);
 
   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
@@ -163,13 +170,21 @@ export default function MediaRecordingCanvasMoveNet() {
               position: "absolute",
               height: "75%",
               width: "75%",
-              objectFit: "cover"
+              objectFit: "cover",
             }}
           />
         </div>
         <select id="filters" name="filters" onChange={onChangeHandler}>
           <option value="pink-bubbles">pink bubbles</option>
           <option value="skeleton">skeleton</option>
+        </select>
+        <select
+          id="webcamOnOff"
+          name="webcamOnOff"
+          onChange={webcamChangeHandler}
+        >
+          <option value="on">Webcam On</option>
+          <option value="off">Webcam Off</option>
         </select>
         {capturing ? (
           <button onClick={handleStopCaptureClick}>Stop Capture</button>

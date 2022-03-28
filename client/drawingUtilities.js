@@ -1,29 +1,39 @@
 import * as poseDetection from "@tensorflow-models/pose-detection";
 
-export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter) {
+export function drawCanvas(
+  poses,
+  videoWidth,
+  videoHeight,
+  canvasRef,
+  video,
+  filter,
+  webcamState
+) {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
 
-  drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
-  geometricFilter(poses[0].keypoints, canvasRef);
-  if(filter === "skeleton"){
-  drawSkeleton(poses[0].keypoints, canvasRef);
-  console.log('drawSkeleton running')
+  if (webcamState === "on") {
+    drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
   }
-  if(filter ==="pink-bubbles"){
-  drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
-  console.log('pink-bubbles running')
+  // geometricFilter(poses[0].keypoints, canvasRef);
+  if (filter === "skeleton") {
+    drawSkeleton(poses[0].keypoints, canvasRef);
+    console.log("drawSkeleton running");
   }
-};
+  if (filter === "pink-bubbles") {
+    drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
+    console.log("pink-bubbles running");
+  }
+}
 
 function drawVidToCanvas(video, width, height, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   ctx.drawImage(video, 0, 0, width, height);
-};
+}
 
 export function drawKeypoint(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   //ctx = methods you get in 2D
 
   // If score is null, just show the keypoint.
@@ -38,7 +48,7 @@ export function drawKeypoint(keypoint, canvasRef) {
   }
 }
 
- function drawKeypointInGeo(keypoint, canvasRef) {
+function drawKeypointInGeo(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
   const ctx = canvasRef.current.getContext("2d");
   //ctx = methods you get in 2D
@@ -55,7 +65,7 @@ export function drawKeypoint(keypoint, canvasRef) {
     ctx.fill(circle);
     ctx.stroke(circle);
   }
-}; 
+}
 
 function geometricFilter(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
@@ -216,11 +226,11 @@ function drawLineFromTo(canvasRef, kpStart, kpEnd) {
 export function drawKeypoints(keypoints, canvasRef) {
   //keypoints is an array of 17 objects of the keypoints
 
-  const ctx = canvasRef.current.getContext('2d');
-  const keypointInd = poseDetection.util.getKeypointIndexBySide('MoveNet');
+  const ctx = canvasRef.current.getContext("2d");
+  const keypointInd = poseDetection.util.getKeypointIndexBySide("MoveNet");
   // object with keys: left, middle, right ---> value is an array of the key points (body parts)
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'White';
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "White";
   ctx.lineWidth = 2;
 
   //middle points will be white (just nose)
@@ -228,20 +238,20 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = 'Green';
+  ctx.fillStyle = "Green";
   for (const i of keypointInd.left) {
-    drawKeypoint(keypoints[i],canvasRef);
+    drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = 'Orange';
+  ctx.fillStyle = "Orange";
   for (const i of keypointInd.right) {
-    drawKeypoint(keypoints[i],canvasRef);
+    drawKeypoint(keypoints[i], canvasRef);
   }
 }
 
 export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
 
   for (let j = 0; j < keypoints.length; j++) {
     for (let i = 0; i < 5; i++) {
@@ -257,21 +267,21 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
       const randomX = generateRandomLocal(currKey.x - 50, currKey.x + 50);
       const randomY = generateRandomLocal(currKey.y - 50, currKey.y + 50);
       ctx.arc(randomX, randomY, 5, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'pink';
+      ctx.strokeStyle = "pink";
       ctx.stroke();
     }
   }
 }
 
 export function drawSkeleton(keypoints, canvasRef, angleArray) {
-  const ctx = canvasRef.current.getContext('2d');
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'White';
+  const ctx = canvasRef.current.getContext("2d");
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "White";
   ctx.lineWidth = 2;
 
-  drawKeypoints(keypoints, canvasRef)
+  drawKeypoints(keypoints, canvasRef);
 
-  poseDetection.util.getAdjacentPairs('MoveNet').forEach(([i, j]) => {
+  poseDetection.util.getAdjacentPairs("MoveNet").forEach(([i, j]) => {
     const kp1 = keypoints[i];
     const kp2 = keypoints[j];
 
