@@ -10,6 +10,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
+  const [secureUrl, setSecureUrl] = useState('');
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -110,6 +111,7 @@ export default function MediaRecordingCanvasMoveNet() {
         type: "video/webm",
       });
       uploadMedia(blob);
+      //add db axios to save secure_url
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       document.body.appendChild(a);

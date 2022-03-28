@@ -1,33 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProject } from '../store/singleProject'; //write this
 import { deleteProject } from '../store/gallery';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+// import { videoTagString, VideoTag } from 'react-video-tag'
+import VideoLooper from 'react-video-looper';
 
 const SingleProject = () => {
+  const [videoUrl, setVideoUrl] = useState('');
+  const [video, setVideo] = useState({});
+  // const[project, setProject] = useState({})
+
   const project = useSelector((state) => {
-    return state.project; //this reads from the redux store so make a separate project key from that sub reducer aight
+    return state.project || {}; //this reads from the redux store so make a separate project key from that sub reducer aight
   });
 
-  const { projectId } = useParams(); //what sorcery is this
+  const { projectId } = useParams();
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (projectId) {
-      //console.log(projectId)
       dispatch(fetchProject(projectId));
       //dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 
-  const projectKeys = Object.keys(project);
-  const projectValues = Object.values(project);
+  useEffect(() => {
+    if (project) {
+      setVideo(project.video);
+    }
+  }, [project]);
 
-  console.log('Project keys', projectKeys);
-  console.log('Project values', projectValues);
-  console.log('Project.video', project.video); //cannot for the life of me get a value after this it has to be simple
-  //console.log('Project.video.videoUrl', project.)
+  useEffect(() => {
+    if (video) {
+      setVideoUrl(video.videoUrl);
+    }
+  }, [video]);
 
   return (
     <>
@@ -35,7 +43,11 @@ const SingleProject = () => {
         <br />
         <div className='project-info'>
           <div id='single-project-video'>
-            {/* <video src={project.video.videoUrl} loop /> */}
+            {videoUrl ? (
+              <VideoLooper source={videoUrl} start={4.31} end={9.48} loop />
+            ) : (
+              ''
+            )}
           </div>
           <div id='project_title'>
             <h1>{project.title}</h1>

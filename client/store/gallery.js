@@ -51,12 +51,7 @@ export const deleteProject = (projectId) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
       const { data } = await axios.delete(
-        `/api/gallery`,
-        {
-          data: {
-            projectId: projectId,
-          },
-        },
+        `/api/gallery/${projectId}`,
         {
           headers: {
             authorization: token,
