@@ -1,15 +1,19 @@
 import * as poseDetection from "@tensorflow-models/pose-detection";
 
-export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video) {
+export function drawCanvas(poses, videoWidth, videoHeight, canvasRef, video, filter) {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
-  //poses gives array of all 17 points as keys w/ objects (y, x, score, name)
+
   drawVidToCanvas(video, videoWidth, videoHeight, canvasRef); 
-  // drawKeypoints(poses[0].keypoints, canvasRef);
-  // poses[0].keypoints ----> this is an array containing 17 objects
-  // drawSkeleton(poses[0].keypoints, canvasRef);
-  // drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
   geometricFilter(poses[0].keypoints, canvasRef);
+  if(filter === "skeleton"){
+  drawSkeleton(poses[0].keypoints, canvasRef);
+  console.log('drawSkeleton running')
+  }
+  if(filter ==="pink-bubbles"){
+  drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
+  console.log('pink-bubbles running')
+  }
 };
 
 function drawVidToCanvas(video, width, height, canvasRef) {
@@ -34,8 +38,6 @@ export function drawKeypoint(keypoint, canvasRef) {
   }
 }
 
-
-//****************** 
  function drawKeypointInGeo(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
   const ctx = canvasRef.current.getContext("2d");
@@ -54,7 +56,6 @@ export function drawKeypoint(keypoint, canvasRef) {
     ctx.stroke(circle);
   }
 }; 
-
 
 function geometricFilter(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
@@ -211,8 +212,6 @@ function drawLineFromTo(canvasRef, kpStart, kpEnd) {
     ctx.stroke(); // Render the path
   }
 }
-//****************** 
-
 
 export function drawKeypoints(keypoints, canvasRef) {
   //keypoints is an array of 17 objects of the keypoints
@@ -241,7 +240,6 @@ export function drawKeypoints(keypoints, canvasRef) {
   }
 }
 
-// *********************** MICA ANIMATIONS ******************************
 export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext('2d');
 
@@ -264,23 +262,6 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
     }
   }
 }
-
-//   function theoreticallyCreateUpwardFloatingDotTrails(
-// 	ctx,
-// 	x,
-// 	y,
-// 	r,
-// 	color,
-// 	canvas
-//   ) {
-// 	requestAnimationFrame(theoreticallyCreateUpwardFloatingDotTrails);
-// 	ctx.clearRect(0, 0, canvas.height, canvas.width); // might need some clarification on what to pass in
-// 	ctx.beginPath();
-// 	ctx.arc(x, y, r, 0, 2 * Math.PI);
-// 	ctx.fillStyle = color;
-// 	ctx.fill();
-// 	x++
-//   }
 
 export function drawSkeleton(keypoints, canvasRef, angleArray) {
   const ctx = canvasRef.current.getContext('2d');
