@@ -12,9 +12,11 @@ const Gallery = () => {
   const projects = useSelector((state) => {
     return state.projects; //this reads from the redux store
   });
-
+console.log('*********** project in Gallery', projects)
   const projectId = useSelector((state) => {
+  
     return state.project.id;
+  
   });
 
   const dispatch = useDispatch();
