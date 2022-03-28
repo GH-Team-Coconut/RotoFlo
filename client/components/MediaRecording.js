@@ -3,7 +3,7 @@ import "@tensorflow/tfjs-backend-webgl";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import { drawCanvas } from "../drawingUtilities";
 import Webcam from "react-webcam";
-// import Axios from 'axios';
+
 import { uploadMedia } from "../cloud";
 
 export default function MediaRecordingCanvasMoveNet() {
@@ -12,6 +12,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
+
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -57,9 +58,6 @@ export default function MediaRecordingCanvasMoveNet() {
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
 
-      //set filter
-      //get this from hook/state and add it as an arguement to line 66
-
       if (detector) {
         let poses = await detector.estimatePoses(video);
         requestAnimationFrame(getPoses);
@@ -86,6 +84,7 @@ export default function MediaRecordingCanvasMoveNet() {
     const webcamState = event.target.value;
     setWebcamOnOff(webcamState);
   };
+
 
   // Canvas data handling
   const handleCanvasDataAvailable = useCallback(
@@ -177,6 +176,7 @@ export default function MediaRecordingCanvasMoveNet() {
         <select id="filters" name="filters" onChange={onChangeHandler}>
           <option value="pink-bubbles">pink bubbles</option>
           <option value="skeleton">skeleton</option>
+          <option value="geometric">geometric</option>
         </select>
         <select
           id="webcamOnOff"
