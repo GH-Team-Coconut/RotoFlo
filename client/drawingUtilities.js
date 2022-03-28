@@ -22,6 +22,7 @@ export function drawCanvas(
   if (filter === "pink-bubbles") {
     drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
     console.log("pink-bubbles running");
+  }
   if (filter === "geometric") {
     geometricFilter(poses[0].keypoints, canvasRef);
   }
@@ -69,7 +70,7 @@ function drawKeypointInGeo(keypoint, canvasRef) {
 }
 
 function geometricFilter(keypoints, canvasRef) {
-  const ctx = canvasRef.current.getContext("2d");
+  // const ctx = canvasRef.current.getContext("2d");
   const gkp1 = {
     name: "above-head",
     x: keypoints[0].x,
