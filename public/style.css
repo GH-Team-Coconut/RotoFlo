@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  background-color: #BAD3D2;
+  color: #DB4855;
 }
 
 a {
@@ -18,4 +20,30 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+#modal-container {
+  background: rgba(0, 0, 0, 0.5);
+  width: 200px;
+  height: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* vw and vh */
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+
+  /*flex stuff below*/
+  display: flex;
+  /* alignment on the MAIN axis (default horizontal) */
+  justify-content: center;
+  /* alignment on the CROSS axis (default vertical) */
+  align-items: center;
+}
+
+#modal-content {
+  width: 600px;
+  height: 400px;
+  background: white;
 }
