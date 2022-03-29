@@ -13,7 +13,6 @@ router.get("/", requireToken, async (req, res, next) => {
       where: {
         userId: req.user.id,
       },
-      include: [Video],
     });
     res.send(gallery);
   } catch (err) {
@@ -50,7 +49,6 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
         id: req.params.projectId,
         userId: req.user.id,
       },
-      include: [Video],
     });
     res.send(project);
   } catch (err) {
@@ -69,7 +67,6 @@ router.delete("/:projectId", requireToken, async (req, res, next) => {
         id: req.params.projectId,
         userId: req.user.id,
       },
-      include: [Video],
     });
     if (project) {
       project.destroy();

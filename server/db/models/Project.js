@@ -9,7 +9,7 @@ module.exports = db.define('project', {
       notEmpty: true,
     },
   },
-  secureUrl: {
+  videoUrl: {
     type: Sequelize.STRING(1000),
     defaultValue: '',
     allowNull: false,
