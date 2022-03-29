@@ -4,7 +4,6 @@ const TOKEN = "token";
 
 const SET_PROJECT_GALLERY = "SET_PROJECT_GALLERY";
 const DELETE_PROJECT = "DELETE_PROJECT";
-const SAVE_PROJECT = "SAVE_PROJECT";
 const SAVE_TO_DATABASE = "SAVE_TO_DATABASE";
 
 export const setProjectGallery = (gallery) => {
@@ -17,13 +16,6 @@ export const setProjectGallery = (gallery) => {
 export const _deleteProject = (project) => {
   return {
     type: DELETE_PROJECT,
-    project,
-  };
-};
-
-export const _saveAndDownload = (project) => {
-  return {
-    type: SAVE_PROJECT,
     project,
   };
 };
@@ -58,20 +50,15 @@ export const deleteProject = (projectId) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
-      const { data } = await axios.delete(
-        `/api/gallery`,
-        {
-          data: {
-            projectId: projectId,
-          },
-        },
+      const { data: project } = await axios.delete(
+        `/api/gallery/${projectId}`,
         {
           headers: {
             authorization: token,
           },
         }
       );
-      dispatch(_deleteProject(data));
+      dispatch(_deleteProject(project));
     } catch (error) {
       console.error(
         "listen, Im doing what I can here but you gotta check out your deleteProject thunk. "
@@ -100,10 +87,6 @@ export const saveToDatabase = (project) => {
   }
 }
 
-export const saveAndDownload = () => {};
-//needs to make request to project table in db to save the info and needs to include userid and
-//runs download function get teams help on this.
-
 const initialState = [];
 
 export default function galleryReducer(state = initialState, action) {
@@ -112,6 +95,8 @@ export default function galleryReducer(state = initialState, action) {
       return action.gallery;
     case DELETE_PROJECT:
       return state.filter((project) => project.id !== action.project.id);
+      case SAVE_TO_DATABASE:
+      return [...state, action.project];
     default:
       return state;
   }
