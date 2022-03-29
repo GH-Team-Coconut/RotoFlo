@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Project, Video },
+  models: { Project },
 } = require("../db");
 const { requireToken } = require("./security");
 
@@ -25,7 +25,12 @@ router.post("/", requireToken, async (req, res, next) => {
     if (!req.user) {
       throw new Error("Unauthorized");
     }
-    const newProject = await Project.create();
+    const newProject = await Project.create({
+      userId: req.user.id,
+      title: req.body.title,
+      videoUrl: req.body.videoUrl,
+      rotoId: req.body.rotoId,
+    });
     if (newProject) {
       res.status(201).send(newProject);
     }
@@ -56,7 +61,7 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
   }
 });
 
-router.delete("/:projectId", requireToken, async (req, res, next) => {
+router.delete("/:projectId", requireToken, async (req, res, next) => { //test this b
   //DELETE FROM CLOUDINARY STILL!!!
   try {
     if (!req.user) {
