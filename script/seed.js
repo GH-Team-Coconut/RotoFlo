@@ -55,8 +55,16 @@ async function seed() {
     })
 
     //Creating Rotos
-    const PinkBubble = await Roto.create({
-      styleName: 'pinkBubble',
+    const pinkBubbles = await Roto.create({
+      styleName: 'pinkBubbles',
+    });
+
+    const skeleton = await Roto.create({
+      styleName: 'skeleton',
+    });
+
+    const geometric = await Roto.create({
+      styleName: 'geometric',
     });
 
     const None = await Roto.create({
@@ -66,7 +74,7 @@ async function seed() {
     //Creating associations
     await MerleDanceProject.setUser(Merle);
     await MerleDanceProject.setVideo(HotGirlShit);
-    await MerleDanceProject.setRoto(PinkBubble);
+    await MerleDanceProject.setRoto(pinkBubbles);
 
     await LeahDanceProject.setUser(Leah);
     await LeahDanceProject.setVideo(Coffee);
@@ -74,7 +82,7 @@ async function seed() {
 
     await YerBubbles.setUser(Leah);
     await YerBubbles.setVideo(LeahBubbles);
-    await YerBubbles.setRoto(PinkBubble);
+    await YerBubbles.setRoto(pinkBubbles);
 
     await SpookyDance.setUser(Leah);
     await SpookyDance.setVideo(SpookyLeah);

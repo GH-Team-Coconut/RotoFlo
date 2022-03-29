@@ -34,10 +34,10 @@ export default function MediaRecordingCanvasMoveNet() {
   const projectObj  =  {userId: userId, videoUrl: secureUrl, title: title, rotoId: filter}
 
   useEffect(() => {
-    if (secureUrl) {
+    if (title) {
       dispatch(saveToDatabase(projectObj));
     }
-  }, [dispatch, projectObj, secureUrl]);
+  }, [dispatch, projectObj, title]);
 
 
   async function init() {
@@ -134,13 +134,13 @@ export default function MediaRecordingCanvasMoveNet() {
       mediaRecorderCanvasRef,
       handleCanvasDataAvailable,
     ]);
-    
+
   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
     setModalIsShowing(true);
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
-  
+
   // Canvas download
   const uploadMedia = (blob) => {
     const formData = new FormData();
@@ -197,7 +197,7 @@ export default function MediaRecordingCanvasMoveNet() {
           />
         </div>
         <select id="filters" name="filters" onChange={onChangeHandler}>
-          <option value="pink-bubbles">pink bubbles</option>
+          <option value="pinkBubbles">pink bubbles</option>
           <option value="skeleton">skeleton</option>
           <option value="geometric">geometric</option>
         </select>
