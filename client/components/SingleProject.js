@@ -7,10 +7,10 @@ import { Link, useParams} from "react-router-dom";
 
 const SingleProject = () => {
   const project = useSelector((state) => {
-    return state.project; //this reads from the redux store so make a separate project key from that sub reducer aight
+    return state.project; 
   });
 
-  const { projectId } = useParams(); 
+  const { projectId } = useParams();
 
 
   const dispatch = useDispatch();
