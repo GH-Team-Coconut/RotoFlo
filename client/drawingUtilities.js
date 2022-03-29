@@ -17,11 +17,9 @@ export function drawCanvas(
   }
   if (filter === "skeleton") {
     drawSkeleton(poses[0].keypoints, canvasRef);
-    console.log("drawSkeleton running");
   }
   if (filter === "pink-bubbles") {
     drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
-    console.log("pink-bubbles running");
   }
   if (filter === "geometric") {
     geometricFilter(poses[0].keypoints, canvasRef);

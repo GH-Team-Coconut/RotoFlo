@@ -3,8 +3,9 @@ import "@tensorflow/tfjs-backend-webgl";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import { drawCanvas } from "../drawingUtilities";
 import Webcam from "react-webcam";
+import Axios from "axios"
 
-import { uploadMedia } from "../cloud";
+// import { uploadMedia } from "../cloud";
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -12,6 +13,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
+  const [secureUrl, setSecureUrl] = useState('')
 
 
   const webcamRef = useRef(null);
@@ -98,7 +100,6 @@ export default function MediaRecordingCanvasMoveNet() {
 
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
-    console.log("capturing");
     //tap into the canvas stream
     const canvasStream = canvasRef.current.captureStream();
     // canvas media instance
@@ -117,33 +118,33 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
     mediaRecorderCanvasRef.current.stop();
-    console.log("stop capturing");
   }, [mediaRecorderCanvasRef, setCapturing]);
 
   // Canvas download
+  const uploadMedia = (blob) =>  {
+    const formData = new FormData();
+    formData.append('file', blob);
+    formData.append('upload_preset', 'jdjof0vs');
+    Axios.post('https://api.cloudinary.com/v1_1/rotoflo/video/upload', formData).then((response)=>{
+      setSecureUrl(response.data.secure_url)
+      console.log('response.data', response.data)
+    });
+  }
+
   const handleCanvasDownload = useCallback(() => {
-    console.log("recordedCanvasChunks", recordedCanvasChunks);
     if (recordedCanvasChunks.length) {
       const blob = new Blob(recordedCanvasChunks, {
         type: "video/webm",
       });
-      uploadMedia(blob);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = url;
-      a.download = "react-canvas-stream-capture.webm";
-      a.click();
-      window.URL.revokeObjectURL(url);
       setRecordedCanvasChunks([]);
+      uploadMedia(blob)
     }
   }, [recordedCanvasChunks]);
-
+  
+  console.log('secureUrl', secureUrl)
   getPoses(filter);
 
   return (
-    //define filter
     <>
       <div>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
@@ -192,7 +193,7 @@ export default function MediaRecordingCanvasMoveNet() {
           <button onClick={handleStartCaptureClick}>Start Capture</button>
         )}
         {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasDownload}>Download</button>
+          <button onClick={handleCanvasDownload}>Save</button>
         )}
       </div>
     </>
