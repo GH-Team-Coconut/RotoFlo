@@ -5,7 +5,6 @@ const db = require('./db')
 const User = require('./models/User');
 const Project = require('./models/Project');
 const Roto = require('./models/Roto');
-const Video = require('./models/Video');
 
 User.hasMany(Project);//this makes the association go both ways and gives us magic methods.
 Project.belongsTo(User); //the thing in the keft of belongsTo has foreign key
@@ -19,6 +18,5 @@ module.exports = {
     User,
     Project,
     Roto,
-    Video
   },
 }
