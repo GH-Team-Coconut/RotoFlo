@@ -81,11 +81,11 @@ export const deleteProject = (projectId) => {
   };
 };
 
-export const saveToDatabase = (videoUrl) => {
+export const saveToDatabase = (project) => {
   return async (dispatch) => {
     try{
       const token = window.localStorage.getItem(TOKEN);
-      const { data: created } = await axios.post('/api/gallery/', videoUrl, {
+      const { data: created } = await axios.post('/api/gallery/', project, {
         headers: {
           authorization: token,
         },
