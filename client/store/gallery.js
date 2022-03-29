@@ -5,6 +5,7 @@ const TOKEN = "token";
 const SET_PROJECT_GALLERY = "SET_PROJECT_GALLERY";
 const DELETE_PROJECT = "DELETE_PROJECT";
 const SAVE_PROJECT = "SAVE_PROJECT";
+const SAVE_TO_DATABASE = "SAVE_TO_DATABASE";
 
 export const setProjectGallery = (gallery) => {
   return {
@@ -26,6 +27,13 @@ export const _saveAndDownload = (project) => {
     project,
   };
 };
+
+export const _saveToDatabase = (project) => {
+  return {
+    type: SAVE_TO_DATABASE,
+    project
+  }
+}
 
 export const fetchProjectGallery = () => {
   return async (dispatch) => {
@@ -72,6 +80,25 @@ export const deleteProject = (projectId) => {
     }
   };
 };
+
+export const saveToDatabase = (videoUrl) => {
+  return async (dispatch) => {
+    try{
+      const token = window.localStorage.getItem(TOKEN);
+      const { data: created } = await axios.post('/api/gallery/', videoUrl, {
+        headers: {
+          authorization: token,
+        },
+      });
+      dispatch(_saveToDatabase(created));
+    } catch (error) {
+      console.error(
+        "did you press save dumb B!"
+      );
+      console.log(error)
+    }
+  }
+}
 
 export const saveAndDownload = () => {};
 //needs to make request to project table in db to save the info and needs to include userid and
