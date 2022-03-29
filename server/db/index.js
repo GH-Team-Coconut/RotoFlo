@@ -13,11 +13,6 @@ Project.belongsTo(User); //the thing in the keft of belongsTo has foreign key
 Roto.hasOne(Project);
 Project.belongsTo(Roto);
 
-Video.hasOne(Project);
-Project.belongsTo(Video);
-
-//associations could go here!
-
 module.exports = {
   db,
   models: {
