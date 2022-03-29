@@ -28,10 +28,11 @@ export default function MediaRecordingCanvasMoveNet() {
   //useSelector and useDispatch replace the connect part of redux. mapstate is like useSelector and useDispatch is more like mapDispatch to props
   // "cram-jammed" - Merle
 
-  const userId = useSelector((state) => { return state.auth.id})
+  //const userId = useSelector((state) => { return state.auth.id})
   const dispatch = useDispatch();
 
-  const projectObj  =  {userId: userId, videoUrl: secureUrl, title: title, rotoId: filter}
+  // const projectObj  =  {userId: userId, videoUrl: secureUrl, title: title, rotoId: filter}
+  const projectObj  =  {videoUrl: secureUrl, title: title, rotoId: filter} //this might work if we get user from req.params for our thunk
 
   useEffect(() => {
     if (title) {
@@ -197,9 +198,9 @@ export default function MediaRecordingCanvasMoveNet() {
           />
         </div>
         <select id="filters" name="filters" onChange={onChangeHandler}>
-          <option value="pinkBubbles">pink bubbles</option>
-          <option value="skeleton">skeleton</option>
-          <option value="geometric">geometric</option>
+          <option value="1">pink bubbles</option>
+          <option value="2">skeleton</option>
+          <option value="3">geometric</option>
         </select>
         <select
           id="webcamOnOff"
@@ -220,16 +221,16 @@ export default function MediaRecordingCanvasMoveNet() {
                   setModalIsShowing(false);
                 }}
               >
-                {/* <form id="rotoflo-modal">
+                <form id="rotoflo-modal">
                 <label htmlFor="title">Title:</label>
-                <input name="title" value={title} />
-              </form> */}
+                <input name="title" value={setTitle(title)} />
+              </form>
+              {recordedCanvasChunks.length > 0 && (
+                <button onClick={handleCanvasDownload}>Save</button>
+              )}
               </Modal>
             )}
           </div>
-        )}
-        {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasDownload}>Save</button>
         )}
       </div>
     </>
