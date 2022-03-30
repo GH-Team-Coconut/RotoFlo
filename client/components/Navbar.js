@@ -50,7 +50,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
             </button>
           </div>
         ) : (
-          <div className='navBar'>
+          <div className='center'>
             {/* The navbar will show these links before you log in */}
             <Link to='/login'>
               <button className='fancyButton' id='makeBlock'>
