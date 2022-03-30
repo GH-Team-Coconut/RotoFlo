@@ -13,7 +13,10 @@ export default function MediaRecordingCanvasMoveNet() {
   const [showModal, setModalIsShowing] = useState(false);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
+
+  const [countDown, setCountDown] = useState();
   const [secureUrl, setSecureUrl] = useState("");
+
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -86,6 +89,22 @@ export default function MediaRecordingCanvasMoveNet() {
     setWebcamOnOff(webcamState);
   };
 
+
+  function recordingTimer() {
+    let count = 5;
+    let timer = setInterval(function () {
+      if (count >= 0) {
+        setCountDown(count);
+        count -= 1;
+      } else if (count < 0) {
+        setCountDown("Bust a move!");
+        handleStartCaptureClick();
+        clearInterval(timer);
+        // setCountDown('')
+      }
+    }, 1000);
+  }
+
   // Canvas data handling
   const handleCanvasDataAvailable = useCallback(
     ({ data }) => {
@@ -96,8 +115,38 @@ export default function MediaRecordingCanvasMoveNet() {
     [setRecordedCanvasChunks] //our overall data array that will go in the blob.
   );
 
+
+  // handle stop
+  const handleStopCaptureClick = useCallback(() => {
+    setModalIsShowing(true);
+    setCapturing(false);
+    mediaRecorderCanvasRef.current.stop();
+  }, [mediaRecorderCanvasRef, setCapturing]);
+
+
+  const handleCanvasSaveToCloud = useCallback(() => {
+    console.log("recordedCanvasChunks", recordedCanvasChunks);
+  const uploadMedia = (blob) => {
+    const formData = new FormData();
+    formData.append("file", blob);
+    formData.append("upload_preset", "jdjof0vs");
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
+      formData
+    ).then((response) => {
+      setSecureUrl(response.data.secure_url);
+      console.log("response.data", response.data);
+    });
+      setRecordedCanvasChunks([]);
+      uploadMedia(blob);
+    }
+  }, [recordedCanvasChunks]);
+
+
+  // handle start
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
+    console.log("capturing");
     //tap into the canvas stream
     const canvasStream = canvasRef.current.captureStream();
     // canvas media instance
@@ -111,39 +160,12 @@ export default function MediaRecordingCanvasMoveNet() {
     );
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable]);
+     setTimeout(() => { handleStopCaptureClick() }, 20000);
+  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable, handleStopCaptureClick]);
 
-  const handleStopCaptureClick = useCallback(() => {
-    setModalIsShowing(true);
-    setCapturing(false);
-    mediaRecorderCanvasRef.current.stop();
-  }, [mediaRecorderCanvasRef, setCapturing]);
-
-  // Canvas download
-  const uploadMedia = (blob) => {
-    const formData = new FormData();
-    formData.append("file", blob);
-    formData.append("upload_preset", "jdjof0vs");
-    Axios.post(
-      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
-      formData
-    ).then((response) => {
-      setSecureUrl(response.data.secure_url);
-      console.log("response.data", response.data);
-    });
-  };
-
-  const handleCanvasDownload = useCallback(() => {
-    if (recordedCanvasChunks.length) {
-      const blob = new Blob(recordedCanvasChunks, {
-        type: "video/webm",
-      });
-      setRecordedCanvasChunks([]);
-      uploadMedia(blob);
-    }
-  }, [recordedCanvasChunks]);
 
   console.log("secureUrl", secureUrl);
+
   getPoses(filter);
 
   return (
@@ -153,6 +175,8 @@ export default function MediaRecordingCanvasMoveNet() {
           className='innerMain'
           style={{ position: "relative", width: "60vw", height: "60vh" }}
         >
+          <p>{countDown}</p>
+
           <Webcam
             id='webcam'
             ref={webcamRef}
@@ -178,7 +202,9 @@ export default function MediaRecordingCanvasMoveNet() {
               objectFit: "cover",
             }}
           />
+          {/* <img src="https://unsplash.com/photos/MV5ro8zkXys"/>  */}
         </div>
+
         <div id='homeTools'>
           <select
             id='filters'
@@ -221,7 +247,7 @@ export default function MediaRecordingCanvasMoveNet() {
               )}
             </div>
           ) : (
-            <button className='fancyButton' onClick={handleStartCaptureClick}>
+            <button className='fancyButton' onClick={recordingTimer}>
               ▶
             </button>
           )}
