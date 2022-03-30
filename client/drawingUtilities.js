@@ -15,13 +15,13 @@ export function drawCanvas(
   if (webcamState === "on") {
     drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
   }
-  if (filter === "skeleton") {
+  if (filter === "2") {
     drawSkeleton(poses[0].keypoints, canvasRef);
   }
-  if (filter === "pink-bubbles") {
+  if (filter === "1") {
     drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
   }
-  if (filter === "geometric") {
+  if (filter === "3") {
     geometricFilter(poses[0].keypoints, canvasRef);
   }
 }

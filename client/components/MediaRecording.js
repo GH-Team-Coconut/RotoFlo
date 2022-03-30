@@ -272,6 +272,7 @@ export default function MediaRecordingCanvasMoveNet() {
           name='filters'
           onChange={handleFilterChange}
         >
+          <option value='' disabled selected hidden>FILTERS</option>
           <option value='1'>pink bubbles</option>
           <option value='2'>skeleton</option>
           <option value='3'>geometric</option>
