@@ -40,6 +40,8 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }, [dispatch, projectObj, title]);
 
+  //component did mount once title is submitted maybe on submit rather than on change.
+
 
   async function init() {
     const detectorConfig = {
@@ -154,6 +156,8 @@ export default function MediaRecordingCanvasMoveNet() {
       setSecureUrl(response.data.secure_url);
     });
   };
+
+  //potentially make delete route here too. then once we get front end response make back end, this is low priority.
 
   const handleCanvasDownload = useCallback(() => {
     if (recordedCanvasChunks.length) {
