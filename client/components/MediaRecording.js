@@ -1,11 +1,10 @@
-
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import '@tensorflow/tfjs-backend-webgl';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import { drawCanvas } from '../drawingUtilities';
-import Webcam from 'react-webcam';
-import Axios from "axios"
-import {Modal} from './Modal';
+import React, { useRef, useState, useCallback, useEffect } from "react";
+import "@tensorflow/tfjs-backend-webgl";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import { drawCanvas } from "../drawingUtilities";
+import Webcam from "react-webcam";
+import Axios from "axios";
+import { Modal } from "./Modal";
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -14,7 +13,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [showModal, setModalIsShowing] = useState(false);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
-  const [secureUrl, setSecureUrl] = useState('');
+  const [secureUrl, setSecureUrl] = useState("");
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -46,7 +45,7 @@ export default function MediaRecordingCanvasMoveNet() {
 
   async function getPoses() {
     if (
-      typeof webcamRef.current !== 'undefined' &&
+      typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
@@ -103,11 +102,11 @@ export default function MediaRecordingCanvasMoveNet() {
     const canvasStream = canvasRef.current.captureStream();
     // canvas media instance
     mediaRecorderCanvasRef.current = new MediaRecorder(canvasStream, {
-      mimeType: 'video/webm', //read only property multipurpose internet mail extension. type of document basically. ascii.
+      mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
     });
     // Canvas event listener: compliling blob data in handleData...
     mediaRecorderCanvasRef.current.addEventListener(
-      'dataavailable', //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
+      "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
       handleCanvasDataAvailable
     );
     //Canvas start
@@ -121,97 +120,117 @@ export default function MediaRecordingCanvasMoveNet() {
   }, [mediaRecorderCanvasRef, setCapturing]);
 
   // Canvas download
-  const uploadMedia = (blob) =>  {
+  const uploadMedia = (blob) => {
     const formData = new FormData();
-    formData.append('file', blob);
-    formData.append('upload_preset', 'jdjof0vs');
-    Axios.post('https://api.cloudinary.com/v1_1/rotoflo/video/upload', formData).then((response)=>{
-      setSecureUrl(response.data.secure_url)
-      console.log('response.data', response.data)
+    formData.append("file", blob);
+    formData.append("upload_preset", "jdjof0vs");
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
+      formData
+    ).then((response) => {
+      setSecureUrl(response.data.secure_url);
+      console.log("response.data", response.data);
     });
-  }
+  };
 
   const handleCanvasDownload = useCallback(() => {
     if (recordedCanvasChunks.length) {
       const blob = new Blob(recordedCanvasChunks, {
-        type: 'video/webm',
+        type: "video/webm",
       });
       setRecordedCanvasChunks([]);
-      uploadMedia(blob)
+      uploadMedia(blob);
     }
   }, [recordedCanvasChunks]);
-  
-  console.log('secureUrl', secureUrl)
+
+  console.log("secureUrl", secureUrl);
   getPoses(filter);
 
   return (
     <>
-      <div>
-        <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+      <div className='innerMain'>
+        <div
+          className='innerMain'
+          style={{ position: "relative", width: "60vw", height: "60vh" }}
+        >
           <Webcam
             id='webcam'
             ref={webcamRef}
             audio={false}
             style={{
-              transform: 'scaleX(-1)',
-              filter: 'FlipH',
-              position: 'absolute',
-              height: '75%',
-              width: '75%',
-              objectFit: 'cover',
+              transform: "scaleX(-1)",
+              filter: "FlipH",
+              position: "absolute",
+              height: "75%",
+              width: "75%",
+              objectFit: "cover",
             }}
           />
           <canvas
             id='canvas'
             ref={canvasRef}
             style={{
-              transform: 'scaleX(-1)',
-              filter: 'FlipH',
-              position: 'absolute',
-              height: '75%',
-              width: '75%',
-              objectFit: 'cover',
+              transform: "scaleX(-1)",
+              filter: "FlipH",
+              position: "absolute",
+              height: "75%",
+              width: "75%",
+              objectFit: "cover",
             }}
           />
         </div>
-        <select id='filters' name='filters' onChange={onChangeHandler}>
-          <option value='pink-bubbles'>pink bubbles</option>
-          <option value='skeleton'>skeleton</option>
-          <option value='geometric'>geometric</option>
-        </select>
-        <select
-          id='webcamOnOff'
-          name='webcamOnOff'
-          onChange={webcamChangeHandler}
-        >
-          <option value='on'>Webcam On</option>
-          <option value='off'>Webcam Off</option>
-        </select>
-        {capturing ? (
-          <div>
-            <button onClick={handleStopCaptureClick}>Stop Capture</button>
-            {showModal && (
-              <Modal
-                onClose={() => {
-                  setModalIsShowing(false);
-                }}
-              >
-                <div id='rotoflo-modal'>
-                  <h1>Title</h1>
-                  <hr />
-                  <div>
-                    <h3>Save/Delete</h3>
+        <div id='homeTools'>
+          <select
+            id='filters'
+            className='custom-dropdown'
+            name='filters'
+            onChange={onChangeHandler}
+          >
+            <option value='pink-bubbles'>pink bubbles</option>
+            <option value='skeleton'>skeleton</option>
+            <option value='geometric'>geometric</option>
+          </select>
+          <select
+            id='webcamOnOff'
+            className='custom-dropdown'
+            name='webcamOnOff'
+            onChange={webcamChangeHandler}
+          >
+            <option value='on'>Webcam On</option>
+            <option value='off'>Webcam Off</option>
+          </select>
+          {capturing ? (
+            <div className='innerMain'>
+              <button className='fancyButton' onClick={handleStopCaptureClick}>
+                ■
+              </button>
+              {showModal && (
+                <Modal
+                  onClose={() => {
+                    setModalIsShowing(false);
+                  }}
+                >
+                  <div id='rotoflo-modal'>
+                    <h1>Title</h1>
+                    <hr />
+                    <div>
+                      <h3>Save/Delete</h3>
+                    </div>
                   </div>
-                </div>
-              </Modal>
-            )}
-          </div>
-        ) : (
-          <button onClick={handleStartCaptureClick}>Start Capture</button>
-        )}
-        {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasDownload}>Save</button>
-        )}
+                </Modal>
+              )}
+            </div>
+          ) : (
+            <button className='fancyButton' onClick={handleStartCaptureClick}>
+              ▶
+            </button>
+          )}
+          {recordedCanvasChunks.length > 0 && (
+            <button className='fancyButton' onClick={handleCanvasDownload}>
+              Save
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
