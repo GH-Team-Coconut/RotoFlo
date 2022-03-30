@@ -9,6 +9,14 @@ module.exports = db.define('project', {
       notEmpty: true,
     },
   },
+  videoUrl: {
+    type: Sequelize.STRING(1000),
+    defaultValue: '',
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
   // },
   //   imageUrl: { //if we decide to makee a thumbnail
   //       type: Sequelize.STRING(1000),

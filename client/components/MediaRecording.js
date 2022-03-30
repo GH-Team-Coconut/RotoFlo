@@ -1,21 +1,24 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
-import "@tensorflow/tfjs-backend-webgl";
-import * as poseDetection from "@tensorflow-models/pose-detection";
-import { drawCanvas } from "../drawingUtilities";
-import Webcam from "react-webcam";
-import Axios from "axios";
-import { Modal } from "./Modal";
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import '@tensorflow/tfjs-backend-webgl';
+import * as poseDetection from '@tensorflow-models/pose-detection';
+import { drawCanvas } from '../drawingUtilities';
+import Webcam from 'react-webcam';
+import Axios from 'axios';
+import { Modal } from './Modal';
+import { saveToDatabase } from '../store/gallery';
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [showModal, setModalIsShowing] = useState(false);
-  const [filter, setFilter] = useState("");
-  const [webcamOnOff, setWebcamOnOff] = useState("on");
-
+  const [filter, setFilter] = useState(''); //rotoId
+  const [webcamOnOff, setWebcamOnOff] = useState('on');
+  const [secureUrl, setSecureUrl] = useState('');
+  const [projectTitle, setProjectTitle] = useState('');
   const [countDown, setCountDown] = useState();
-  const [secureUrl, setSecureUrl] = useState("");
+
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -24,6 +27,20 @@ export default function MediaRecordingCanvasMoveNet() {
   //write a solid read me, include gifs of how the project works and shows what it can do, and make the final presentation very polished.
   //useSelector and useDispatch replace the connect part of redux. mapstate is like useSelector and useDispatch is more like mapDispatch to props
   // "cram-jammed" - Merle
+
+  //const userId = useSelector((state) => { return state.auth.id})
+  const dispatch = useDispatch();
+
+  // const projectObj  =  {userId: userId, videoUrl: secureUrl, title: title, rotoId: filter}
+  const projectObj = { videoUrl: secureUrl, title: projectTitle, rotoId: filter }; //this might work if we get user from req.params for our thunk
+
+  useEffect(() => {
+    if (secureUrl) {
+      dispatch(saveToDatabase(projectObj));
+      console.log('PROJECT OBJECT:', projectObj)
+    }
+  }, [dispatch, secureUrl]);
+
 
   async function init() {
     const detectorConfig = {
@@ -78,7 +95,17 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }
 
-  const onChangeHandler = (event) => {
+  const handleTitleChange = (event) => {
+    const projectTitle = event.target.value;
+    setProjectTitle(projectTitle);
+  };
+
+  const handleSubmit = (event) => { //this has to do with our input right?
+    event.preventDefault();
+    //setSubmit('true');
+  }
+
+  const handleFilterChange = (event) => {
     const filter = event.target.value;
     setFilter(filter);
   };
@@ -114,33 +141,34 @@ export default function MediaRecordingCanvasMoveNet() {
   );
 
   // handle stop
-  const handleStopCaptureClick = useCallback(() => {
-    setModalIsShowing(true);
+   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
+    setModalIsShowing(true);
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
 
-  const handleCanvasSaveToCloud = useCallback(() => {
-    console.log("recordedCanvasChunks", recordedCanvasChunks);
-    const uploadMedia = (blob) => {
-      const formData = new FormData();
-      formData.append("file", blob);
-      formData.append("upload_preset", "jdjof0vs");
-      Axios.post(
-        "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
-        formData
-      ).then((response) => {
-        setSecureUrl(response.data.secure_url);
-        console.log("response.data", response.data);
-      });
-      setRecordedCanvasChunks([]);
-      uploadMedia(blob);
-    };
-  }, [recordedCanvasChunks]);
+//   const handleCanvasSaveToCloud = useCallback(() => {
+//     console.log("recordedCanvasChunks", recordedCanvasChunks);
+//     const uploadMedia = (blob) => {
+//       const formData = new FormData();
+//       formData.append("file", blob);
+//       formData.append("upload_preset", "jdjof0vs");
+//       Axios.post(
+//         "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
+//         formData
+//       ).then((response) => {
+//         setSecureUrl(response.data.secure_url);
+//         console.log("response.data", response.data);
+//       });
+//       setRecordedCanvasChunks([]);
+//       uploadMedia(blob);
+//     };
+//   }, [recordedCanvasChunks]);
 
   // handle start
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
+    setModalIsShowing(false);
     console.log("capturing");
     //tap into the canvas stream
     const canvasStream = canvasRef.current.captureStream();
@@ -165,7 +193,38 @@ export default function MediaRecordingCanvasMoveNet() {
     handleStopCaptureClick,
   ]);
 
-  console.log("secureUrl", secureUrl);
+  const resetStateValues = () => {
+    setFilter('');
+    setSecureUrl('');
+    setProjectTitle('');
+    setModalIsShowing(false);
+  }
+
+  // Canvas download
+  const uploadMedia = (blob) => {
+    const formData = new FormData();
+    formData.append('file', blob);
+    formData.append('upload_preset', 'jdjof0vs');
+    Axios.post(
+      'https://api.cloudinary.com/v1_1/rotoflo/video/upload',
+      formData
+    ).then((response) => {
+      setSecureUrl(response.data.secure_url);
+    });
+  };
+
+  //potentially make delete route here too. then once we get front end response make back end, this is low priority.
+
+  const handleCanvasSaveToCloud = useCallback(() => {
+    if (recordedCanvasChunks.length) {
+      const blob = new Blob(recordedCanvasChunks, {
+        type: 'video/webm',
+      });
+      setRecordedCanvasChunks([]);
+      uploadMedia(blob);
+      setModalIsShowing(false)
+    }
+  }, [recordedCanvasChunks]);
 
   getPoses(filter);
 
@@ -203,6 +262,43 @@ export default function MediaRecordingCanvasMoveNet() {
           />
          
         </div>
+//         <select id='filters' name='filters' onChange={handleFilterChange}>
+//           <option value='1'>pink bubbles</option>
+//           <option value='2'>skeleton</option>
+//           <option value='3'>geometric</option>
+//         </select>
+//         <select
+//           id='webcamOnOff'
+//           name='webcamOnOff'
+//           onChange={webcamChangeHandler}
+//         >
+//           <option value='on'>Webcam On</option>
+//           <option value='off'>Webcam Off</option>
+//         </select>
+//         {capturing ? (
+//           <button onClick={handleStopCaptureClick}>Stop Capture</button>
+//         ) : (
+//           <div>
+//             <button onClick={handleStartCaptureClick}>Start Capture</button>
+//             {showModal && (
+//               <Modal
+//                 onClose={() => {
+//                   setModalIsShowing(false);
+//                 }}
+//               >
+//                 <form onSubmit={handleSubmit} id='rotoflo-modal'>
+//                   <label htmlFor='title'>Title:</label>
+//                   <input name='title' value={projectTitle} onChange={handleTitleChange}/>
+//                 </form>
+//                 {recordedCanvasChunks.length > 0 && (
+//                   <button onClick={handleCanvasSaveToCloud} type='submit'>Save</button>
+//                   )}
+//                   <button onClick={resetStateValues}>Trash</button>
+//               </Modal>
+//             )}
+//           </div>
+//         )}
+
         <div className="header" >{countDown}</div>
         <div id="homeTools">
           <select
@@ -211,9 +307,9 @@ export default function MediaRecordingCanvasMoveNet() {
             name="filters"
             onChange={onChangeHandler}
           >
-            <option value="pink-bubbles">pink bubbles</option>
-            <option value="skeleton">skeleton</option>
-            <option value="geometric">geometric</option>
+            <option value='1'>pink bubbles</option>
+          <option value='2'>skeleton</option>
+          <option value='3'>geometric</option>
           </select>
           <select
             id="webcamOnOff"
@@ -235,13 +331,14 @@ export default function MediaRecordingCanvasMoveNet() {
                     setModalIsShowing(false);
                   }}
                 >
-                  <div id="rotoflo-modal">
-                    <h1>Title</h1>
-                    <hr />
-                    <div>
-                      <h3>Save/Delete</h3>
-                    </div>
-                  </div>
+                  <form onSubmit={handleSubmit} id='rotoflo-modal'>
+                  <label htmlFor='title'>Title:</label>
+                  <input name='title' value={projectTitle} onChange={handleTitleChange}/>
+                </form>
+                {recordedCanvasChunks.length > 0 && (
+                  <button onClick={handleCanvasSaveToCloud} type='submit'>Save</button>
+                  )}
+                  <button onClick={resetStateValues}>Trash</button>
                 </Modal>
               )}
             </div>

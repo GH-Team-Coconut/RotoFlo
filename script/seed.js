@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Project, Roto, Video },
+  models: { User, Project, Roto },
 } = require('../server/db');
 
 /**
@@ -23,40 +23,35 @@ async function seed() {
     //Creating Projects
     const MerleDanceProject = await Project.create({
       title: 'Hot Girl Shit',
+      videoUrl:
+        'https://res.cloudinary.com/rotoflo/video/upload/v1648308475/rxkwlwzygaakk9bclga1.mkv'
     });
     const LeahDanceProject = await Project.create({
-      title: 'Coffee mmmm'
+      title: 'Coffee mmmm',
+      videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1647882718/ibktfhzhieglvsivecnn.mov'
     });
 
     const YerBubbles = await Project.create({
-      title: "Yer Bubbles"
-    })
-
-    const SpookyDance = await Project.create({
-      title: 'Spoooooky'
-    })
-
-    //creating Videos
-    const HotGirlShit = await Video.create({
-      videoUrl:
-        'https://res.cloudinary.com/rotoflo/video/upload/v1648308475/rxkwlwzygaakk9bclga1.mkv',
-    });
-
-    const Coffee = await Video.create({
-      videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1647882718/ibktfhzhieglvsivecnn.mov'
-    })
-
-    const LeahBubbles = await Video.create({
+      title: "Yer Bubbles",
       videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1648228496/lvc8vxlvlpy32a4wvepu.mkv'
     })
 
-    const SpookyLeah = await Video.create({
+    const SpookyDance = await Project.create({
+      title: 'Spoooooky',
       videoUrl: 'https://res.cloudinary.com/rotoflo/video/upload/v1648159174/fzcuixjfbbqjh09qnwr1.mkv'
     })
 
     //Creating Rotos
-    const PinkBubble = await Roto.create({
-      styleName: 'pinkBubble',
+    const pinkBubbles = await Roto.create({
+      styleName: 'pinkBubbles',
+    });
+
+    const skeleton = await Roto.create({
+      styleName: 'skeleton',
+    });
+
+    const geometric = await Roto.create({
+      styleName: 'geometric',
     });
 
     const None = await Roto.create({
@@ -65,19 +60,15 @@ async function seed() {
 
     //Creating associations
     await MerleDanceProject.setUser(Merle);
-    await MerleDanceProject.setVideo(HotGirlShit);
-    await MerleDanceProject.setRoto(PinkBubble);
+    await MerleDanceProject.setRoto(pinkBubbles);
 
     await LeahDanceProject.setUser(Leah);
-    await LeahDanceProject.setVideo(Coffee);
     await LeahDanceProject.setRoto(None);
 
     await YerBubbles.setUser(Leah);
-    await YerBubbles.setVideo(LeahBubbles);
-    await YerBubbles.setRoto(PinkBubble);
+    await YerBubbles.setRoto(pinkBubbles);
 
     await SpookyDance.setUser(Leah);
-    await SpookyDance.setVideo(SpookyLeah);
     await SpookyDance.setRoto(None);
 
   } catch (err) {
