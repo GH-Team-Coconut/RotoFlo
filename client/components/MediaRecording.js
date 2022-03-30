@@ -223,7 +223,7 @@ export default function MediaRecordingCanvasMoveNet() {
               >
                 <form id="rotoflo-modal">
                 <label htmlFor="title">Title:</label>
-                <input name="title" value={setTitle(title)} />
+                <input name="title" value={title} />
               </form>
               {recordedCanvasChunks.length > 0 && (
                 <button onClick={handleCanvasDownload}>Save</button>
