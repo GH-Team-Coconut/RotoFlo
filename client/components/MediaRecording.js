@@ -3,16 +3,20 @@ import "@tensorflow/tfjs-backend-webgl";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import { drawCanvas } from "../drawingUtilities";
 import Webcam from "react-webcam";
-
-import { uploadMedia } from "../cloud";
+import Axios from "axios";
+import { Modal } from "./Modal";
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
+  const [showModal, setModalIsShowing] = useState(false);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
+
   const [countDown, setCountDown] = useState();
+  const [secureUrl, setSecureUrl] = useState("");
+
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -85,6 +89,7 @@ export default function MediaRecordingCanvasMoveNet() {
     setWebcamOnOff(webcamState);
   };
 
+
   function recordingTimer() {
     let count = 5;
     let timer = setInterval(function () {
@@ -110,24 +115,33 @@ export default function MediaRecordingCanvasMoveNet() {
     [setRecordedCanvasChunks] //our overall data array that will go in the blob.
   );
 
+
   // handle stop
   const handleStopCaptureClick = useCallback(() => {
+    setModalIsShowing(true);
     setCapturing(false);
     mediaRecorderCanvasRef.current.stop();
-    console.log("stop capturing");
   }, [mediaRecorderCanvasRef, setCapturing]);
 
-  // Canvas download
+
   const handleCanvasSaveToCloud = useCallback(() => {
     console.log("recordedCanvasChunks", recordedCanvasChunks);
-    if (recordedCanvasChunks.length) {
-      const blob = new Blob(recordedCanvasChunks, {
-        type: "video/webm",
-      });
-      uploadMedia(blob);
+  const uploadMedia = (blob) => {
+    const formData = new FormData();
+    formData.append("file", blob);
+    formData.append("upload_preset", "jdjof0vs");
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
+      formData
+    ).then((response) => {
+      setSecureUrl(response.data.secure_url);
+      console.log("response.data", response.data);
+    });
       setRecordedCanvasChunks([]);
+      uploadMedia(blob);
     }
   }, [recordedCanvasChunks]);
+
 
   // handle start
   const handleStartCaptureClick = useCallback(() => {
@@ -149,16 +163,22 @@ export default function MediaRecordingCanvasMoveNet() {
      setTimeout(() => { handleStopCaptureClick() }, 20000);
   }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable, handleStopCaptureClick]);
 
+
+  console.log("secureUrl", secureUrl);
+
   getPoses(filter);
 
   return (
-    //define filter
     <>
-      <div>
-        <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+      <div className='innerMain'>
+        <div
+          className='innerMain'
+          style={{ position: "relative", width: "60vw", height: "60vh" }}
+        >
           <p>{countDown}</p>
+
           <Webcam
-            id="webcam"
+            id='webcam'
             ref={webcamRef}
             audio={false}
             style={{
@@ -171,7 +191,7 @@ export default function MediaRecordingCanvasMoveNet() {
             }}
           />
           <canvas
-            id="canvas"
+            id='canvas'
             ref={canvasRef}
             style={{
               transform: "scaleX(-1)",
@@ -184,28 +204,59 @@ export default function MediaRecordingCanvasMoveNet() {
           />
           {/* <img src="https://unsplash.com/photos/MV5ro8zkXys"/>  */}
         </div>
-        <select id="filters" name="filters" onChange={onChangeHandler}>
-          <option value="pink-bubbles">pink bubbles</option>
-          <option value="skeleton">skeleton</option>
-          <option value="geometric">geometric</option>
-        </select>
-        <select
-          id="webcamOnOff"
-          name="webcamOnOff"
-          onChange={webcamChangeHandler}
-        >
-          <option value="on">Webcam On</option>
-          <option value="off">Webcam Off</option>
-          <option value="space">Cellular</option>
-        </select>
-        {capturing ? (
-          <button onClick={handleStopCaptureClick}>Stop Recording</button>
-        ) : (
-          <button onClick={recordingTimer}>Record</button>
-        )}
-        {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasSaveToCloud}>Download</button>
-        )}
+
+        <div id='homeTools'>
+          <select
+            id='filters'
+            className='custom-dropdown'
+            name='filters'
+            onChange={onChangeHandler}
+          >
+            <option value='pink-bubbles'>pink bubbles</option>
+            <option value='skeleton'>skeleton</option>
+            <option value='geometric'>geometric</option>
+          </select>
+          <select
+            id='webcamOnOff'
+            className='custom-dropdown'
+            name='webcamOnOff'
+            onChange={webcamChangeHandler}
+          >
+            <option value='on'>Webcam On</option>
+            <option value='off'>Webcam Off</option>
+          </select>
+          {capturing ? (
+            <div className='innerMain'>
+              <button className='fancyButton' onClick={handleStopCaptureClick}>
+                ■
+              </button>
+              {showModal && (
+                <Modal
+                  onClose={() => {
+                    setModalIsShowing(false);
+                  }}
+                >
+                  <div id='rotoflo-modal'>
+                    <h1>Title</h1>
+                    <hr />
+                    <div>
+                      <h3>Save/Delete</h3>
+                    </div>
+                  </div>
+                </Modal>
+              )}
+            </div>
+          ) : (
+            <button className='fancyButton' onClick={recordingTimer}>
+              ▶
+            </button>
+          )}
+          {recordedCanvasChunks.length > 0 && (
+            <button className='fancyButton' onClick={handleCanvasDownload}>
+              Save
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

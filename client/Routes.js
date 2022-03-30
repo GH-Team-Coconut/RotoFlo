@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import { me } from "./store";
 import Gallery from "./components/Gallery";
 import SingleProject from "./components/SingleProject";
+import { Landing } from "./components/Landing";
 
 /**
  * COMPONENT
@@ -19,7 +20,7 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
 
     return (
-      <div>
+      <div id='main'>
         {isLoggedIn ? (
           <Switch>
             <Route path='/home' component={Home} />
@@ -29,7 +30,7 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={Login} />
+            <Route path='/' exact component={Landing} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
           </Switch>
