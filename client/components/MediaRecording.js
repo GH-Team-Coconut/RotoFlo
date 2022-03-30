@@ -12,7 +12,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [filter, setFilter] = useState("");
   const [webcamOnOff, setWebcamOnOff] = useState("on");
-
+  const [countDown, setCountDown] = useState();
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -85,6 +85,20 @@ export default function MediaRecordingCanvasMoveNet() {
     setWebcamOnOff(webcamState);
   };
 
+  function recordingTimer() {
+    let count = 5;
+    let timer = setInterval(function () {
+      if (count >= 0) {
+        setCountDown(count);
+        count -= 1;
+      } else if (count < 0) {
+        setCountDown("Bust a move!");
+        handleStartCaptureClick();
+        clearInterval(timer);
+        // setCountDown('')
+      }
+    }, 1000);
+  }
 
   // Canvas data handling
   const handleCanvasDataAvailable = useCallback(
@@ -96,6 +110,26 @@ export default function MediaRecordingCanvasMoveNet() {
     [setRecordedCanvasChunks] //our overall data array that will go in the blob.
   );
 
+  // handle stop
+  const handleStopCaptureClick = useCallback(() => {
+    setCapturing(false);
+    mediaRecorderCanvasRef.current.stop();
+    console.log("stop capturing");
+  }, [mediaRecorderCanvasRef, setCapturing]);
+
+  // Canvas download
+  const handleCanvasSaveToCloud = useCallback(() => {
+    console.log("recordedCanvasChunks", recordedCanvasChunks);
+    if (recordedCanvasChunks.length) {
+      const blob = new Blob(recordedCanvasChunks, {
+        type: "video/webm",
+      });
+      uploadMedia(blob);
+      setRecordedCanvasChunks([]);
+    }
+  }, [recordedCanvasChunks]);
+
+  // handle start
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     console.log("capturing");
@@ -112,33 +146,8 @@ export default function MediaRecordingCanvasMoveNet() {
     );
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable]);
-
-  const handleStopCaptureClick = useCallback(() => {
-    setCapturing(false);
-    mediaRecorderCanvasRef.current.stop();
-    console.log("stop capturing");
-  }, [mediaRecorderCanvasRef, setCapturing]);
-
-  // Canvas download
-  const handleCanvasDownload = useCallback(() => {
-    console.log("recordedCanvasChunks", recordedCanvasChunks);
-    if (recordedCanvasChunks.length) {
-      const blob = new Blob(recordedCanvasChunks, {
-        type: "video/webm",
-      });
-      uploadMedia(blob);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = url;
-      a.download = "react-canvas-stream-capture.webm";
-      a.click();
-      window.URL.revokeObjectURL(url);
-      setRecordedCanvasChunks([]);
-    }
-  }, [recordedCanvasChunks]);
+     setTimeout(() => { handleStopCaptureClick() }, 20000);
+  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable, handleStopCaptureClick]);
 
   getPoses(filter);
 
@@ -147,6 +156,7 @@ export default function MediaRecordingCanvasMoveNet() {
     <>
       <div>
         <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+          <p>{countDown}</p>
           <Webcam
             id="webcam"
             ref={webcamRef}
@@ -172,6 +182,7 @@ export default function MediaRecordingCanvasMoveNet() {
               objectFit: "cover",
             }}
           />
+          {/* <img src="https://unsplash.com/photos/MV5ro8zkXys"/>  */}
         </div>
         <select id="filters" name="filters" onChange={onChangeHandler}>
           <option value="pink-bubbles">pink bubbles</option>
@@ -185,14 +196,15 @@ export default function MediaRecordingCanvasMoveNet() {
         >
           <option value="on">Webcam On</option>
           <option value="off">Webcam Off</option>
+          <option value="space">Cellular</option>
         </select>
         {capturing ? (
-          <button onClick={handleStopCaptureClick}>Stop Capture</button>
+          <button onClick={handleStopCaptureClick}>Stop Recording</button>
         ) : (
-          <button onClick={handleStartCaptureClick}>Start Capture</button>
+          <button onClick={recordingTimer}>Record</button>
         )}
         {recordedCanvasChunks.length > 0 && (
-          <button onClick={handleCanvasDownload}>Download</button>
+          <button onClick={handleCanvasSaveToCloud}>Download</button>
         )}
       </div>
     </>
