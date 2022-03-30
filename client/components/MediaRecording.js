@@ -17,7 +17,6 @@ export default function MediaRecordingCanvasMoveNet() {
   const [countDown, setCountDown] = useState();
   const [secureUrl, setSecureUrl] = useState("");
 
-
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mediaRecorderCanvasRef = useRef(null);
@@ -89,7 +88,6 @@ export default function MediaRecordingCanvasMoveNet() {
     setWebcamOnOff(webcamState);
   };
 
-
   function recordingTimer() {
     let count = 5;
     let timer = setInterval(function () {
@@ -115,7 +113,6 @@ export default function MediaRecordingCanvasMoveNet() {
     [setRecordedCanvasChunks] //our overall data array that will go in the blob.
   );
 
-
   // handle stop
   const handleStopCaptureClick = useCallback(() => {
     setModalIsShowing(true);
@@ -123,25 +120,23 @@ export default function MediaRecordingCanvasMoveNet() {
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
 
-
   const handleCanvasSaveToCloud = useCallback(() => {
     console.log("recordedCanvasChunks", recordedCanvasChunks);
-  const uploadMedia = (blob) => {
-    const formData = new FormData();
-    formData.append("file", blob);
-    formData.append("upload_preset", "jdjof0vs");
-    Axios.post(
-      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
-      formData
-    ).then((response) => {
-      setSecureUrl(response.data.secure_url);
-      console.log("response.data", response.data);
-    });
+    const uploadMedia = (blob) => {
+      const formData = new FormData();
+      formData.append("file", blob);
+      formData.append("upload_preset", "jdjof0vs");
+      Axios.post(
+        "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
+        formData
+      ).then((response) => {
+        setSecureUrl(response.data.secure_url);
+        console.log("response.data", response.data);
+      });
       setRecordedCanvasChunks([]);
       uploadMedia(blob);
-    }
+    };
   }, [recordedCanvasChunks]);
-
 
   // handle start
   const handleStartCaptureClick = useCallback(() => {
@@ -160,9 +155,15 @@ export default function MediaRecordingCanvasMoveNet() {
     );
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-     setTimeout(() => { handleStopCaptureClick() }, 20000);
-  }, [setCapturing, mediaRecorderCanvasRef, handleCanvasDataAvailable, handleStopCaptureClick]);
-
+    setTimeout(() => {
+      handleStopCaptureClick();
+    }, 20000);
+  }, [
+    setCapturing,
+    mediaRecorderCanvasRef,
+    handleCanvasDataAvailable,
+    handleStopCaptureClick,
+  ]);
 
   console.log("secureUrl", secureUrl);
 
@@ -170,15 +171,13 @@ export default function MediaRecordingCanvasMoveNet() {
 
   return (
     <>
-      <div className='innerMain'>
+      <div className="innerMain">
         <div
-          className='innerMain'
+          className="innerMain"
           style={{ position: "relative", width: "60vw", height: "60vh" }}
         >
-          <p>{countDown}</p>
-
           <Webcam
-            id='webcam'
+            id="webcam"
             ref={webcamRef}
             audio={false}
             style={{
@@ -191,7 +190,7 @@ export default function MediaRecordingCanvasMoveNet() {
             }}
           />
           <canvas
-            id='canvas'
+            id="canvas"
             ref={canvasRef}
             style={{
               transform: "scaleX(-1)",
@@ -202,32 +201,32 @@ export default function MediaRecordingCanvasMoveNet() {
               objectFit: "cover",
             }}
           />
-          {/* <img src="https://unsplash.com/photos/MV5ro8zkXys"/>  */}
+         
         </div>
-
-        <div id='homeTools'>
+        <div className="header" >{countDown}</div>
+        <div id="homeTools">
           <select
-            id='filters'
-            className='custom-dropdown'
-            name='filters'
+            id="filters"
+            className="custom-dropdown"
+            name="filters"
             onChange={onChangeHandler}
           >
-            <option value='pink-bubbles'>pink bubbles</option>
-            <option value='skeleton'>skeleton</option>
-            <option value='geometric'>geometric</option>
+            <option value="pink-bubbles">pink bubbles</option>
+            <option value="skeleton">skeleton</option>
+            <option value="geometric">geometric</option>
           </select>
           <select
-            id='webcamOnOff'
-            className='custom-dropdown'
-            name='webcamOnOff'
+            id="webcamOnOff"
+            className="custom-dropdown"
+            name="webcamOnOff"
             onChange={webcamChangeHandler}
           >
-            <option value='on'>Webcam On</option>
-            <option value='off'>Webcam Off</option>
+            <option value="on">Webcam On</option>
+            <option value="off">Webcam Off</option>
           </select>
           {capturing ? (
-            <div className='innerMain'>
-              <button className='fancyButton' onClick={handleStopCaptureClick}>
+            <div className="innerMain">
+              <button className="fancyButton" onClick={handleStopCaptureClick}>
                 ■
               </button>
               {showModal && (
@@ -236,7 +235,7 @@ export default function MediaRecordingCanvasMoveNet() {
                     setModalIsShowing(false);
                   }}
                 >
-                  <div id='rotoflo-modal'>
+                  <div id="rotoflo-modal">
                     <h1>Title</h1>
                     <hr />
                     <div>
@@ -247,12 +246,12 @@ export default function MediaRecordingCanvasMoveNet() {
               )}
             </div>
           ) : (
-            <button className='fancyButton' onClick={recordingTimer}>
+            <button className="fancyButton" onClick={recordingTimer}>
               ▶
             </button>
           )}
           {recordedCanvasChunks.length > 0 && (
-            <button className='fancyButton' onClick={handleCanvasDownload}>
+            <button className="fancyButton" onClick={handleCanvasSaveToCloud}>
               Save
             </button>
           )}
