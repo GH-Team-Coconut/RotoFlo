@@ -7,7 +7,7 @@ import { Link, useParams} from "react-router-dom";
 
 const SingleProject = () => {
   const project = useSelector((state) => {
-    return state.project; 
+    return state.project;
   });
 
   const { projectId } = useParams();
@@ -19,7 +19,7 @@ const SingleProject = () => {
     if (projectId) {
       console.log(projectId)
       dispatch(fetchProject(projectId));
-      // dispatch(deleteProject(projectId));
+      dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 

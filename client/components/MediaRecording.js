@@ -17,9 +17,6 @@ export default function MediaRecordingCanvasMoveNet() {
   const [webcamOnOff, setWebcamOnOff] = useState('on');
   const [secureUrl, setSecureUrl] = useState('');
   const [projectTitle, setProjectTitle] = useState('');
-  //const [submit, setSubmit] = useState('false');
-
-  // Title, rotoID, videoId
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -42,7 +39,6 @@ export default function MediaRecordingCanvasMoveNet() {
     }
   }, [dispatch, secureUrl]);
 
-  //component did mount once title is submitted maybe on submit rather than on change.
 
   async function init() {
     const detectorConfig = {
@@ -151,6 +147,13 @@ export default function MediaRecordingCanvasMoveNet() {
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
 
+  const resetStateValues = () => {
+    setFilter('');
+    setSecureUrl('');
+    setProjectTitle('');
+    setModalIsShowing(false);
+  }
+
   // Canvas download
   const uploadMedia = (blob) => {
     const formData = new FormData();
@@ -173,7 +176,7 @@ export default function MediaRecordingCanvasMoveNet() {
       });
       setRecordedCanvasChunks([]);
       uploadMedia(blob);
-      //setSubmit('true');
+      setModalIsShowing(false)
     }
   }, [recordedCanvasChunks]);
 
@@ -239,7 +242,8 @@ export default function MediaRecordingCanvasMoveNet() {
                 </form>
                 {recordedCanvasChunks.length > 0 && (
                   <button onClick={handleCanvasDownload} type='submit'>Save</button>
-                )}
+                  )}
+                  <button onClick={resetStateValues}>Trash</button>
               </Modal>
             )}
           </div>
