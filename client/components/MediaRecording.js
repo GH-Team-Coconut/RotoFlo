@@ -36,11 +36,11 @@ export default function MediaRecordingCanvasMoveNet() {
   const projectObj = { videoUrl: secureUrl, title: projectTitle, rotoId: filter }; //this might work if we get user from req.params for our thunk
 
   useEffect(() => {
-    if (projectTitle) {
+    if (secureUrl) {
       dispatch(saveToDatabase(projectObj));
       console.log('PROJECT OBJECT:', projectObj)
     }
-  }, [dispatch, projectTitle, projectObj]);
+  }, [dispatch, secureUrl]);
 
   //component did mount once title is submitted maybe on submit rather than on change.
 
@@ -102,10 +102,9 @@ export default function MediaRecordingCanvasMoveNet() {
     setProjectTitle(projectTitle);
   };
 
-  const handleSubmit = (event) => {     //////////////////////can we do this instead of useEffect?
+  const handleSubmit = (event) => { //this has to do with our input right?
     event.preventDefault();
-    dispatch(saveToDatabase(projectObj));
-    // setSubmit('true');
+    //setSubmit('true');
   }
 
   const handleFilterChange = (event) => {
@@ -174,7 +173,7 @@ export default function MediaRecordingCanvasMoveNet() {
       });
       setRecordedCanvasChunks([]);
       uploadMedia(blob);
-      // setSubmit('true');
+      //setSubmit('true');
     }
   }, [recordedCanvasChunks]);
 
