@@ -1,37 +1,74 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => {
   const [inGallery, setInGallery] = useState(false);
   return (
-  <div>
-    <h1 id='app-title'>RotoFlo</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {inGallery ? (
-           <Link to='/home' onClick={()=>{setInGallery(false)}}>Home</Link>
+    <div className='navBar'>
+      <Link to={"/home"}>
+        <img id='navLogo' src='/rf-logo.png' />
+      </Link>
+
+      {/* <img id='navBG' src='/cubes.png' /> */}
+      <nav>
+        {isLoggedIn ? (
+          <div className='center'>
+            {inGallery ? (
+              <Link className='center' to='/home'>
+                <button
+                  onClick={() => {
+                    setInGallery(false);
+                  }}
+                  className='fancyButton'
+                  id='makeBlock'
+                >
+                  HOME
+                </button>
+              </Link>
+            ) : (
+              <Link
+                className='center'
+                to='/gallery'
+                onClick={() => {
+                  setInGallery(true);
+                }}
+              >
+                <button id='makeBlock' className='fancyButton'>
+                  GALLERY
+                </button>
+              </Link>
+            )}
+            {/* The navbar will show these links after you log in */}
+            <button
+              className='fancyButton'
+              id='makeBlock'
+              onClick={handleClick}
+            >
+              LOG OUT
+            </button>
+          </div>
         ) : (
-          <Link to='/gallery' onClick={()=>{setInGallery(true)}}>Gallery</Link>
+          <div className='center'>
+            {/* The navbar will show these links before you log in */}
+            <Link to='/login'>
+              <button className='fancyButton' id='makeBlock'>
+                LOG IN
+              </button>
+            </Link>
+            <Link to='/signup'>
+              <button className='fancyButton' id='makeBlock'>
+                SIGN UP
+              </button>
+            </Link>
+          </div>
         )}
-          {/* The navbar will show these links after you log in */}
-          <a href='#' onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to='/login'>Login</Link>
-          <Link to='/signup'>Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)};
+      </nav>
+      <hr />
+    </div>
+  );
+};
 
 /**
  * CONTAINER
