@@ -1,7 +1,7 @@
 body {
   font-family: sans-serif;
-  background-color: #BAD3D2;
-  color: #DB4855;
+  background-color: #bad3d2;
+  color: #db4855;
 }
 
 a {
@@ -20,6 +20,141 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+#app {
+  display: flex;
+  justify-content: flex-start;
+}
+.navBar {
+  width: 33vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-image: url(/cubes.png);
+}
+#navLogo {
+  width: 25vw;
+  transition: all 1s ease;
+}
+#navLogo:hover {
+  transform: scale(1.05);
+}
+
+#main {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+
+  align-items: center;
+  height: 100vh;
+  width: 66vw;
+  background: rgb(255, 246, 246);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 246, 246, 1) 0%,
+    rgba(252, 233, 235, 1) 70%,
+    rgba(249, 178, 184, 0.9822303921568627) 100%
+  );
+}
+.innerMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project {
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 25vw;
+  height: 25vh;
+  background: #e7efee;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+.singleProject {
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50vw;
+  height: 50vh;
+  background: #e7efee;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#thumbnail {
+  /* display: block; */
+  width: 10vw;
+}
+
+/* CSS */
+.fancyButton {
+  background: linear-gradient(to bottom right, #c4d4d3, #7ea09b);
+  width: 13vw;
+  height: 4vh;
+  margin: 15px;
+
+  border: 0;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 1.5vw;
+  /* font-weight: 500;
+  line-height: 2.5; */
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  transition: all 1s ease;
+}
+
+.fancyButton:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #db4855,
+    0.125rem 0.125rem 1rem #f6fff9;
+  transform: scale(1.1);
+}
+#makeBlock {
+  display: block;
 }
 
 #modal-container {
@@ -46,4 +181,81 @@ form div {
   width: 600px;
   height: 400px;
   background: white;
+}
+
+.custom-dropdown {
+  background-color: #bad3d2;
+  color: #fff;
+  font-size: inherit;
+  padding: 0.5em;
+  padding-right: 2.5em;
+  border: 1px solid white;
+
+  margin: 1vw;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: "";
+  -webkit-appearance: button; /* hide default arrow in chrome OSX */
+  transition: all 1s ease;
+}
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.custom-dropdown::after {
+  /*  Custom dropdown arrow */
+  content: "\25BC";
+  height: 1em;
+  font-size: 0.625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -0.5em;
+}
+
+.custom-dropdown::before {
+  /*  Custom dropdown arrow cover */
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.custom-dropdown select[disabled] {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.custom-dropdown select[disabled]::after {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.custom-dropdown::before {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.custom-dropdown::after {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.custom-dropdown:hover {
+  background-color: #7ea09b;
+}
+.header {
+  background-color: #db4855;
+  color: #fff6f6;
+  width: 20vw;
+  text-align: center;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  border-radius: 25px;
 }
