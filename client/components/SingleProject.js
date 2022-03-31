@@ -5,7 +5,6 @@ import { deleteProject } from '../store/gallery';
 import { useParams, useHistory } from 'react-router-dom';
 import VideoLooper from 'react-video-looper';
 
-
 const SingleProject = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const [video, setVideo] = useState({});
