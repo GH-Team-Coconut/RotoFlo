@@ -34,7 +34,7 @@ const Gallery = () => {
         {projects.map((project) => (
           <div className='project' key={project.id}>
             <Link to={`/gallery/${project.id}`}>
-              <button onClick={()=>refreshVideo(project.id)}>{project.title}</button>
+              <button onClick={()=>refreshVideo(project.id)} className='fancyButton'>{project.title}</button>
             </Link>
           </div>
         ))}

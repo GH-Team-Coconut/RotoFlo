@@ -1,22 +1,22 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import '@tensorflow/tfjs-backend-webgl';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import { drawCanvas } from '../drawingUtilities';
-import Webcam from 'react-webcam';
-import Axios from 'axios';
-import { Modal } from './Modal';
-import { saveToDatabase } from '../store/gallery';
+import React, { useRef, useState, useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import "@tensorflow/tfjs-backend-webgl";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import { drawCanvas } from "../drawingUtilities";
+import Webcam from "react-webcam";
+import Axios from "axios";
+import { Modal } from "./Modal";
+import { saveToDatabase } from "../store/gallery";
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
   const [capturing, setCapturing] = useState(false);
   const [recordedCanvasChunks, setRecordedCanvasChunks] = useState([]);
   const [showModal, setModalIsShowing] = useState(false);
-  const [filter, setFilter] = useState(''); //rotoId
-  const [webcamOnOff, setWebcamOnOff] = useState('on');
-  const [secureUrl, setSecureUrl] = useState('');
-  const [projectTitle, setProjectTitle] = useState('');
+  const [filter, setFilter] = useState(""); //rotoId
+  const [webcamOnOff, setWebcamOnOff] = useState("on");
+  const [secureUrl, setSecureUrl] = useState("");
+  const [projectTitle, setProjectTitle] = useState("");
   const [countDown, setCountDown] = useState();
 
   const webcamRef = useRef(null);
@@ -40,7 +40,7 @@ export default function MediaRecordingCanvasMoveNet() {
   useEffect(() => {
     if (secureUrl) {
       dispatch(saveToDatabase(projectObj));
-      console.log('PROJECT OBJECT:', projectObj);
+      console.log("PROJECT OBJECT:", projectObj);
     }
   }, [dispatch, secureUrl]);
 
@@ -66,7 +66,7 @@ export default function MediaRecordingCanvasMoveNet() {
 
   async function getPoses() {
     if (
-      typeof webcamRef.current !== 'undefined' &&
+      typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
       webcamRef.current.video.readyState === 4
     ) {
@@ -125,7 +125,7 @@ export default function MediaRecordingCanvasMoveNet() {
         setCountDown(count);
         count -= 1;
       } else if (count < 0) {
-        setCountDown('Bust a move!');
+        setCountDown("Bust a move!");
         handleStartCaptureClick();
         clearInterval(timer);
         // setCountDown('')
@@ -147,7 +147,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleStopCaptureClick = useCallback(() => {
     setCapturing(false);
     setModalIsShowing(true);
-    console.log('STAHP');
+    console.log("STAHP");
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
 
@@ -173,16 +173,16 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
     setModalIsShowing(false);
-    console.log('capturing');
+    console.log("capturing");
     //tap into the canvas stream
     const canvasStream = canvasRef.current.captureStream();
     // canvas media instance
     mediaRecorderCanvasRef.current = new MediaRecorder(canvasStream, {
-      mimeType: 'video/webm', //read only property multipurpose internet mail extension. type of document basically. ascii.
+      mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
     });
     // Canvas event listener: compliling blob data in handleData...
     mediaRecorderCanvasRef.current.addEventListener(
-      'dataavailable', //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
+      "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
       handleCanvasDataAvailable
     );
     //Canvas start
@@ -198,19 +198,19 @@ export default function MediaRecordingCanvasMoveNet() {
   ]);
 
   const resetStateValues = () => {
-    setFilter('');
-    setSecureUrl('');
-    setProjectTitle('');
+    setFilter("");
+    setSecureUrl("");
+    setProjectTitle("");
     setModalIsShowing(false);
   };
 
   // Canvas download
   const uploadMedia = (blob) => {
     const formData = new FormData();
-    formData.append('file', blob);
-    formData.append('upload_preset', 'jdjof0vs');
+    formData.append("file", blob);
+    formData.append("upload_preset", "jdjof0vs");
     Axios.post(
-      'https://api.cloudinary.com/v1_1/rotoflo/video/upload',
+      "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
       formData
     ).then((response) => {
       setSecureUrl(response.data.secure_url);
@@ -222,7 +222,7 @@ export default function MediaRecordingCanvasMoveNet() {
   const handleCanvasSaveToCloud = useCallback(() => {
     if (recordedCanvasChunks.length) {
       const blob = new Blob(recordedCanvasChunks, {
-        type: 'video/webm',
+        type: "video/webm",
       });
       setRecordedCanvasChunks([]);
       uploadMedia(blob);
@@ -236,35 +236,35 @@ export default function MediaRecordingCanvasMoveNet() {
     <div className='innerMain'>
       <div
         className='innerMain'
-        style={{ position: 'relative', width: '60vw', height: '60vh' }}
+        style={{ position: "relative", width: "60vw", height: "60vh" }}
       >
         <Webcam
           id='webcam'
           ref={webcamRef}
           audio={false}
           style={{
-            transform: 'scaleX(-1)',
-            filter: 'FlipH',
-            position: 'absolute',
-            height: '75%',
-            width: '75%',
-            objectFit: 'cover',
+            transform: "scaleX(-1)",
+            filter: "FlipH",
+            position: "absolute",
+            height: "75%",
+            width: "75%",
+            objectFit: "cover",
           }}
         />
         <canvas
           id='canvas'
           ref={canvasRef}
           style={{
-            transform: 'scaleX(-1)',
-            filter: 'FlipH',
-            position: 'absolute',
-            height: '75%',
-            width: '75%',
-            objectFit: 'cover',
+            transform: "scaleX(-1)",
+            filter: "FlipH",
+            position: "absolute",
+            height: "75%",
+            width: "75%",
+            objectFit: "cover",
           }}
         />
       </div>
-      <div className='header'>{countDown}</div>
+      <div className='countDown'>{countDown}</div>
       <div id='homeTools'>
         <select
           id='filters'
@@ -272,7 +272,9 @@ export default function MediaRecordingCanvasMoveNet() {
           name='filters'
           onChange={handleFilterChange}
         >
-          <option value='' disabled selected hidden>FILTERS</option>
+          <option value='' disabled selected hidden>
+            FILTERS
+          </option>
           <option value='1'>pink bubbles</option>
           <option value='2'>skeleton</option>
           <option value='3'>geometric</option>
@@ -296,7 +298,7 @@ export default function MediaRecordingCanvasMoveNet() {
           <button className='fancyButton' onClick={recordingTimer}>
             ▶
           </button>
-        )}{' '}
+        )}{" "}
         {showModal && (
           <Modal
             onClose={() => {

@@ -21,7 +21,6 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
-      console.log('PROJECT ID', projectId)
     }
   }, [dispatch, projectId]);
 
@@ -43,6 +42,9 @@ const SingleProject = () => {
     <>
       <div className='single-project'>
         <br />
+        <Link className='fancyButton' to='/gallery'>
+          GALLERY
+        </Link>
         <div className='project-info'>
           <div className='singleProject' id='single-project-video'>
             {videoUrl ? (
