@@ -272,3 +272,7 @@ form div {
   flex-direction: column;
   align-items: center;
 }
+.countDown {
+  color: #db4855;
+  font-size: 2rem;
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProject } from "../store/singleProject"; //write this
 import { deleteProject } from "../store/gallery";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import VideoLooper from "react-video-looper";
 
 const SingleProject = () => {
@@ -19,7 +19,7 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
-      dispatch(deleteProject(projectId));
+      //dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 
@@ -40,6 +40,9 @@ const SingleProject = () => {
     <>
       <div className='single-project'>
         <br />
+        <Link className='fancyButton' to='/gallery'>
+          GALLERY
+        </Link>
         <div className='project-info'>
           <div className='singleProject' id='single-project-video'>
             {videoUrl ? (
@@ -71,7 +74,7 @@ const SingleProject = () => {
               type='submit'
               className='fancyButton'
               value={project.id}
-              onClick={(event) => dispatch(deleteProject(event.target.value))}
+              // onClick={(event) => dispatch(deleteProject(event.target.value))}
             >
               DOWNLOAD
             </button>
