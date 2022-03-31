@@ -7,34 +7,38 @@ import VideoLooper from 'react-video-looper';
 
 const SingleProject = () => {
   const [videoUrl, setVideoUrl] = useState('');
-  const [video, setVideo] = useState({});
+  //const [video, setVideo] = useState({});
 
   const project = useSelector((state) => {
     return state.project || {}; //this reads from the redux store so make a separate project key from that sub reducer aight
   });
 
   const { projectId } = useParams();
+
   const history = useHistory();
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
+      console.log('PROJECT ID', projectId)
     }
   }, [dispatch, projectId]);
 
   useEffect(() => {
     if (project) {
-      setVideo(project.video);
-      console.log(video);
+      setVideoUrl(project.videoUrl);
+      // console.log('PROJECT', project)
     }
   }, [project]);
 
-  useEffect(() => {
-    if (video) {
-      setVideoUrl(video.videoUrl);
-    }
-  }, [video]);
+  // useEffect(() => {
+  //   if (video) {
+  //     setVideoUrl(video.videoUrl);
+  //     console.log('VIDEO',video);
+  //     console.log('VIDEOURL',videoUrl);
+  //   }
+  // }, [projectId, video]);
 
 
   const deleteAndReturn = (event) => {
@@ -91,3 +95,4 @@ const SingleProject = () => {
 };
 
 export default SingleProject;
+
