@@ -41,7 +41,8 @@ const SingleProject = () => {
   const deleteAndReturn = (event) => {
     dispatch(deleteProject(event.target.value));
     history.push('/gallery');
-    // window.location.reload();
+    //window.location.reload()
+    //window.location.replace('http://localhost:8080/gallery');
     history.go(0);
   };
 
