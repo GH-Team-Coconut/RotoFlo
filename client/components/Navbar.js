@@ -3,11 +3,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
 
-const Navbar = ({ handleClick, isLoggedIn }) => {
-  const [inGallery, setInGallery] = useState(false);
+const Navbar = ({ handleClick, isLoggedIn, match }) => {
+  const [inGallery, setInGallery] = useState(
+    window.location.href.includes("gallery")
+  );
+
+  console.log(window.location.href);
   return (
     <div className='navBar'>
-      <Link to={"/home"}>
+      <Link to={"/"}>
         <img id='navLogo' src='/rf-logo.png' />
       </Link>
 
@@ -16,17 +20,20 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
         {isLoggedIn ? (
           <div className='center'>
             {inGallery ? (
-              <Link className='center' to='/home'>
-                <button
-                  onClick={() => {
-                    setInGallery(false);
-                  }}
-                  className='fancyButton'
-                  id='makeBlock'
-                >
-                  HOME
-                </button>
-              </Link>
+              <div>
+                {" "}
+                <Link className='center' to='/home'>
+                  <button
+                    onClick={() => {
+                      setInGallery(false);
+                    }}
+                    className='fancyButton'
+                    id='makeBlock'
+                  >
+                    HOME
+                  </button>
+                </Link>
+              </div>
             ) : (
               <Link
                 className='center'
@@ -40,6 +47,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => {
                 </button>
               </Link>
             )}
+
             {/* The navbar will show these links after you log in */}
             <button
               className='fancyButton'

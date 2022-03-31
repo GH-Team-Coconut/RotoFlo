@@ -11,7 +11,7 @@ const Gallery = () => {
   const projects = useSelector((state) => {
     return state.projects; //this reads from the redux store
   });
-//console.log('*********** project in Gallery', projects)
+  //console.log('*********** project in Gallery', projects)
 
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const Gallery = () => {
         {projects.map((project) => (
           <div className='project' key={project.id}>
             <Link to={`/gallery/${project.id}`}>
-              <button>{project.title}</button>
+              <button className='fancyButton'>{project.title}</button>
             </Link>
           </div>
         ))}
