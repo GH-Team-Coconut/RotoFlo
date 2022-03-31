@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { fetchProjectGallery } from "../store/gallery";
+import VideoLooper from 'react-video-looper';
 
 const Gallery = () => {
   const userId = useSelector((state) => {
@@ -25,7 +26,7 @@ const Gallery = () => {
   const refreshVideo = (projectId) => {
     history.push(`/gallery/${projectId}`)
     history.go(0);
-  }
+  };
 
   return (
     <div>
@@ -33,6 +34,14 @@ const Gallery = () => {
       <div className='gallery'>
         {projects.map((project) => (
           <div className='project' key={project.id}>
+            <VideoLooper
+            clasName ='video-thumbnails'
+                source={project.videoUrl}
+                start={4.31}
+                end={9.48}
+                loop
+                position={'relative'}
+              />
             <Link to={`/gallery/${project.id}`}>
               <button onClick={()=>refreshVideo(project.id)} className='fancyButton'>{project.title}</button>
             </Link>

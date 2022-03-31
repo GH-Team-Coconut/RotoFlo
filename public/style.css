@@ -277,3 +277,8 @@ form div {
   color: #db4855;
   font-size: 2rem;
 }
+
+.video-thumbnails {
+  height: 5vh;
+  width: 5vw;
+}
