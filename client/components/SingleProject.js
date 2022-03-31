@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProject } from "../store/singleProject"; //write this
 import { deleteProject } from "../store/gallery";
@@ -19,7 +19,6 @@ const SingleProject = () => {
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
-      dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
 
@@ -58,7 +57,6 @@ const SingleProject = () => {
             </div>
           </div>
           <div>
-            {" "}
             <button
               type='submit'
               className='fancyButton'
@@ -71,7 +69,7 @@ const SingleProject = () => {
               type='submit'
               className='fancyButton'
               value={project.id}
-              onClick={(event) => dispatch(deleteProject(event.target.value))}
+              //onClick={(event) => downloadProject(event.target.value)}
             >
               DOWNLOAD
             </button>
