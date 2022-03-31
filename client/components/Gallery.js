@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { fetchProjectGallery } from "../store/gallery";
 
 const Gallery = () => {
@@ -11,15 +11,21 @@ const Gallery = () => {
   const projects = useSelector((state) => {
     return state.projects; //this reads from the redux store
   });
-//console.log('*********** project in Gallery', projects)
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   useEffect(() => {
     if (userId) {
       dispatch(fetchProjectGallery());
     }
   }, [dispatch, userId]);
+
+  const refreshVideo = (projectId) => {
+    history.push(`/gallery/${projectId}`)
+    history.go(0);
+  }
 
   return (
     <div>
@@ -28,7 +34,7 @@ const Gallery = () => {
         {projects.map((project) => (
           <div className='project' key={project.id}>
             <Link to={`/gallery/${project.id}`}>
-              <button>{project.title}</button>
+              <button onClick={()=>refreshVideo(project.id)}>{project.title}</button>
             </Link>
           </div>
         ))}

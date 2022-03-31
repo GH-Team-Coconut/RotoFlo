@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProject } from '../store/singleProject'; //write this
+import { fetchProject } from '../store/singleProject'; 
 import { deleteProject } from '../store/gallery';
 import { useParams, useHistory } from 'react-router-dom';
 import VideoLooper from 'react-video-looper';
 
 const SingleProject = () => {
   const [videoUrl, setVideoUrl] = useState('');
-  //const [video, setVideo] = useState({});
+
+  const history = useHistory();
 
   const project = useSelector((state) => {
-    return state.project || {}; //this reads from the redux store so make a separate project key from that sub reducer aight
+    return state.project || {};
   });
 
   const { projectId } = useParams();
 
-  const history = useHistory();
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (projectId) {
       dispatch(fetchProject(projectId));
@@ -28,18 +28,8 @@ const SingleProject = () => {
   useEffect(() => {
     if (project) {
       setVideoUrl(project.videoUrl);
-      // console.log('PROJECT', project)
     }
   }, [project]);
-
-  // useEffect(() => {
-  //   if (video) {
-  //     setVideoUrl(video.videoUrl);
-  //     console.log('VIDEO',video);
-  //     console.log('VIDEOURL',videoUrl);
-  //   }
-  // }, [projectId, video]);
-
 
   const deleteAndReturn = (event) => {
     dispatch(deleteProject(event.target.value));
