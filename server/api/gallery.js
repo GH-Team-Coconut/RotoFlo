@@ -61,7 +61,7 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
   }
 });
 
-router.delete("/:projectId", requireToken, async (req, res, next) => { //test this b
+router.delete("/:projectId", requireToken, async (req, res, next) => {
   //DELETE FROM CLOUDINARY STILL!!!
   try {
     if (!req.user) {

@@ -46,7 +46,7 @@ export const fetchProjectGallery = () => {
   };
 };
 
-export const deleteProject = (projectId) => {
+export const deleteProject = (projectId, history) => {
   return async (dispatch) => {
     try {
       const token = window.localStorage.getItem(TOKEN);
@@ -59,6 +59,7 @@ export const deleteProject = (projectId) => {
         }
       );
       dispatch(_deleteProject(project));
+      history.push('/gallery')
     } catch (error) {
       console.error(
         "listen, Im doing what I can here but you gotta check out your deleteProject thunk. "
