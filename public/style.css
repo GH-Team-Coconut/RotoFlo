@@ -166,8 +166,6 @@ form div {
 
 #modal-container {
   background: rgba(0, 0, 0, 0.5);
-  width: 200px;
-  height: 200px;
   position: fixed;
   top: 0;
   left: 0;
@@ -185,9 +183,22 @@ form div {
 }
 
 #modal-content {
-  width: 600px;
-  height: 400px;
-  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  width: 33vw;
+  height: 33vh;
+  background: #fff6f6;
+}
+
+#rotoflo-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
 }
 
 .custom-dropdown {
