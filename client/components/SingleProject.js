@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProject } from '../store/singleProject'; 
+import { fetchProject } from '../store/singleProject';
 import { deleteProject } from '../store/gallery';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import VideoLooper from 'react-video-looper';
 
 const SingleProject = () => {
@@ -37,6 +37,11 @@ const SingleProject = () => {
     //window.location.replace('http://localhost:8080/gallery');
     history.go(0);
   };
+
+  const download = () => {
+    console.log(videoUrl)
+    return <a href={videoUrl}> Hyper link </a>
+  }
 
   return (
     <>
@@ -75,9 +80,9 @@ const SingleProject = () => {
               type='submit'
               className='fancyButton'
               value={project.id}
-              //onClick={(event) => downloadProject(event.target.value)}
+              onClick={download}
             >
-              DOWNLOAD
+              <a href={videoUrl}> DOWNLOAD </a>
             </button>
           </div>
         </div>
