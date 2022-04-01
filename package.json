@@ -43,6 +43,7 @@
     "react-video-looper": "^1.0.16",
     "react-webcam": "^7.0.0",
     "sequelize": "^6.3.5",
+    "tailwindcss": "^3.0.23",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {

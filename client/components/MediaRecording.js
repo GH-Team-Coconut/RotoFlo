@@ -313,6 +313,7 @@ export default function MediaRecordingCanvasMoveNet() {
                 onChange={handleTitleChange}
               />
             </form>
+            <div >
             {recordedCanvasChunks.length > 0 && (
               <button
                 onClick={handleCanvasSaveToCloud}
@@ -321,10 +322,13 @@ export default function MediaRecordingCanvasMoveNet() {
               >
                 Save
               </button>
+              
             )}
+           
             <button className='fancyButton' onClick={resetStateValues}>
               Trash
             </button>
+            </div>
           </Modal>
         )}
       </div>

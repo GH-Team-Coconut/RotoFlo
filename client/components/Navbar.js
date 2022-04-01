@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
@@ -7,13 +7,17 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
   const [inGallery, setInGallery] = useState(
     window.location.href.includes("gallery")
   );
+  const [inLanding, setInLanding] = useState(
+    window.location.pathname === "/" ? "gone" : "navBar"
+  );
 
-  console.log(window.location.href);
+  console.log(window.location);
   return (
-    <div className='navBar'>
-      <Link to={"/"}>
+    <div className={inLanding}>
+      <Link to={"/home"}>
         <img id='navLogo' src='/rf-logo.png' />
       </Link>
+      <h1 className='header'>ROTOFLO</h1>
 
       {/* <img id='navBG' src='/cubes.png' /> */}
       <nav>
@@ -27,7 +31,7 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
                     onClick={() => {
                       setInGallery(false);
                     }}
-                    className='fancyButton'
+                    className='superFancyButton'
                     id='makeBlock'
                   >
                     HOME
@@ -42,7 +46,7 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
                   setInGallery(true);
                 }}
               >
-                <button id='makeBlock' className='fancyButton'>
+                <button id='makeBlock' className='superFancyButton'>
                   GALLERY
                 </button>
               </Link>
@@ -50,7 +54,7 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
 
             {/* The navbar will show these links after you log in */}
             <button
-              className='fancyButton'
+              className='superFancyButton'
               id='makeBlock'
               onClick={handleClick}
             >
@@ -61,12 +65,12 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
           <div className='center'>
             {/* The navbar will show these links before you log in */}
             <Link to='/login'>
-              <button className='fancyButton' id='makeBlock'>
+              <button className='superFancyButton' id='makeBlock'>
                 LOG IN
               </button>
             </Link>
             <Link to='/signup'>
-              <button className='fancyButton' id='makeBlock'>
+              <button className='superFancyButton' id='makeBlock'>
                 SIGN UP
               </button>
             </Link>
