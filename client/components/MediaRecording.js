@@ -275,9 +275,9 @@ export default function MediaRecordingCanvasMoveNet() {
           <option value='' disabled selected hidden>
             FILTERS
           </option>
-          <option value='1'>pink bubbles</option>
-          <option value='2'>skeleton</option>
-          <option value='3'>geometric</option>
+          <option value='1'>PINK BUBBLES</option>
+          <option value='2'>SKELETON</option>
+          <option value='3'>GEOMETRIC</option>
         </select>
         <select
           id='webcamOnOff'
@@ -285,8 +285,11 @@ export default function MediaRecordingCanvasMoveNet() {
           name='webcamOnOff'
           onChange={webcamChangeHandler}
         >
-          <option value='on'>Webcam On</option>
-          <option value='off'>Webcam Off</option>
+          <option value='' disabled selected hidden>
+            BACKGROUNDS
+          </option>
+          <option value='on'>WEBCAM ON</option>
+          <option value='off'>WEBCAM OFF</option>
         </select>
         {capturing ? (
           <div className='innerMain'>
@@ -322,9 +325,9 @@ export default function MediaRecordingCanvasMoveNet() {
               >
                 Save
               </button>
-              
+
             )}
-           
+
             <button className='fancyButton' onClick={resetStateValues}>
               Trash
             </button>
