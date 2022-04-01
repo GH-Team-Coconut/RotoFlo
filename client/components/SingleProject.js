@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProject } from '../store/singleProject';
-import { deleteProject } from '../store/gallery';
-import { useParams, useHistory, Link } from 'react-router-dom';
-import VideoLooper from 'react-video-looper';
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProject } from "../store/singleProject";
+import { deleteProject } from "../store/gallery";
+import { useParams, useHistory, Link } from "react-router-dom";
+import VideoLooper from "react-video-looper";
 
 const SingleProject = () => {
-  const [videoUrl, setVideoUrl] = useState('');
+  const [videoUrl, setVideoUrl] = useState("");
 
   const history = useHistory();
 
@@ -32,16 +32,16 @@ const SingleProject = () => {
 
   const deleteAndReturn = (event) => {
     dispatch(deleteProject(event.target.value));
-    history.push('/gallery');
+    history.push("/gallery");
     //window.location.reload()
     //window.location.replace('http://localhost:8080/gallery');
     history.go(0);
   };
 
   const download = () => {
-    console.log(videoUrl)
-    return <a href={videoUrl}> Hyper link </a>
-  }
+    console.log(videoUrl);
+    return <a href={videoUrl}> Hyper link </a>;
+  };
 
   return (
     <>
@@ -58,10 +58,10 @@ const SingleProject = () => {
                 start={4.31}
                 end={9.48}
                 loop
-                position={'relative'}
+                position={"relative"}
               />
             ) : (
-              ''
+              ""
             )}
             <div id='project_title'>
               <h1 className='header'>{project.title}</h1>
@@ -92,4 +92,3 @@ const SingleProject = () => {
 };
 
 export default SingleProject;
-

@@ -1,20 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const Landing = () => {
+  const history = useHistory();
+  const loginHandler = () => {
+    history.push("/login");
+    history.go(0);
+  };
+
   return (
     <div className='landing'>
       <img src='/rf-logo.png' id='landLogo' />
-      <h1> ROTOFLO</h1>
-      <h3>MOTION INTERACTIVE AR EXPERIENCE</h3>
+      <h1 className='headerLand'> ROTOFLO</h1>
+      <h3 className='subHeader'>MOTION INTERACTIVE AR EXPERIENCE</h3>
       <Link to='/login'>
-        <button className='fancyButton' type='button'>
-          LOG IN
-        </button>{" "}
-      </Link>
-      <Link to='/signup'>
-        <button className='fancyButton' type='button'>
-          SIGN UP
+        <button
+          onClick={loginHandler}
+          className='superFancyButton'
+          type='button'
+        >
+          START CREATING
         </button>{" "}
       </Link>
     </div>
