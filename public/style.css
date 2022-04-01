@@ -29,7 +29,7 @@ form div {
   margin: 0;
 }
 .navBar {
-  width: 33vw;
+  width: 33.3vw;
   height: 95vh;
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@ form div {
   justify-content: center;
   align-items: center;
   height: 95vh;
-  width: 66vw;
+  width: 66.6vw;
   background: rgb(255, 246, 246);
   background: linear-gradient(
     180deg,
@@ -390,13 +390,13 @@ form div {
   border-radius: 25px;
 }
 
-.footer_info{
+.footer_info {
   height: 5vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  font-size: .7rem;
+  font-size: 0.7rem;
   background-color: #e7efee;
   margin: 0;
 }
@@ -408,7 +408,6 @@ form div {
     0.125rem 0.125rem 1rem #f6fff9; */
 }
 
-#canvas{
+#canvas {
   border-radius: 25px;
 }
-
