@@ -29,7 +29,7 @@ form div {
 }
 .navBar {
   width: 33vw;
-  height: 100vh;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +60,7 @@ form div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   width: 66vw;
   background: rgb(255, 246, 246);
   background: linear-gradient(
@@ -208,7 +208,7 @@ form div {
   left: 0;
   /* vw and vh */
   width: 100vw;
-  height: 100vh;
+  height: 95vh;
   z-index: 2;
 
   /*flex stuff below*/
@@ -371,7 +371,7 @@ form div {
 .landing {
   background-image: url(/cubes.png);
   width: 100vw;
-  height: 100vh;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -385,3 +385,13 @@ form div {
   height: 5vh;
   width: 5vw;
 }
+
+.footer_info{
+  height: 3vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-size: .5rem;
+}
+
