@@ -29,6 +29,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
     "bcrypt": "^5.0.0",
+    "boxicons": "^2.1.2",
     "cloudinary-react": "^1.7.1",
     "compression": "^1.7.3",
     "express": "^4.17.3",
