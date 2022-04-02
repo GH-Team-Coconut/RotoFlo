@@ -27,7 +27,9 @@ export function drawCanvas(
     case "3":
       return geometricFilter(poses[0].keypoints, canvasRef);
     case "4":
-      flubberMan(poses[0].keypoints, canvasRef);
+     return flubberMan(poses[0].keypoints, canvasRef);
+    case "5":
+      return boundingBox(poses[0].keypoints, canvasRef);
     default:
       console.log("no filter");
   }
@@ -331,4 +333,23 @@ export function flubberMan(keypoints, canvasRef) {
       ctx.stroke();
     }
   });
+}
+
+export function boundingBox(keypoints, canvasRef){
+  const ctx = canvasRef.current.getContext("2d");
+  
+  const leftWrist = keypoints[10]; 
+  const rightWrist = keypoints[9]; 
+  const leftAnkle = keypoints[16]; 
+  const rightAnkle = keypoints[15];
+
+  ctx.moveTo(leftAnkle.x, leftAnkle.y);
+  ctx.lineTo(rightAnkle.x, rightAnkle.y);
+  ctx.lineTo(rightWrist.x, rightWrist.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftAnkle.x, leftAnkle.y);
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'orange'; 
+  ctx.stroke();
+  
 }
