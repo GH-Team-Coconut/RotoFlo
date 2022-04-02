@@ -15,14 +15,21 @@ export function drawCanvas(
   if (webcamState === "on") {
     drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
   }
-  if (filter === "2") {
-    drawSkeleton(poses[0].keypoints, canvasRef);
-  }
-  if (filter === "1") {
-    drawSomeRandomPointsClusteredAtKeypoint(poses[0].keypoints, canvasRef);
-  }
-  if (filter === "3") {
-    geometricFilter(poses[0].keypoints, canvasRef);
+
+  switch (filter) {
+    case "2":
+      return drawSkeleton(poses[0].keypoints, canvasRef);
+    case "1":
+      return drawSomeRandomPointsClusteredAtKeypoint(
+        poses[0].keypoints,
+        canvasRef
+      );
+    case "3":
+      return geometricFilter(poses[0].keypoints, canvasRef);
+    case "4":
+      flubberMan(poses[0].keypoints, canvasRef);
+    default:
+      console.log("no filter");
   }
 }
 
@@ -294,6 +301,33 @@ export function drawSkeleton(keypoints, canvasRef, angleArray) {
       ctx.beginPath();
       ctx.moveTo(kp1.x, kp1.y);
       ctx.lineTo(kp2.x, kp2.y);
+      ctx.stroke();
+    }
+  });
+}
+
+export function flubberMan(keypoints, canvasRef) {
+  const ctx = canvasRef.current.getContext("2d");
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "lime";
+  ctx.globalAlpha = "0.40";
+  ctx.lineWidth = 2;
+
+  poseDetection.util.getAdjacentPairs("MoveNet").forEach(([i, j]) => {
+    const kp1 = keypoints[i];
+    const kp2 = keypoints[j];
+
+    // If score is null, just show the keypoint.
+    const score1 = kp1.score != null ? kp1.score : 1;
+    const score2 = kp2.score != null ? kp2.score : 1;
+    const scoreThreshold = 0.2;
+
+    if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
+      ctx.beginPath();
+      ctx.moveTo(kp1.x, kp1.y);
+      ctx.lineTo(kp2.x, kp2.y);
+      ctx.lineWidth = 120;
+      ctx.lineCap = "round";
       ctx.stroke();
     }
   });
