@@ -247,6 +247,21 @@ form div {
   align-items: center;
   justify-content: center;
   border-radius: 25px;
+
+}
+
+#rotoflo-modal input{
+background: transparent;
+border-top: none;
+border-left: none;
+border-right: none;
+border-bottom: solid #db4855;
+color: #db4855;
+align-items: center;
+justify-content: center;
+}
+#rotoflo-modal input:focus {
+  outline: none;
 }
 
 .custom-dropdown {
