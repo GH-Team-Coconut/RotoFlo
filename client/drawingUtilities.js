@@ -378,11 +378,17 @@ export function boundingBox(keypoints, canvasRef) {
 export function prism(keypoints, canvasRef){
   const ctx = canvasRef.current.getContext("2d");
 
+  const topOfHead = {
+    x: keypoints[0].x,
+    y: keypoints[0].y - 50,
+    score: keypoints[0].score,
+  }
+
   const leftWrist = keypoints[10];
   const rightWrist = keypoints[9];
   const leftAnkle = keypoints[16];
   const rightAnkle = keypoints[15];
-  const topOfHead = keypoints[x];
+
   const leftHip = keypoints[12];
   const rightHip = keypoints[11];
   const leftKnee = keypoints[14];
@@ -393,13 +399,11 @@ export function prism(keypoints, canvasRef){
   const rightElbow = keypoints[7];
 
 
-  ctx.moveTo(leftAnkle.x, leftAnkle.y);
-  ctx.lineTo(rightAnkle.x, rightAnkle.y);
-
-  ctx.lineTo(rightAnkle.x, rightAnkle.y);
-
-  ctx.lineTo(rightWrist.x, rightWrist.y);
+  ctx.moveTo(topOfHead.x, topOfHead.y);
   ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftElbow.x, leftElbow.y);
+  ctx.lineTo(topOfHead.x, topOfHead.y);
+  ctx.lineTo(leftShoulder.x, leftShoulder.y);
   ctx.lineTo(leftAnkle.x, leftAnkle.y);
 
 
@@ -409,8 +413,3 @@ export function prism(keypoints, canvasRef){
   ctx.stroke();
 
 }
-
-name: "above-head",
-    x: keypoints[0].x,
-    y: keypoints[0].y - 50,
-    score: keypoints[0].score,
