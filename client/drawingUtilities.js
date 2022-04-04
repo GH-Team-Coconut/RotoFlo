@@ -353,3 +353,36 @@ export function boundingBox(keypoints, canvasRef){
   ctx.stroke();
 
 }
+
+// export function prism(keypoints, canvasRef){
+//   const ctx = canvasRef.current.getContext("2d");
+
+//   const leftWrist = keypoints[10];
+//   const rightWrist = keypoints[9];
+//   const leftAnkle = keypoints[16];
+//   const rightAnkle = keypoints[15];
+//   const topOfHead = keypoints[?];
+//   const leftHip = keypoints[?];
+//   const rightHip = keypoints[?];
+//   const leftKnee = keypoints[?];
+//   const rightKnee = keypoints[?];
+//   const leftShoulder = keypoints[?];
+//   const rightShoulder = keypoints[?];
+
+
+//   ctx.moveTo(leftAnkle.x, leftAnkle.y);
+//   ctx.lineTo(rightAnkle.x, rightAnkle.y);
+
+//   ctx.lineTo(rightAnkle.x, rightAnkle.y);
+
+//   ctx.lineTo(rightWrist.x, rightWrist.y);
+//   ctx.lineTo(leftWrist.x, leftWrist.y);
+//   ctx.lineTo(leftAnkle.x, leftAnkle.y);
+
+
+
+//   ctx.lineWidth = 3;
+//   ctx.strokeStyle = 'BlanchedAlmond';
+//   ctx.stroke();
+
+// }
