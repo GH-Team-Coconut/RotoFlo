@@ -396,6 +396,7 @@ form div {
 
 .footer_info {
   height: 5vh;
+  width:100vw;
   display: flex;
   flex-direction: row;
   align-items: center;
