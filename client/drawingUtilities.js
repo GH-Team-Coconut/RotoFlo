@@ -30,6 +30,8 @@ export function drawCanvas(
       return flubberMan(poses[0].keypoints, canvasRef);
     case "5":
       return boundingBox(poses[0].keypoints, canvasRef);
+    case "6":
+      return radiate(poses[0].keypoints, canvasRef);
     default:
       console.log("no filter");
   }
@@ -186,38 +188,38 @@ function geometricFilter(keypoints, canvasRef) {
     gkp14,
     gkp15,
   ];
-  drawLineFromTo(canvasRef, gkp1, gkp4);
-  drawLineFromTo(canvasRef, gkp1, gkp5);
-  drawLineFromTo(canvasRef, gkp1, gkp6);
-  drawLineFromTo(canvasRef, gkp1, gkp7);
-  drawLineFromTo(canvasRef, gkp2, gkp12);
-  drawLineFromTo(canvasRef, gkp3, gkp5);
-  drawLineFromTo(canvasRef, gkp3, gkp7);
-  drawLineFromTo(canvasRef, gkp5, gkp7);
-  drawLineFromTo(canvasRef, gkp4, gkp5);
-  drawLineFromTo(canvasRef, gkp4, gkp9);
-  drawLineFromTo(canvasRef, gkp6, gkp7);
-  drawLineFromTo(canvasRef, gkp6, gkp12);
-  drawLineFromTo(canvasRef, gkp7, gkp10);
-  drawLineFromTo(canvasRef, gkp7, gkp11);
-  drawLineFromTo(canvasRef, gkp7, gkp12);
-  drawLineFromTo(canvasRef, gkp7, gkp13);
-  drawLineFromTo(canvasRef, gkp7, gkp14);
-  drawLineFromTo(canvasRef, gkp8, gkp10);
-  drawLineFromTo(canvasRef, gkp9, gkp10);
-  drawLineFromTo(canvasRef, gkp10, gkp13);
-  drawLineFromTo(canvasRef, gkp10, gkp15);
-  drawLineFromTo(canvasRef, gkp11, gkp14);
-  drawLineFromTo(canvasRef, gkp11, gkp13);
-  drawLineFromTo(canvasRef, gkp11, gkp15);
-  drawLineFromTo(canvasRef, gkp12, gkp14);
-  drawLineFromTo(canvasRef, gkp13, gkp15);
+  drawLineFromTo(canvasRef, gkp1, gkp4, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp6, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp2, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp3, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp3, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp5, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp4, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp4, gkp9, "white", 3);
+  drawLineFromTo(canvasRef, gkp6, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp6, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp11, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp8, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp9, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp10, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp10, gkp15, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp15, "white", 3);
+  drawLineFromTo(canvasRef, gkp12, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp13, gkp15, "white", 3);
   for (let i = 0; i < arrayOfVerticies.length; i++) {
     drawKeypointInGeo(arrayOfVerticies[i], canvasRef);
   }
 }
 
-function drawLineFromTo(canvasRef, kpStart, kpEnd) {
+function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
   const ctx = canvasRef.current.getContext("2d");
   const score1 = kpStart.score != null ? kpStart.score : 1;
   const score2 = kpEnd.score != null ? kpEnd.score : 1;
@@ -226,8 +228,8 @@ function drawLineFromTo(canvasRef, kpStart, kpEnd) {
     ctx.beginPath(); // Start a new path
     ctx.moveTo(kpStart.x, kpStart.y); // Move the pen to (30, 50)
     ctx.lineTo(kpEnd.x, kpEnd.y); // Draw a line to (150, 100)
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
     ctx.stroke(); // Render the path
   }
 }
@@ -365,12 +367,31 @@ export function boundingBox(keypoints, canvasRef) {
   }
 }
 
-// export function radiate(keypoints, canvasRef){
-//     const ctx = canvasRef.current.getContext("2d");
-//     const scoreThreshold = 0.3 || 0;
-//     const xAvg = (keypoints[6].x + keypoints[5].x + keypoints[12].x + keypoints[11].x)/4
-//     const yAvg = (keypoints[6].y + keypoints[5].y + keypoints[12].y + keypoints[11].y)/4
+export function radiate(keypoints, canvasRef) {
+  // const ctx = canvasRef.current.getContext("2d");
+  // const scoreThreshold = 0.3 || 0;
+  // const xAvg =
+  //   (keypoints[6].x + keypoints[5].x + keypoints[12].x + keypoints[11].x) / 4;
+  // const yAvg =
+  //   (keypoints[6].y + keypoints[5].y + keypoints[12].y + keypoints[11].y) / 4;
+  // const scoreAvg =
+  //   (keypoints[6].score +
+  //     keypoints[5].score +
+  //     keypoints[12].score +
+  //     keypoints[11].score) /
+  //   4;
+  const center = {
+    x: keypoints[0].x,
+    y: keypoints[0].y + 170,
+    score: keypoints[0].score,
+  };
 
-//     const center =
-
-// }
+  for (let i = 0; i < keypoints.length; i++) {
+    // if (
+    //   center.score >= scoreThreshold &&
+    //   keypoints[i].score >= scoreThreshold
+    // ) {
+    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 4);
+    // }
+  }
+}

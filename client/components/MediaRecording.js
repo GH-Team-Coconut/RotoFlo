@@ -280,6 +280,7 @@ export default function MediaRecordingCanvasMoveNet() {
           <option value='3'>GEOMETRIC</option>
           <option value='4'>FLUBBER</option>
           <option value='5'>BOX</option>
+          <option value='6'>RADIATE</option>
         </select>
         <select
           id='webcamOnOff'
