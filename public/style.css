@@ -46,6 +46,8 @@ form div {
 }
 #navLogo:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #db4855,
+    0.125rem 0.125rem 1rem #f6fff9;
 }
 #landLogo {
   width: 25vw;
@@ -54,6 +56,8 @@ form div {
 }
 #landLogo:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #db4855,
+    0.125rem 0.125rem 1rem #f6fff9;
 }
 #main {
   margin: 0;
@@ -412,7 +416,7 @@ form div {
   border-radius: 25px;
 }
 
-.Auth-Form-Input{
+.Auth-Form-Input {
   background: transparent;
   border-top: none;
   border-left: none;
@@ -420,11 +424,11 @@ form div {
   border-bottom: solid #db4855;
   color: #db4855;
 }
-.Auth-Form-Input:focus{
-    outline: none;
+.Auth-Form-Input:focus {
+  outline: none;
 }
 
-::placeholder{
+::placeholder {
   color: #db4855;
-  opacity: .5;
+  opacity: 0.5;
 }

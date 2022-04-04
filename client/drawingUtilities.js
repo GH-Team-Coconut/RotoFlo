@@ -337,7 +337,6 @@ export function flubberMan(keypoints, canvasRef) {
 
 export function boundingBox(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
-  const confidence = keypoint.score != null ? keypoint.score : 1;
   const scoreThreshold = 0.3 || 0;
 
   const leftWrist = keypoints[10];
@@ -353,7 +352,7 @@ export function boundingBox(keypoints, canvasRef) {
     confidenceLW &&
     confidenceRW &&
     confidenceLA &&
-    confidenceRA > scoreThreshold
+    confidenceRA >= scoreThreshold
   ) {
     ctx.moveTo(leftAnkle.x, leftAnkle.y);
     ctx.lineTo(rightAnkle.x, rightAnkle.y);
