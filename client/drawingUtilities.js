@@ -364,3 +364,13 @@ export function boundingBox(keypoints, canvasRef) {
     ctx.stroke();
   }
 }
+
+// export function radiate(keypoints, canvasRef){
+//     const ctx = canvasRef.current.getContext("2d");
+//     const scoreThreshold = 0.3 || 0;
+//     const xAvg = (keypoints[6].x + keypoints[5].x + keypoints[12].x + keypoints[11].x)/4
+//     const yAvg = (keypoints[6].y + keypoints[5].y + keypoints[12].y + keypoints[11].y)/4
+
+//     const center =
+
+// }
