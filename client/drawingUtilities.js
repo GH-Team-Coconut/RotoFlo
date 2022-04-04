@@ -247,13 +247,13 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = "Green";
+  ctx.fillStyle = "#7ea09b";
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = "Orange";
+  ctx.fillStyle = "#db4855";
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
@@ -374,3 +374,43 @@ export function boundingBox(keypoints, canvasRef) {
 //     const center =
 
 // }
+
+export function prism(keypoints, canvasRef){
+  const ctx = canvasRef.current.getContext("2d");
+
+  const leftWrist = keypoints[10];
+  const rightWrist = keypoints[9];
+  const leftAnkle = keypoints[16];
+  const rightAnkle = keypoints[15];
+  const topOfHead = keypoints[x];
+  const leftHip = keypoints[12];
+  const rightHip = keypoints[11];
+  const leftKnee = keypoints[14];
+  const rightKnee = keypoints[13];
+  const leftShoulder = keypoints[6];
+  const rightShoulder = keypoints[5];
+  const leftElbow = keypoints[8];
+  const rightElbow = keypoints[7];
+
+
+  ctx.moveTo(leftAnkle.x, leftAnkle.y);
+  ctx.lineTo(rightAnkle.x, rightAnkle.y);
+
+  ctx.lineTo(rightAnkle.x, rightAnkle.y);
+
+  ctx.lineTo(rightWrist.x, rightWrist.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftAnkle.x, leftAnkle.y);
+
+
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = 'BlanchedAlmond';
+  ctx.stroke();
+
+}
+
+name: "above-head",
+    x: keypoints[0].x,
+    y: keypoints[0].y - 50,
+    score: keypoints[0].score,
