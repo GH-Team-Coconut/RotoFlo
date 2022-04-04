@@ -249,13 +249,13 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = "Green";
+  ctx.fillStyle = "#7ea09b";
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = "Orange";
+  ctx.fillStyle = `#db4855`;
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
@@ -339,6 +339,7 @@ export function flubberMan(keypoints, canvasRef) {
 
 export function boundingBox(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
+
   const scoreThreshold = 0.3 || 0;
 
   const leftWrist = keypoints[10];
@@ -347,8 +348,10 @@ export function boundingBox(keypoints, canvasRef) {
   const confidenceRW = rightWrist.score != null ? rightWrist.score : 1;
   const leftAnkle = keypoints[16];
   const confidenceLA = leftAnkle.score != null ? leftAnkle.score : 1;
+
   const rightAnkle = keypoints[15];
   const confidenceRA = rightAnkle.score != null ? rightAnkle.score : 1;
+
 
   if (
     confidenceLW &&
@@ -365,7 +368,10 @@ export function boundingBox(keypoints, canvasRef) {
     ctx.strokeStyle = "orange";
     ctx.stroke();
   }
+
 }
+
+
 
 export function radiate(keypoints, canvasRef) {
   // const ctx = canvasRef.current.getContext("2d");
@@ -395,3 +401,4 @@ export function radiate(keypoints, canvasRef) {
     // }
   }
 }
+
