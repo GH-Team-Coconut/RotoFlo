@@ -7,6 +7,7 @@ import Webcam from "react-webcam";
 import Axios from "axios";
 import { Modal } from "./Modal";
 import { saveToDatabase } from "../store/gallery";
+import { DownloadIcon, TrashIcon } from '@heroicons/react/outline'
 
 export default function MediaRecordingCanvasMoveNet() {
   const [detector, setDetector] = useState();
@@ -187,14 +188,14 @@ export default function MediaRecordingCanvasMoveNet() {
     );
     //Canvas start
     mediaRecorderCanvasRef.current.start(); //this will rerun every time one of the things in the array changes
-    // setTimeout(() => {
-    //   handleStopCaptureClick();
-    // }, 20000);
+    setTimeout(() => {
+      handleStopCaptureClick();
+    }, 10000);
   }, [
     setCapturing,
     mediaRecorderCanvasRef,
     handleCanvasDataAvailable,
-    //handleStopCaptureClick,
+    handleStopCaptureClick,
   ]);
 
   const resetStateValues = () => {
@@ -233,13 +234,13 @@ export default function MediaRecordingCanvasMoveNet() {
   getPoses(filter);
 
   return (
-    <div className='innerMain'>
+    <div className="innerMain">
       <div
-        className='innerMain'
+        className="innerMain"
         style={{ position: "relative", width: "60vw", height: "60vh" }}
       >
         <Webcam
-          id='webcam'
+          id="webcam"
           ref={webcamRef}
           audio={false}
           style={{
@@ -252,7 +253,7 @@ export default function MediaRecordingCanvasMoveNet() {
           }}
         />
         <canvas
-          id='canvas'
+          id="canvas"
           ref={canvasRef}
           style={{
             transform: "scaleX(-1)",
@@ -264,43 +265,43 @@ export default function MediaRecordingCanvasMoveNet() {
           }}
         />
       </div>
-      <div className='countDown'>{countDown}</div>
-      <div id='homeTools'>
+      <div className="countDown">{countDown}</div>
+      <div id="homeTools">
         <select
-          id='filters'
-          className='custom-dropdown'
-          name='filters'
+          id="filters"
+          className="custom-dropdown"
+          name="filters"
           onChange={handleFilterChange}
         >
-          <option value='' disabled selected hidden>
+          <option value="" disabled selected hidden>
             FILTERS
           </option>
-          <option value='1'>PINK BUBBLES</option>
-          <option value='2'>SKELETON</option>
-          <option value='3'>GEOMETRIC</option>
-          <option value='4'>FLUBBER</option>
-          <option value='5'>BOX</option>
+          <option value="1">PINK BUBBLES</option>
+          <option value="2">SKELETON</option>
+          <option value="3">GEOMETRIC</option>
+          <option value="4">FLUBBER</option>
+          <option value="5">BOX</option>
         </select>
         <select
-          id='webcamOnOff'
-          className='custom-dropdown'
-          name='webcamOnOff'
+          id="webcamOnOff"
+          className="custom-dropdown"
+          name="webcamOnOff"
           onChange={webcamChangeHandler}
         >
-          <option value='' disabled selected hidden>
+          <option value="" disabled selected hidden>
             BACKGROUNDS
           </option>
-          <option value='on'>WEBCAM ON</option>
-          <option value='off'>WEBCAM OFF</option>
+          <option value="on">WEBCAM ON</option>
+          <option value="off">WEBCAM OFF</option>
         </select>
         {capturing ? (
-          <div className='innerMain'>
-            <button className='fancyButton' onClick={handleStopCaptureClick}>
+          <div className="innerMain">
+            <button className="fancyButton" onClick={handleStopCaptureClick}>
               ■
             </button>
           </div>
         ) : (
-          <button className='fancyButton' onClick={recordingTimer}>
+          <button className="fancyButton" onClick={recordingTimer}>
             ▶
           </button>
         )}{" "}
@@ -310,10 +311,10 @@ export default function MediaRecordingCanvasMoveNet() {
               setModalIsShowing(false);
             }}
           >
-            <form onSubmit={handleSubmit} id='rotoflo-modal'>
-              <label htmlFor='title'>Title:</label>
+            <form onSubmit={handleSubmit} id="rotoflo-modal">
+              <label htmlFor="title">Title:</label>
               <input
-                name='title'
+                name="title"
                 value={projectTitle}
                 onChange={handleTitleChange}
               />
@@ -322,15 +323,15 @@ export default function MediaRecordingCanvasMoveNet() {
               {recordedCanvasChunks.length > 0 && (
                 <button
                   onClick={handleCanvasSaveToCloud}
-                  className='fancyButton'
-                  type='submit'
+                  className="fancyButton"
+                  type="submit"
                 >
-                  Save
+                  <DownloadIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
                 </button>
               )}
 
-              <button className='fancyButton' onClick={resetStateValues}>
-                Trash
+              <button className="fancyButton" onClick={resetStateValues}>
+                <TrashIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
               </button>
             </div>
           </Modal>

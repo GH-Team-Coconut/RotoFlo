@@ -428,3 +428,48 @@ form div {
   color: #db4855;
   opacity: .5;
 }
+.about-main-div{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  color: #7ea09b;
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: 0.1em;
+} 
+
+.team-div{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 15em;
+  width: 15em;
+  padding: 1em;
+}
+
+.dev-img{
+  height: 12em;
+  width: 12em;
+}
+
+#bio-div{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2em;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.team-div a{
+  color: #db4855;
+  font-weight: 500;
+  transition: all 1s ease;
+
+}
+
+.team-div a:hover {
+  transform: scale(1.2);
+}
