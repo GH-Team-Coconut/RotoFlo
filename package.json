@@ -19,6 +19,7 @@
   "author": "Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@heroicons/react": "^1.0.6",
     "@mediapipe/pose": "^0.5.1635988162",
     "@tensorflow-models/pose-detection": "^2.0.0",
     "@tensorflow/tfjs-backend-webgl": "^3.15.0",

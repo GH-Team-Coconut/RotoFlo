@@ -15,24 +15,24 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
   return (
     <div className={inLanding}>
       <Link to={"/home"}>
-        <img id='navLogo' src='/rf-logo.png' />
+        <img id="navLogo" src="/rf-logo.png" alt="" />
       </Link>
-      <h1 className='header'>ROTOFLO</h1>
+      <h1 className="header">ROTOFLO</h1>
 
       {/* <img id='navBG' src='/cubes.png' /> */}
       <nav>
         {isLoggedIn ? (
-          <div className='center'>
+          <div className="center">
             {inGallery ? (
               <div>
                 {" "}
-                <Link className='center' to='/home'>
+                <Link className="center" to="/home">
                   <button
                     onClick={() => {
                       setInGallery(false);
                     }}
-                    className='superFancyButton'
-                    id='makeBlock'
+                    className="superFancyButton"
+                    id="makeBlock"
                   >
                     HOME
                   </button>
@@ -40,37 +40,45 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
               </div>
             ) : (
               <Link
-                className='center'
-                to='/gallery'
+                className="center"
+                to="/gallery"
                 onClick={() => {
                   setInGallery(true);
                 }}
               >
-                <button id='makeBlock' className='superFancyButton'>
+                <button id="makeBlock" className="superFancyButton">
                   GALLERY
                 </button>
               </Link>
             )}
 
-            {/* The navbar will show these links after you log in */}
+            <Link
+              className="center"
+              to="/about"
+              >
+              <button id="makeBlock" className="superFancyButton">
+                ABOUT
+              </button>
+            </Link>
+
             <button
-              className='superFancyButton'
-              id='makeBlock'
+              className="superFancyButton"
+              id="makeBlock"
               onClick={handleClick}
             >
               LOG OUT
             </button>
           </div>
         ) : (
-          <div className='center'>
+          <div className="center">
             {/* The navbar will show these links before you log in */}
-            <Link to='/login'>
-              <button className='superFancyButton' id='makeBlock'>
+            <Link to="/login">
+              <button className="superFancyButton" id="makeBlock">
                 LOG IN
               </button>
             </Link>
-            <Link to='/signup'>
-              <button className='superFancyButton' id='makeBlock'>
+            <Link to="/signup">
+              <button className="superFancyButton" id="makeBlock">
                 SIGN UP
               </button>
             </Link>

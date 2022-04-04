@@ -7,6 +7,7 @@ import { me } from "./store";
 import Gallery from "./components/Gallery";
 import SingleProject from "./components/SingleProject";
 import { Landing } from "./components/Landing";
+import { About } from "./components/AboutUs"
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
             <Route path='/home' component={Home} />
             <Route exact path='/gallery' component={Gallery} />
             <Route path='/gallery/:projectId' component={SingleProject} />
+            <Route path='/about' component={About} />
             <Redirect to='/home' />
           </Switch>
         ) : (
