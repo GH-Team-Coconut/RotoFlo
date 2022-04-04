@@ -27,7 +27,7 @@ export function drawCanvas(
     case "3":
       return geometricFilter(poses[0].keypoints, canvasRef);
     case "4":
-     return flubberMan(poses[0].keypoints, canvasRef);
+      return flubberMan(poses[0].keypoints, canvasRef);
     case "5":
       return boundingBox(poses[0].keypoints, canvasRef);
     default:
@@ -335,21 +335,33 @@ export function flubberMan(keypoints, canvasRef) {
   });
 }
 
-export function boundingBox(keypoints, canvasRef){
+export function boundingBox(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
-  
-  const leftWrist = keypoints[10]; 
-  const rightWrist = keypoints[9]; 
-  const leftAnkle = keypoints[16]; 
-  const rightAnkle = keypoints[15];
+  const confidence = keypoint.score != null ? keypoint.score : 1;
+  const scoreThreshold = 0.3 || 0;
 
-  ctx.moveTo(leftAnkle.x, leftAnkle.y);
-  ctx.lineTo(rightAnkle.x, rightAnkle.y);
-  ctx.lineTo(rightWrist.x, rightWrist.y);
-  ctx.lineTo(leftWrist.x, leftWrist.y);
-  ctx.lineTo(leftAnkle.x, leftAnkle.y);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'orange'; 
-  ctx.stroke();
-  
+  const leftWrist = keypoints[10];
+  const confidenceLW = leftWrist.score != null ? leftWrist.score : 1;
+  const rightWrist = keypoints[9];
+  const confidenceRW = rightWrist.score != null ? rightWrist.score : 1;
+  const leftAnkle = keypoints[16];
+  const confidenceLA = leftAnkle.score != null ? leftAnkle.score : 1;
+  const rightAnkle = keypoints[15];
+  const confidenceRA = rightAnkle.score != null ? rightAnkle.score : 1;
+
+  if (
+    confidenceLW &&
+    confidenceRW &&
+    confidenceLA &&
+    confidenceRA > scoreThreshold
+  ) {
+    ctx.moveTo(leftAnkle.x, leftAnkle.y);
+    ctx.lineTo(rightAnkle.x, rightAnkle.y);
+    ctx.lineTo(rightWrist.x, rightWrist.y);
+    ctx.lineTo(leftWrist.x, leftWrist.y);
+    ctx.lineTo(leftAnkle.x, leftAnkle.y);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "orange";
+    ctx.stroke();
+  }
 }
