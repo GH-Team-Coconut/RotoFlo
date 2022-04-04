@@ -72,6 +72,14 @@ form div {
     rgba(249, 178, 184, 0.9822303921568627) 100%
   );
 }
+.gallery {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .innerMain {
   display: flex;
   flex-direction: column;
