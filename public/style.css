@@ -46,8 +46,6 @@ form div {
 }
 #navLogo:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #db4855,
-    0.125rem 0.125rem 1rem #f6fff9;
 }
 #landLogo {
   width: 25vw;
@@ -56,8 +54,6 @@ form div {
 }
 #landLogo:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5), -0.125rem -0.125rem 1rem #db4855,
-    0.125rem 0.125rem 1rem #f6fff9;
 }
 #main {
   margin: 0;
@@ -396,7 +392,7 @@ form div {
 
 .footer_info {
   height: 5vh;
-  width:100vw;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   align-items: center;
