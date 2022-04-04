@@ -247,13 +247,13 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = "Green";
+  ctx.fillStyle = "#7ea09b";
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = "Orange";
+  ctx.fillStyle = `#db4855`;
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
@@ -337,10 +337,10 @@ export function flubberMan(keypoints, canvasRef) {
 
 export function boundingBox(keypoints, canvasRef){
   const ctx = canvasRef.current.getContext("2d");
-  
-  const leftWrist = keypoints[10]; 
-  const rightWrist = keypoints[9]; 
-  const leftAnkle = keypoints[16]; 
+
+  const leftWrist = keypoints[10];
+  const rightWrist = keypoints[9];
+  const leftAnkle = keypoints[16];
   const rightAnkle = keypoints[15];
 
   ctx.moveTo(leftAnkle.x, leftAnkle.y);
@@ -349,7 +349,7 @@ export function boundingBox(keypoints, canvasRef){
   ctx.lineTo(leftWrist.x, leftWrist.y);
   ctx.lineTo(leftAnkle.x, leftAnkle.y);
   ctx.lineWidth = 3;
-  ctx.strokeStyle = 'orange'; 
+  ctx.strokeStyle = 'orange';
   ctx.stroke();
-  
+
 }
