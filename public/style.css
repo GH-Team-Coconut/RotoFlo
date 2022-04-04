@@ -72,6 +72,14 @@ form div {
     rgba(249, 178, 184, 0.9822303921568627) 100%
   );
 }
+.gallery {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .innerMain {
   display: flex;
   flex-direction: column;
@@ -90,8 +98,8 @@ form div {
   border-radius: 25px;
   align-items: center;
   justify-content: space-evenly;
-  width: 25vw;
-  height: 25vh;
+  width: 20vw;
+  height: 20vh;
   background: #e7efee;
   margin-left: 2vw;
   margin-right: 2vw;
@@ -392,6 +400,7 @@ form div {
 
 .footer_info {
   height: 5vh;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -412,7 +421,7 @@ form div {
   border-radius: 25px;
 }
 
-.Auth-Form-Input{
+.Auth-Form-Input {
   background: transparent;
   border-top: none;
   border-left: none;
@@ -420,12 +429,13 @@ form div {
   border-bottom: solid #db4855;
   color: #db4855;
 }
-.Auth-Form-Input:focus{
-    outline: none;
+.Auth-Form-Input:focus {
+  outline: none;
 }
 
-::placeholder{
+::placeholder {
   color: #db4855;
+
   opacity: .5;
 }
 .about-main-div{
@@ -473,3 +483,4 @@ form div {
 .team-div a:hover {
   transform: scale(1.2);
 }
+

@@ -276,11 +276,14 @@ export default function MediaRecordingCanvasMoveNet() {
           <option value="" disabled selected hidden>
             FILTERS
           </option>
-          <option value="1">PINK BUBBLES</option>
-          <option value="2">SKELETON</option>
-          <option value="3">GEOMETRIC</option>
-          <option value="4">FLUBBER</option>
-          <option value="5">BOX</option>
+
+          <option value='1'>PINK BUBBLES</option>
+          <option value='2'>SKELETON</option>
+          <option value='3'>GEOMETRIC</option>
+          <option value='4'>FLUBBER</option>
+          <option value='5'>BOX</option>
+          <option value='6'>RADIATE</option>
+
         </select>
         <select
           id="webcamOnOff"

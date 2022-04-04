@@ -27,9 +27,11 @@ export function drawCanvas(
     case "3":
       return geometricFilter(poses[0].keypoints, canvasRef);
     case "4":
-     return flubberMan(poses[0].keypoints, canvasRef);
+      return flubberMan(poses[0].keypoints, canvasRef);
     case "5":
       return boundingBox(poses[0].keypoints, canvasRef);
+    case "6":
+      return radiate(poses[0].keypoints, canvasRef);
     default:
       console.log("no filter");
   }
@@ -186,38 +188,38 @@ function geometricFilter(keypoints, canvasRef) {
     gkp14,
     gkp15,
   ];
-  drawLineFromTo(canvasRef, gkp1, gkp4);
-  drawLineFromTo(canvasRef, gkp1, gkp5);
-  drawLineFromTo(canvasRef, gkp1, gkp6);
-  drawLineFromTo(canvasRef, gkp1, gkp7);
-  drawLineFromTo(canvasRef, gkp2, gkp12);
-  drawLineFromTo(canvasRef, gkp3, gkp5);
-  drawLineFromTo(canvasRef, gkp3, gkp7);
-  drawLineFromTo(canvasRef, gkp5, gkp7);
-  drawLineFromTo(canvasRef, gkp4, gkp5);
-  drawLineFromTo(canvasRef, gkp4, gkp9);
-  drawLineFromTo(canvasRef, gkp6, gkp7);
-  drawLineFromTo(canvasRef, gkp6, gkp12);
-  drawLineFromTo(canvasRef, gkp7, gkp10);
-  drawLineFromTo(canvasRef, gkp7, gkp11);
-  drawLineFromTo(canvasRef, gkp7, gkp12);
-  drawLineFromTo(canvasRef, gkp7, gkp13);
-  drawLineFromTo(canvasRef, gkp7, gkp14);
-  drawLineFromTo(canvasRef, gkp8, gkp10);
-  drawLineFromTo(canvasRef, gkp9, gkp10);
-  drawLineFromTo(canvasRef, gkp10, gkp13);
-  drawLineFromTo(canvasRef, gkp10, gkp15);
-  drawLineFromTo(canvasRef, gkp11, gkp14);
-  drawLineFromTo(canvasRef, gkp11, gkp13);
-  drawLineFromTo(canvasRef, gkp11, gkp15);
-  drawLineFromTo(canvasRef, gkp12, gkp14);
-  drawLineFromTo(canvasRef, gkp13, gkp15);
+  drawLineFromTo(canvasRef, gkp1, gkp4, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp6, "white", 3);
+  drawLineFromTo(canvasRef, gkp1, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp2, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp3, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp3, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp5, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp4, gkp5, "white", 3);
+  drawLineFromTo(canvasRef, gkp4, gkp9, "white", 3);
+  drawLineFromTo(canvasRef, gkp6, gkp7, "white", 3);
+  drawLineFromTo(canvasRef, gkp6, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp11, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp12, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp7, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp8, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp9, gkp10, "white", 3);
+  drawLineFromTo(canvasRef, gkp10, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp10, gkp15, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp13, "white", 3);
+  drawLineFromTo(canvasRef, gkp11, gkp15, "white", 3);
+  drawLineFromTo(canvasRef, gkp12, gkp14, "white", 3);
+  drawLineFromTo(canvasRef, gkp13, gkp15, "white", 3);
   for (let i = 0; i < arrayOfVerticies.length; i++) {
     drawKeypointInGeo(arrayOfVerticies[i], canvasRef);
   }
 }
 
-function drawLineFromTo(canvasRef, kpStart, kpEnd) {
+function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
   const ctx = canvasRef.current.getContext("2d");
   const score1 = kpStart.score != null ? kpStart.score : 1;
   const score2 = kpEnd.score != null ? kpEnd.score : 1;
@@ -226,8 +228,8 @@ function drawLineFromTo(canvasRef, kpStart, kpEnd) {
     ctx.beginPath(); // Start a new path
     ctx.moveTo(kpStart.x, kpStart.y); // Move the pen to (30, 50)
     ctx.lineTo(kpEnd.x, kpEnd.y); // Draw a line to (150, 100)
-    ctx.strokeStyle = "white";
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
     ctx.stroke(); // Render the path
   }
 }
@@ -247,13 +249,13 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = "Green";
+  ctx.fillStyle = "#7ea09b";
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = "Orange";
+  ctx.fillStyle = `#db4855`;
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
@@ -275,7 +277,7 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
 
       const randomX = generateRandomLocal(currKey.x - 50, currKey.x + 50);
       const randomY = generateRandomLocal(currKey.y - 50, currKey.y + 50);
-      ctx.arc(randomX, randomY, 5, 0, 2 * Math.PI);
+      ctx.arc(randomX, randomY, 15, 0, 2 * Math.PI);
       ctx.strokeStyle = "pink";
       ctx.stroke();
     }
@@ -335,21 +337,68 @@ export function flubberMan(keypoints, canvasRef) {
   });
 }
 
-export function boundingBox(keypoints, canvasRef){
+export function boundingBox(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
-  
-  const leftWrist = keypoints[10]; 
-  const rightWrist = keypoints[9]; 
-  const leftAnkle = keypoints[16]; 
-  const rightAnkle = keypoints[15];
 
-  ctx.moveTo(leftAnkle.x, leftAnkle.y);
-  ctx.lineTo(rightAnkle.x, rightAnkle.y);
-  ctx.lineTo(rightWrist.x, rightWrist.y);
-  ctx.lineTo(leftWrist.x, leftWrist.y);
-  ctx.lineTo(leftAnkle.x, leftAnkle.y);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'orange'; 
-  ctx.stroke();
-  
+  const scoreThreshold = 0.3 || 0;
+
+  const leftWrist = keypoints[10];
+  const confidenceLW = leftWrist.score != null ? leftWrist.score : 1;
+  const rightWrist = keypoints[9];
+  const confidenceRW = rightWrist.score != null ? rightWrist.score : 1;
+  const leftAnkle = keypoints[16];
+  const confidenceLA = leftAnkle.score != null ? leftAnkle.score : 1;
+
+  const rightAnkle = keypoints[15];
+  const confidenceRA = rightAnkle.score != null ? rightAnkle.score : 1;
+
+
+  if (
+    confidenceLW &&
+    confidenceRW &&
+    confidenceLA &&
+    confidenceRA >= scoreThreshold
+  ) {
+    ctx.moveTo(leftAnkle.x, leftAnkle.y);
+    ctx.lineTo(rightAnkle.x, rightAnkle.y);
+    ctx.lineTo(rightWrist.x, rightWrist.y);
+    ctx.lineTo(leftWrist.x, leftWrist.y);
+    ctx.lineTo(leftAnkle.x, leftAnkle.y);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "orange";
+    ctx.stroke();
+  }
+
 }
+
+
+
+export function radiate(keypoints, canvasRef) {
+  // const ctx = canvasRef.current.getContext("2d");
+  // const scoreThreshold = 0.3 || 0;
+  // const xAvg =
+  //   (keypoints[6].x + keypoints[5].x + keypoints[12].x + keypoints[11].x) / 4;
+  // const yAvg =
+  //   (keypoints[6].y + keypoints[5].y + keypoints[12].y + keypoints[11].y) / 4;
+  // const scoreAvg =
+  //   (keypoints[6].score +
+  //     keypoints[5].score +
+  //     keypoints[12].score +
+  //     keypoints[11].score) /
+  //   4;
+  const center = {
+    x: keypoints[0].x,
+    y: keypoints[0].y + 170,
+    score: keypoints[0].score,
+  };
+
+  for (let i = 0; i < keypoints.length; i++) {
+    // if (
+    //   center.score >= scoreThreshold &&
+    //   keypoints[i].score >= scoreThreshold
+    // ) {
+    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 4);
+    // }
+  }
+}
+
