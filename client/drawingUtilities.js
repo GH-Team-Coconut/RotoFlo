@@ -275,7 +275,7 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
 
       const randomX = generateRandomLocal(currKey.x - 50, currKey.x + 50);
       const randomY = generateRandomLocal(currKey.y - 50, currKey.y + 50);
-      ctx.arc(randomX, randomY, 5, 0, 2 * Math.PI);
+      ctx.arc(randomX, randomY, 15, 0, 2 * Math.PI);
       ctx.strokeStyle = "pink";
       ctx.stroke();
     }
