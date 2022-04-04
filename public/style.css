@@ -392,6 +392,7 @@ form div {
 
 .footer_info {
   height: 5vh;
+  width: 100vw;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -410,4 +411,21 @@ form div {
 
 #canvas {
   border-radius: 25px;
+}
+
+.Auth-Form-Input {
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid #db4855;
+  color: #db4855;
+}
+.Auth-Form-Input:focus {
+  outline: none;
+}
+
+::placeholder {
+  color: #db4855;
+  opacity: 0.5;
 }

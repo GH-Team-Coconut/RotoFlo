@@ -12,16 +12,10 @@ const AuthForm = (props) => {
     <div id='auth'>
       <form onSubmit={handleSubmit} name={name}>
         <div>
-          <label htmlFor='username'>
-            <small>Username</small>
-          </label>
-          <input name='username' type='text' />
+          <input className='Auth-Form-Input' name='username' type='text' placeholder="USERNAME" />
         </div>
         <div>
-          <label htmlFor='password'>
-            <small>Password</small>
-          </label>
-          <input name='password' type='password' />
+          <input className='Auth-Form-Input' name='password' type='password' placeholder="PASSWORD" />
         </div>
         <div>
           <button className='fancyButton' type='submit'>
