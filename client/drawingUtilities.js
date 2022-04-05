@@ -32,6 +32,8 @@ export function drawCanvas(
       return boundingBox(poses[0].keypoints, canvasRef);
     case "6":
       return radiate(poses[0].keypoints, canvasRef);
+    case "7":
+      return prism(poses[0].keypoints, canvasRef);
     default:
       console.log("no filter");
   }
@@ -255,7 +257,7 @@ export function drawKeypoints(keypoints, canvasRef) {
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = `#db4855`;
+  ctx.fillStyle = "#db4855";
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
@@ -339,7 +341,6 @@ export function flubberMan(keypoints, canvasRef) {
 
 export function boundingBox(keypoints, canvasRef) {
   const ctx = canvasRef.current.getContext("2d");
-
   const scoreThreshold = 0.3 || 0;
 
   const leftWrist = keypoints[10];
@@ -351,7 +352,6 @@ export function boundingBox(keypoints, canvasRef) {
 
   const rightAnkle = keypoints[15];
   const confidenceRA = rightAnkle.score != null ? rightAnkle.score : 1;
-
 
   if (
     confidenceLW &&
@@ -368,37 +368,77 @@ export function boundingBox(keypoints, canvasRef) {
     ctx.strokeStyle = "orange";
     ctx.stroke();
   }
+}
+export function prism(keypoints, canvasRef) {
+  const ctx = canvasRef.current.getContext("2d");
 
+  const topOfHead = {
+    x: keypoints[0].x,
+    y: keypoints[0].y - 50,
+    score: keypoints[0].score,
+  };
+
+  const leftWrist = keypoints[10];
+  const rightWrist = keypoints[9];
+  const leftAnkle = keypoints[16];
+  const rightAnkle = keypoints[15];
+  const leftHip = keypoints[12];
+  const rightHip = keypoints[11];
+  const leftKnee = keypoints[14];
+  const rightKnee = keypoints[13];
+  const leftShoulder = keypoints[6];
+  const rightShoulder = keypoints[5];
+  const leftElbow = keypoints[8];
+  const rightElbow = keypoints[7];
+
+  ctx.moveTo(topOfHead.x, topOfHead.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftElbow.x, leftElbow.y);
+  ctx.lineTo(topOfHead.x, topOfHead.y);
+  ctx.lineTo(leftShoulder.x, leftShoulder.y);
+  ctx.lineTo(rightShoulder.x, rightShoulder.y);
+  ctx.lineTo(topOfHead.x, topOfHead.y);
+  ctx.lineTo(rightElbow.x, rightElbow.y);
+  ctx.lineTo(rightWrist.x, rightWrist.y);
+  ctx.lineTo(topOfHead.x, topOfHead.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftHip.x, leftHip.y);
+  ctx.lineTo(leftElbow.x, leftElbow.y);
+  ctx.lineTo(leftShoulder.x, leftShoulder.y);
+  ctx.lineTo(leftHip.x, leftHip.y);
+  ctx.lineTo(rightHip.x, rightHip.y);
+  ctx.lineTo(rightShoulder.x, rightShoulder.y);
+  ctx.lineTo(rightElbow.x, rightElbow.y);
+  ctx.lineTo(rightHip.x, rightHip.y);
+  ctx.lineTo(rightWrist.x, rightWrist.y);
+  ctx.lineTo(rightKnee.x, rightKnee.y);
+  ctx.lineTo(rightHip.x, rightHip.y);
+  ctx.lineTo(leftKnee.x, leftKnee.y);
+  ctx.lineTo(leftHip.x, leftHip.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftKnee.x, leftKnee.y);
+  ctx.lineTo(rightKnee.x, rightKnee.y);
+  ctx.lineTo(rightAnkle.x, rightAnkle.y);
+  ctx.lineTo(leftKnee.x, leftKnee.y);
+  ctx.lineTo(leftAnkle.x, leftAnkle.y);
+  ctx.lineTo(leftWrist.x, leftWrist.y);
+  ctx.lineTo(leftAnkle.x, leftAnkle.y);
+  ctx.lineTo(rightAnkle.x, rightAnkle.y);
+  ctx.lineTo(rightWrist.x, rightWrist.y);
+
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = "BlanchedAlmond";
+  ctx.stroke();
 }
 
-
-
 export function radiate(keypoints, canvasRef) {
-  // const ctx = canvasRef.current.getContext("2d");
-  // const scoreThreshold = 0.3 || 0;
-  // const xAvg =
-  //   (keypoints[6].x + keypoints[5].x + keypoints[12].x + keypoints[11].x) / 4;
-  // const yAvg =
-  //   (keypoints[6].y + keypoints[5].y + keypoints[12].y + keypoints[11].y) / 4;
-  // const scoreAvg =
-  //   (keypoints[6].score +
-  //     keypoints[5].score +
-  //     keypoints[12].score +
-  //     keypoints[11].score) /
-  //   4;
   const center = {
     x: keypoints[0].x,
-    y: keypoints[0].y + 170,
+    y: keypoints[0].y + 120,
     score: keypoints[0].score,
   };
 
   for (let i = 0; i < keypoints.length; i++) {
-    // if (
-    //   center.score >= scoreThreshold &&
-    //   keypoints[i].score >= scoreThreshold
-    // ) {
-    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 4);
-    // }
+    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 2);
   }
 }
-
