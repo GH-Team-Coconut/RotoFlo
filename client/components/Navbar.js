@@ -18,8 +18,6 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
         <img id="navLogo" src="/rf-logo.png" alt="" />
       </Link>
       <h1 className="header">ROTOFLO</h1>
-
-      {/* <img id='navBG' src='/cubes.png' /> */}
       <nav>
         {isLoggedIn ? (
           <div className="center">
