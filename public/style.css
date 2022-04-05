@@ -79,6 +79,8 @@ form div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
 }
 .innerMain {
   display: flex;
@@ -182,7 +184,7 @@ form div {
   cursor: pointer;
   display: inline-block;
   font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.5em;
   /* font-weight: 500;
   line-height: 2.5; */
   outline: transparent;
@@ -247,6 +249,21 @@ form div {
   align-items: center;
   justify-content: center;
   border-radius: 25px;
+
+}
+
+#rotoflo-modal input{
+background: transparent;
+border-top: none;
+border-left: none;
+border-right: none;
+border-bottom: solid #db4855;
+color: #db4855;
+align-items: center;
+justify-content: center;
+}
+#rotoflo-modal input:focus {
+  outline: none;
 }
 
 .custom-dropdown {
@@ -484,3 +501,6 @@ form div {
   transform: scale(1.2);
 }
 
+#about{
+  width: 100%;
+}

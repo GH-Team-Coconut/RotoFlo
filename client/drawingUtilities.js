@@ -1,4 +1,4 @@
-import * as poseDetection from '@tensorflow-models/pose-detection';
+import * as poseDetection from "@tensorflow-models/pose-detection";
 
 export function drawCanvas(
   poses,
@@ -12,41 +12,41 @@ export function drawCanvas(
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
 
-  if (webcamState === 'on') {
+  if (webcamState === "on") {
     drawVidToCanvas(video, videoWidth, videoHeight, canvasRef);
   }
 
   switch (filter) {
-    case '2':
+    case "2":
       return drawSkeleton(poses[0].keypoints, canvasRef);
-    case '1':
+    case "1":
       return drawSomeRandomPointsClusteredAtKeypoint(
         poses[0].keypoints,
         canvasRef
       );
-    case '3':
+    case "3":
       return geometricFilter(poses[0].keypoints, canvasRef);
-    case '4':
+    case "4":
       return flubberMan(poses[0].keypoints, canvasRef);
-    case '5':
+    case "5":
       return boundingBox(poses[0].keypoints, canvasRef);
     case "6":
       return radiate(poses[0].keypoints, canvasRef);
-    case '7':
+    case "7":
       return prism(poses[0].keypoints, canvasRef);
     default:
-      console.log('no filter');
+      console.log("no filter");
   }
 }
 
 function drawVidToCanvas(video, width, height, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   ctx.drawImage(video, 0, 0, width, height);
 }
 
 export function drawKeypoint(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   //ctx = methods you get in 2D
 
   // If score is null, just show the keypoint.
@@ -63,7 +63,7 @@ export function drawKeypoint(keypoint, canvasRef) {
 
 function drawKeypointInGeo(keypoint, canvasRef) {
   //keypoint argument is a singular point --> (y, x, score, name)
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   //ctx = methods you get in 2D
 
   // If score is null, just show the keypoint.
@@ -73,8 +73,8 @@ function drawKeypointInGeo(keypoint, canvasRef) {
   if (confidence >= scoreThreshold) {
     const circle = new Path2D();
     circle.arc(keypoint.x, keypoint.y, 6, 0, 2 * Math.PI);
-    ctx.fillStyle = 'white';
-    ctx.strokeStyle = 'white';
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "white";
     ctx.fill(circle);
     ctx.stroke(circle);
   }
@@ -83,91 +83,91 @@ function drawKeypointInGeo(keypoint, canvasRef) {
 function geometricFilter(keypoints, canvasRef) {
   // const ctx = canvasRef.current.getContext("2d");
   const gkp1 = {
-    name: 'above-head',
+    name: "above-head",
     x: keypoints[0].x,
     y: keypoints[0].y - 50,
     score: keypoints[0].score,
   };
   const gkp2 = {
-    name: 'right-shoulder',
+    name: "right-shoulder",
     x: keypoints[6].x,
     y: keypoints[6].y,
     score: keypoints[6].score,
   };
   const gkp3 = {
-    name: 'left-shoulder',
+    name: "left-shoulder",
     x: keypoints[5].x,
     y: keypoints[5].y,
     score: keypoints[5].score,
   };
   const gkp4 = {
-    name: 'outer-left-elbow',
+    name: "outer-left-elbow",
     x: keypoints[7].x - 50,
     y: keypoints[7].y - 10,
     score: keypoints[7].score,
   };
   const gkp5 = {
-    name: 'left-elbow',
+    name: "left-elbow",
     x: keypoints[7].x,
     y: keypoints[7].y,
     score: keypoints[7].score,
   };
   const gkp6 = {
-    name: 'right-wrist',
+    name: "right-wrist",
     x: keypoints[10].x,
     y: keypoints[10].y,
     score: keypoints[10].score,
   };
   const gkp7 = {
-    name: 'off-center-belly',
+    name: "off-center-belly",
     x: keypoints[12].x - 5,
     y: keypoints[12].y - 10,
     score: keypoints[12].score,
   };
   const gkp8 = {
-    name: 'left-wrist',
+    name: "left-wrist",
     x: keypoints[9].x,
     y: keypoints[9].y,
     score: keypoints[9].score,
   };
   const gkp9 = {
-    name: 'left-fingertip-area',
+    name: "left-fingertip-area",
     x: keypoints[9].x - 10,
     y: keypoints[9].y + 20,
     score: keypoints[9].score,
   };
   const gkp10 = {
-    name: 'outer-left-thigh',
+    name: "outer-left-thigh",
     x: keypoints[13].x + 30,
     y: keypoints[13].y - 40,
     score: keypoints[13].score,
   };
   const gkp11 = {
-    name: 'below-crotch',
+    name: "below-crotch",
     x: keypoints[0].x,
     y: keypoints[0].y + 300,
     score: keypoints[0].score,
   };
   const gkp12 = {
-    name: 'outer-right-calf',
+    name: "outer-right-calf",
     x: keypoints[14].x + 20,
     y: keypoints[14].y - 20,
     score: keypoints[14].score,
   };
   const gkp13 = {
-    name: 'left-knee',
+    name: "left-knee",
     x: keypoints[13].x,
     y: keypoints[13].y,
     score: keypoints[13].score,
   };
   const gkp14 = {
-    name: 'right-ankle',
+    name: "right-ankle",
     x: keypoints[16].x,
     y: keypoints[16].y,
     score: keypoints[16].score,
   };
   const gkp15 = {
-    name: 'left-ankle',
+    name: "left-ankle",
     x: keypoints[15].x,
     y: keypoints[15].y,
     score: keypoints[15].score,
@@ -239,11 +239,11 @@ function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
 export function drawKeypoints(keypoints, canvasRef) {
   //keypoints is an array of 17 objects of the keypoints
 
-  const ctx = canvasRef.current.getContext('2d');
-  const keypointInd = poseDetection.util.getKeypointIndexBySide('MoveNet');
+  const ctx = canvasRef.current.getContext("2d");
+  const keypointInd = poseDetection.util.getKeypointIndexBySide("MoveNet");
   // object with keys: left, middle, right ---> value is an array of the key points (body parts)
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'White';
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "White";
   ctx.lineWidth = 2;
 
   //middle points will be white (just nose)
@@ -251,20 +251,20 @@ export function drawKeypoints(keypoints, canvasRef) {
     drawKeypoint(keypoints[i], canvasRef);
   }
   //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = '#7ea09b';
+  ctx.fillStyle = "#7ea09b";
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
   //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = '#db4855';
+  ctx.fillStyle = "#db4855";
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);
   }
 }
 
 export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
 
   for (let j = 0; j < keypoints.length; j++) {
     for (let i = 0; i < 5; i++) {
@@ -280,21 +280,21 @@ export function drawSomeRandomPointsClusteredAtKeypoint(keypoints, canvasRef) {
       const randomX = generateRandomLocal(currKey.x - 50, currKey.x + 50);
       const randomY = generateRandomLocal(currKey.y - 50, currKey.y + 50);
       ctx.arc(randomX, randomY, 15, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'pink';
+      ctx.strokeStyle = "pink";
       ctx.stroke();
     }
   }
 }
 
 export function drawSkeleton(keypoints, canvasRef, angleArray) {
-  const ctx = canvasRef.current.getContext('2d');
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'White';
+  const ctx = canvasRef.current.getContext("2d");
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "White";
   ctx.lineWidth = 2;
 
   drawKeypoints(keypoints, canvasRef);
 
-  poseDetection.util.getAdjacentPairs('MoveNet').forEach(([i, j]) => {
+  poseDetection.util.getAdjacentPairs("MoveNet").forEach(([i, j]) => {
     const kp1 = keypoints[i];
     const kp2 = keypoints[j];
 
@@ -313,13 +313,13 @@ export function drawSkeleton(keypoints, canvasRef, angleArray) {
 }
 
 export function flubberMan(keypoints, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'lime';
-  ctx.globalAlpha = '0.40';
+  const ctx = canvasRef.current.getContext("2d");
+  ctx.fillStyle = "White";
+  ctx.strokeStyle = "lime";
+  ctx.globalAlpha = "0.40";
   ctx.lineWidth = 2;
 
-  poseDetection.util.getAdjacentPairs('MoveNet').forEach(([i, j]) => {
+  poseDetection.util.getAdjacentPairs("MoveNet").forEach(([i, j]) => {
     const kp1 = keypoints[i];
     const kp2 = keypoints[j];
 
@@ -333,15 +333,14 @@ export function flubberMan(keypoints, canvasRef) {
       ctx.moveTo(kp1.x, kp1.y);
       ctx.lineTo(kp2.x, kp2.y);
       ctx.lineWidth = 120;
-      ctx.lineCap = 'round';
+      ctx.lineCap = "round";
       ctx.stroke();
     }
   });
 }
 
 export function boundingBox(keypoints, canvasRef) {
-
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
   const scoreThreshold = 0.3 || 0;
 
   const leftWrist = keypoints[10];
@@ -353,7 +352,6 @@ export function boundingBox(keypoints, canvasRef) {
 
   const rightAnkle = keypoints[15];
   const confidenceRA = rightAnkle.score != null ? rightAnkle.score : 1;
-
 
   if (
     confidenceLW &&
@@ -367,13 +365,12 @@ export function boundingBox(keypoints, canvasRef) {
     ctx.lineTo(leftWrist.x, leftWrist.y);
     ctx.lineTo(leftAnkle.x, leftAnkle.y);
     ctx.lineWidth = 3;
-    ctx.strokeStyle = 'orange';
+    ctx.strokeStyle = "orange";
     ctx.stroke();
   }
-
 }
 export function prism(keypoints, canvasRef) {
-  const ctx = canvasRef.current.getContext('2d');
+  const ctx = canvasRef.current.getContext("2d");
 
   const topOfHead = {
     x: keypoints[0].x,
@@ -430,21 +427,18 @@ export function prism(keypoints, canvasRef) {
   ctx.lineTo(rightWrist.x, rightWrist.y);
 
   ctx.lineWidth = 3;
-  ctx.strokeStyle = 'BlanchedAlmond';
+  ctx.strokeStyle = "BlanchedAlmond";
   ctx.stroke();
 }
 
 export function radiate(keypoints, canvasRef) {
-
   const center = {
     x: keypoints[0].x,
-    y: keypoints[0].y + 170,
+    y: keypoints[0].y + 120,
     score: keypoints[0].score,
   };
 
   for (let i = 0; i < keypoints.length; i++) {
-
-    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 4);
+    drawLineFromTo(canvasRef, center, keypoints[i], "yellow", 2);
   }
 }
-

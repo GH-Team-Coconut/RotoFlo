@@ -315,9 +315,9 @@ export default function MediaRecordingCanvasMoveNet() {
             }}
           >
             <form onSubmit={handleSubmit} id="rotoflo-modal">
-              <label htmlFor="title">Title:</label>
               <input
                 name="title"
+                placeholder="TITLE"
                 value={projectTitle}
                 onChange={handleTitleChange}
               />

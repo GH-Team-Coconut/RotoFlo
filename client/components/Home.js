@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import MediaRecording from "./MediaRecording";
-/**
- * COMPONENT
- */
+
+
 export const Home = (props) => {
   const { username } = props;
-
+  window.onload = function() {
+    if(!window.location.hash) {
+      window.location = window.location + '#loaded';
+      window.location.reload();
+    }
+  }
   return (
     <div className='center'>
       <h3 className='header' id='welcomeMsg'>
@@ -17,9 +21,7 @@ export const Home = (props) => {
   );
 };
 
-/**
- * CONTAINER
- */
+
 const mapState = (state) => {
   return {
     username: state.auth.username,
