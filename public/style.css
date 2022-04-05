@@ -118,7 +118,7 @@ form div {
   align-items: center;
   justify-content: space-evenly;
   width: 50vw;
-  height: 75vh;
+  height: 60vh;
   background: #e7efee;
   margin-left: 2vw;
   margin-right: 2vw;
@@ -447,7 +447,7 @@ form div {
   color: #7ea09b;
   font-family: 'Ubuntu', sans-serif;
   letter-spacing: 0.1em;
-} 
+}
 
 .team-div{
   display:flex;

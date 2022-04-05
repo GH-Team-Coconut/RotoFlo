@@ -70,18 +70,22 @@ async function seed() {
       styleName: 'prism'
     })
 
+    const none = await Roto.create({
+      styleName: 'none'
+    })
+
     //Creating associations
     await MerleDanceProject.setUser(Merle);
     await MerleDanceProject.setRoto(pinkBubbles);
 
     await LeahDanceProject.setUser(Leah);
-    await LeahDanceProject.setRoto(None);
+    await LeahDanceProject.setRoto(none);
 
     await YerBubbles.setUser(Leah);
     await YerBubbles.setRoto(pinkBubbles);
 
     await SpookyDance.setUser(Leah);
-    await SpookyDance.setRoto(None);
+    await SpookyDance.setRoto(none);
 
   } catch (err) {
     console.log(err);
