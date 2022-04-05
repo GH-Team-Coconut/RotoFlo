@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 export const Landing = () => {
   const history = useHistory();
+
   const loginHandler = () => {
     history.push("/login");
     history.go(0);

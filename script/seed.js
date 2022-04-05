@@ -54,7 +54,23 @@ async function seed() {
       styleName: 'geometric',
     });
 
-    const None = await Roto.create({
+    const flubber = await Roto.create({
+      styleName: 'flubber'
+    })
+
+    const box = await Roto.create({
+      styleName: 'box'
+    })
+
+    const radiate = await Roto.create({
+      styleName: 'radiate'
+    })
+
+    const prism = await Roto.create({
+      styleName: 'prism'
+    })
+
+    const none = await Roto.create({
       styleName: 'none'
     })
 
@@ -63,13 +79,13 @@ async function seed() {
     await MerleDanceProject.setRoto(pinkBubbles);
 
     await LeahDanceProject.setUser(Leah);
-    await LeahDanceProject.setRoto(None);
+    await LeahDanceProject.setRoto(none);
 
     await YerBubbles.setUser(Leah);
     await YerBubbles.setRoto(pinkBubbles);
 
     await SpookyDance.setUser(Leah);
-    await SpookyDance.setRoto(None);
+    await SpookyDance.setRoto(none);
 
   } catch (err) {
     console.log(err);
