@@ -79,6 +79,8 @@ form div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
 }
 .innerMain {
   display: flex;
@@ -182,7 +184,7 @@ form div {
   cursor: pointer;
   display: inline-block;
   font-family: "Bebas Neue", Arial, Helvetica, sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.5em;
   /* font-weight: 500;
   line-height: 2.5; */
   outline: transparent;
@@ -499,3 +501,6 @@ justify-content: center;
   transform: scale(1.2);
 }
 
+#about{
+  width: 100%;
+}

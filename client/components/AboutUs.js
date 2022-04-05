@@ -3,11 +3,9 @@ import React from "react";
 export const About = () => {
   return (
     <div className="about-main-div">
-      <div className="innerMain">
-        <h1 className="header" id="about">
+       <h1 className="header" id="about">
           About RotoFlo's Developers
         </h1>
-      </div>
       <div className="team-div">
         <img
           className="dev-img"
