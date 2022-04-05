@@ -54,8 +54,12 @@ async function seed() {
       styleName: 'geometric',
     });
 
-    const None = await Roto.create({
-      styleName: 'none'
+    const flubber = await Roto.create({
+      styleName: 'flubber'
+    })
+
+    const box = await Roto.create({
+      styleName: 'box'
     })
 
     //Creating associations
