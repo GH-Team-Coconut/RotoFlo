@@ -62,6 +62,14 @@ async function seed() {
       styleName: 'box'
     })
 
+    const radiate = await Roto.create({
+      styleName: 'radiate'
+    })
+
+    const prism = await Roto.create({
+      styleName: 'prism'
+    })
+
     //Creating associations
     await MerleDanceProject.setUser(Merle);
     await MerleDanceProject.setRoto(pinkBubbles);
