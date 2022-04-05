@@ -51,16 +51,6 @@ const Navbar = ({ handleClick, isLoggedIn, match }) => {
                 </button>
               </Link>
             )}
-
-            <Link
-              className="center"
-              to="/about"
-              >
-              <button id="makeBlock" className="superFancyButton">
-                ABOUT
-              </button>
-            </Link>
-
             <button
               className="superFancyButton"
               id="makeBlock"

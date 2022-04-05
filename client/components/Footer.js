@@ -1,13 +1,12 @@
 import React from 'react';
-import 'boxicons';
+import 'boxicons'
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
     <footer>
       <p className='footer_info'>
-        Email: rotoflo.ar@gmail.com
-        <box-icon name='instagram-alt' type='logo' color='#db4855'></box-icon> 
-        © 2022 Copyright: RotoFlo
+        Email: rotoflo.ar@gmail.com <box-icon name='instagram-alt' type='logo' color='#db4855'></box-icon>  <Link to="/about" style={{color:'#db4855'}}>About The Developers</Link> © 2022 Copyright: RotoFlo
       </p>
     </footer>
   );
