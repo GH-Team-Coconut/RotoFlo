@@ -16,6 +16,8 @@ RotoFlo can be used in-browser on a laptop or desktop. Please see 'Using RotoFlo
 
 #### Using RotoFlo 
 
+![Alt Text](https://media.giphy.com/media/hIJ4ZRKbxDj2idE7er/giphy.gif)
+
 Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you will be directed to the landing page. 
 
 1. Create an account to engage with the site and its features
