@@ -44,7 +44,7 @@ Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you w
 
 6. View your projects in the Gallery
 
-<img src="./public/gallery.png" width="350"/>
+<img src="./public/galleryView.png" width="350"/>
 
 7. To download or delete video, click on the specific video to go to the single page view
 
