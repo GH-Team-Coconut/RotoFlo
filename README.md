@@ -23,8 +23,6 @@ RotoFlo can be used in-browser on a laptop or desktop. Please see 'Using RotoFlo
 Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you will be directed to the landing page. 
 
 1. Create an account to engage with the site and its features
-![Screen Shot 2022-04-05 at 7 04 02 PM](https://user-images.githubusercontent.com/92180710/161882671-93b2c7b9-f05c-4bfc-b20a-10f5183c7703.png)
-
 2. Once logged in, choose from a drop down menu of filter options and toggle   between “webcam on” if you would like to be in the final video or “webcam off” if you just want your illustration to render
 3. Press the play button to record. You’ll be shown a 5 second countdown to get in place
 4. You have 10 seconds to ‘bust a move’ or you can stop recording earlier
