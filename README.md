@@ -1,4 +1,4 @@
-# RotoFlo <img src="./public/rf-logo.png" width="35"/>
+# RotoFlo <img src="./public/rf-logo.png" width="50"/>
 
 ## Introduction 
 
