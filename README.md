@@ -8,7 +8,8 @@ RotoFlo is a motion interactive AR experience. Our app leverages machine learnin
 
 ### Video Demonstration
 
-<!-- <p align='center'><a href=""> <img style="max-width:300px" src=""> </br> <p align='center'> Watch Video</p> </a> </p> -->
+<!-- <p alig![giphy](https://user-images.githubusercontent.com/92180710/161878397-0130eacb-77c4-49cd-9e4d-30c835e42470.gif)
+n='center'><a href=""> <img style="max-width:300px" src=""> </br> <p align='center'> Watch Video</p> </a> </p> -->
 
 ## Visit the Deployed App
 
