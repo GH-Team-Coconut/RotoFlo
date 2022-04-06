@@ -24,31 +24,31 @@ Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you w
 
 1. Create an account to engage with the site and its features
 
-<img src="./public/signIn.png" width="200"/>
+<img src="./public/signIn.png" width="350"/>
 
 2. Once logged in, choose from a drop down menu of filter options and toggle   between “webcam on” if you would like to be in the final video or “webcam off” if you just want your illustration to render
 
-<img src="./public/filters.png" width="35"/> 
+<img src="./public/filters.png" width="350"/> 
 
 3. Press the play button to record. You’ll be shown a 5 second countdown to get in place
 
-<img src="./public/hitPlay.png" width="35"/>
+<img src="./public/hitPlay.png" width="350"/>
 
 4. You have 10 seconds to ‘bust a move’ or you can stop recording earlier
 
-<img src="./public/bustAMove.png" width="35"/>
+<img src="./public/bustAMove.png" width="350"/>
 
 5. A prompt will appear on the screen asking you to input a project title: choose to save or trash your project
 
-<img src="./public/modal.png" width="35"/>
+<img src="./public/modal.png" width="350"/>
 
 6. View your projects in the Gallery
 
-<img src="./public/gallery.png" width="35"/>
+<img src="./public/gallery.png" width="350"/>
 
 7. To download or delete video, click on the specific video to go to the single page view
 
-<img src="./public/singleProject.png" width="35"/>
+<img src="./public/singleProject.png" width="350"/>
 
 ## Tech Stack
  RotoFlo utilized a wide variety of technologies to help actualize our vision. The most prevalent of these being TenserFlow.js, ReactWebcam and html5Canvas.
