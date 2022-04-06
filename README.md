@@ -83,7 +83,7 @@ We are very proud of what we have accomplished so far with RotoFlo, and are very
 
 ## Special Thanks
 
-We’d like to give a special thanks to Joe Alves, our lead Instructor, and Josephine Wang our mentor and Project Manager. Thank Jason Mayes, and Sam Hannan who very graciously consulted with us on our use of TenserFlow. We’d also like to thank our friends in the industry, Morgan Pierson, Bryan Clark, Eugene Chung, and Deanna Dune for help with debugging and moral support. Thank you to everyone in our excellent team of Grace Hopper mentors and teachers for all of your time, enthusiasm and insight. We deeply appreciate you all, thank you so much!
+We’d like to give a special thanks to Joe Alves, our lead Instructor, and Josephine Wang our mentor and Project Manager. Thank you Jason Mayes and Sam Hannan who very graciously consulted with us on our use of TenserFlow. We’d also like to thank our friends in the industry, Morgan Pierson, Bryan Clark, Eugene Chung, and Deanna Dune for help with debugging and moral support. Thank you to everyone in our excellent team of Grace Hopper mentors and teachers for all of your time, enthusiasm and insight. We deeply appreciate you all, thank you so much!
 
 
 
