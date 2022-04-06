@@ -9,7 +9,7 @@ RotoFlo is a motion interactive AR experience. Our app leverages machine learnin
 
 ### Video Demonstration
 
-![Alt Text](https://media.giphy.com/media/rFymGd7cX0o3YIOxA9/giphy.gif)
+![Serena](https://media.giphy.com/media/rFymGd7cX0o3YIOxA9/giphy.gif) ![Alexandra](https://media.giphy.com/media/hIJ4ZRKbxDj2idE7er/giphy.gif)
 
 ## Visit the Deployed App
 
@@ -22,27 +22,32 @@ Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you w
 
 <img src="./public/landing.png" width="35"/>
 
-![Alt Text](https://media.giphy.com/media/hIJ4ZRKbxDj2idE7er/giphy.gif)
-
 1. Create an account to engage with the site and its features
+
 <img src="./public/signIn.png" width="200"/>
 
 2. Once logged in, choose from a drop down menu of filter options and toggle   between “webcam on” if you would like to be in the final video or “webcam off” if you just want your illustration to render
-<img src="./public/filters.png" width="35"/> <img src="./public/wecamToggle.png" width="35"/>
+
+<img src="./public/filters.png" width="35"/> 
 
 3. Press the play button to record. You’ll be shown a 5 second countdown to get in place
+
 <img src="./public/hitPlay.png" width="35"/>
 
 4. You have 10 seconds to ‘bust a move’ or you can stop recording earlier
+
 <img src="./public/bustAMove.png" width="35"/>
 
 5. A prompt will appear on the screen asking you to input a project title: choose to save or trash your project
+
 <img src="./public/modal.png" width="35"/>
 
 6. View your projects in the Gallery
+
 <img src="./public/gallery.png" width="35"/>
 
 7. To download or delete video, click on the specific video to go to the single page view
+
 <img src="./public/singleProject.png" width="35"/>
 
 ## Tech Stack
