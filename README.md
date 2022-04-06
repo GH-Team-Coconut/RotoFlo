@@ -4,12 +4,10 @@
 
 RotoFlo is a motion interactive AR experience. Our app leverages machine learning to generate dynamic, algorithmic full body filters, allowing users to save and share stunning and expressive video content. 
 
-![gif](https://giphy.com/gifs/rFymGd7cX0o3YIOxA9)
 
 ### Video Demonstration
 
-<!-- <p alig![giphy](https://user-images.githubusercontent.com/92180710/161878397-0130eacb-77c4-49cd-9e4d-30c835e42470.gif)
-n='center'><a href=""> <img style="max-width:300px" src=""> </br> <p align='center'> Watch Video</p> </a> </p> -->
+![Alt Text](https://media.giphy.com/media/rFymGd7cX0o3YIOxA9/giphy.gif)
 
 ## Visit the Deployed App
 
