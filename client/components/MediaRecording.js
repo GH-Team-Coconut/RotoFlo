@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "@tensorflow/tfjs-backend-webgl";
 import * as poseDetection from "@tensorflow-models/pose-detection";
 import { drawCanvas } from "../drawingUtilities";
@@ -24,19 +24,13 @@ export default function MediaRecordingCanvasMoveNet() {
   const canvasRef = useRef(null);
   const mediaRecorderCanvasRef = useRef(null);
 
-  //write a solid read me, include gifs of how the project works and shows what it can do, and make the final presentation very polished.
-  //useSelector and useDispatch replace the connect part of redux. mapstate is like useSelector and useDispatch is more like mapDispatch to props
-  // "cram-jammed" - Merle
-
-  //const userId = useSelector((state) => { return state.auth.id})
   const dispatch = useDispatch();
 
-  // const projectObj  =  {userId: userId, videoUrl: secureUrl, title: title, rotoId: filter}
   const projectObj = {
     videoUrl: secureUrl,
     title: projectTitle,
     rotoId: filter,
-  }; //this might work if we get user from req.params for our thunk
+  };
 
   useEffect(() => {
     if (secureUrl) {
@@ -73,7 +67,6 @@ export default function MediaRecordingCanvasMoveNet() {
     ) {
       // Get video properties
       const video = webcamRef.current.video;
-      // const videoStream = webcamRef.current.stream;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
 
@@ -104,9 +97,7 @@ export default function MediaRecordingCanvasMoveNet() {
   };
 
   const handleSubmit = (event) => {
-    //this has to do with our input right?
     event.preventDefault();
-    //setSubmit('true');
   };
 
   const handleFilterChange = (event) => {
@@ -129,7 +120,6 @@ export default function MediaRecordingCanvasMoveNet() {
         setCountDown("Bust a move!");
         handleStartCaptureClick();
         clearInterval(timer);
-        // setCountDown('')
       }
     }, 1000);
   }
@@ -152,24 +142,6 @@ export default function MediaRecordingCanvasMoveNet() {
     mediaRecorderCanvasRef.current.stop();
   }, [mediaRecorderCanvasRef, setCapturing]);
 
-  //   const handleCanvasSaveToCloud = useCallback(() => {
-  //     console.log("recordedCanvasChunks", recordedCanvasChunks);
-  //     const uploadMedia = (blob) => {
-  //       const formData = new FormData();
-  //       formData.append("file", blob);
-  //       formData.append("upload_preset", "jdjof0vs");
-  //       Axios.post(
-  //         "https://api.cloudinary.com/v1_1/rotoflo/video/upload",
-  //         formData
-  //       ).then((response) => {
-  //         setSecureUrl(response.data.secure_url);
-  //         console.log("response.data", response.data);
-  //       });
-  //       setRecordedCanvasChunks([]);
-  //       uploadMedia(blob);
-  //     };
-  //   }, [recordedCanvasChunks]);
-
   // handle start
   const handleStartCaptureClick = useCallback(() => {
     setCapturing(true);
@@ -181,7 +153,7 @@ export default function MediaRecordingCanvasMoveNet() {
     mediaRecorderCanvasRef.current = new MediaRecorder(canvasStream, {
       mimeType: "video/webm", //read only property multipurpose internet mail extension. type of document basically. ascii.
     });
-    // Canvas event listener: compliling blob data in handleData...
+    // Canvas event listener: compliling blob data in handleData
     mediaRecorderCanvasRef.current.addEventListener(
       "dataavailable", //this collects our blob data, binary large object, used to store images and audio files stored as strings of 0's and 1's.
       handleCanvasDataAvailable
@@ -217,8 +189,6 @@ export default function MediaRecordingCanvasMoveNet() {
       setSecureUrl(response.data.secure_url);
     });
   };
-
-  //potentially make delete route here too. then once we get front end response make back end, this is low priority.
 
   const handleCanvasSaveToCloud = useCallback(() => {
     if (recordedCanvasChunks.length) {
@@ -329,12 +299,12 @@ export default function MediaRecordingCanvasMoveNet() {
                   className="fancyButton"
                   type="submit"
                 >
-                  <DownloadIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
+                  <DownloadIcon className="heroicons" style={{height: '20px', width: '20px'}}/>
                 </button>
               )}
 
               <button className="fancyButton" onClick={resetStateValues}>
-                <TrashIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
+                <TrashIcon className="heroicons" style={{height: '20px', width: '20px'}}/>
               </button>
             </div>
           </Modal>
