@@ -37,7 +37,7 @@ router.post("/", requireToken, async (req, res, next) => {
     res.status(409).send("not today");
   } catch (error) {
     console.error(
-      "you thought you could post a effing video??? THINK AGAIN",
+      "you thought you could post a video??? THINK AGAIN",
       error
     );
     next(error);
@@ -62,7 +62,6 @@ router.get("/:projectId", requireToken, async (req, res, next) => {
 });
 
 router.delete("/:projectId", requireToken, async (req, res, next) => {
-  //DELETE FROM CLOUDINARY STILL!!!
   try {
     if (!req.user) {
       throw new Error("Unauthorized");
