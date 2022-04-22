@@ -81,7 +81,6 @@ function drawKeypointInGeo(keypoint, canvasRef) {
 }
 
 function geometricFilter(keypoints, canvasRef) {
-  // const ctx = canvasRef.current.getContext("2d");
   const gkp1 = {
     name: 'above-head',
     x: keypoints[0].x,
@@ -250,13 +249,13 @@ export function drawKeypoints(keypoints, canvasRef) {
   for (const i of keypointInd.middle) {
     drawKeypoint(keypoints[i], canvasRef);
   }
-  //left points will be green... note your actual left side (technically right side when looking at video)
+  //left points will be blue... note your actual left side (technically right side when looking at video)
   ctx.fillStyle = '#7ea09b';
   for (const i of keypointInd.left) {
     drawKeypoint(keypoints[i], canvasRef);
     //looping through all the left points & drawing a outline filled circle
   }
-  //right points will be orange... note your actual right side (technically left side when looking at video)
+  //right points will be red... note your actual right side (technically left side when looking at video)
   ctx.fillStyle = '#db4855';
   for (const i of keypointInd.right) {
     drawKeypoint(keypoints[i], canvasRef);

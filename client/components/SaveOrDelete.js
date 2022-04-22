@@ -11,7 +11,7 @@ const SaveOrDelete = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (projectId) {
-      dispatch(saveAndDownload()); //still need to be written
+      dispatch(saveAndDownload());
       dispatch(deleteProject(projectId));
     }
   }, [dispatch, projectId]);
@@ -32,7 +32,6 @@ const SaveOrDelete = () => {
           <button
             type='submit'
             className='project_saveAndDownload_btn'
-            // value={projectId}
             onClick={(event) => saveAndDownload(event.target.value)}
           >
             Save and Download

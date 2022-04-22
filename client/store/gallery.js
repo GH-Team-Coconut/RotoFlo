@@ -81,7 +81,7 @@ export const saveToDatabase = (project) => {
       dispatch(_saveToDatabase(created));
     } catch (error) {
       console.error(
-        "did you press save dumb B!"
+        "did you press save? Hmmm? Did ya really?"
       );
       console.log(error)
     }
