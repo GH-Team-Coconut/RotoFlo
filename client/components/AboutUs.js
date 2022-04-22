@@ -11,7 +11,6 @@ export const About = () => {
           className="dev-img"
           src="https://hosting.photobucket.com/images/i/MerleSelf/slide.png"
           alt=""
-          // style={{ height: "100px", width: "100px" }}
         />
         <a href="https://www.linkedin.com/in/mica-oz/">
           <h3 className="name">Mica Oz</h3>
@@ -23,7 +22,6 @@ export const About = () => {
           className="dev-img"
           src="https://hosting.photobucket.com/images/i/MerleSelf/Serena.png"
           alt=""
-          // style={{ height: "100px", width: "100px" }}
         />
         <a href="https://www.linkedin.com/in/serena-chang-a986w/">
           <h3 className="name">Serena Chang</h3>
@@ -35,7 +33,6 @@ export const About = () => {
           className="dev-img"
           src="https://hosting.photobucket.com/images/i/MerleSelf/Leah.png"
           alt=""
-          // style={{ height: "100px", width: "100px" }}
         />
         <a href="https://www.linkedin.com/in/leah-ball-hamilton/">
           <h3 className="name">Leah Ball-Hamilton</h3>
@@ -46,7 +43,6 @@ export const About = () => {
           className="dev-img"
           src="https://hosting.photobucket.com/images/i/MerleSelf/Merle.png"
           alt=""
-          // style={{ height: "100px", width: "100px" }}
         />
         <a href="https://www.linkedin.com/in/merle-self/">
           <h3 className="name">Merle Self</h3>
