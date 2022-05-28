@@ -67,7 +67,7 @@ Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you w
 3. Create `Rotoflo` database.
 4. Seed the database with `npm run seed`.
 5. Start the build process and your application with: `npm run start:dev`.
-6. Navigate to `localhost:8080` to see FormFit in action!
+6. Navigate to `localhost:8080` to see Rotoflo in action!
 
 ## RotoFlo's Developers
 
