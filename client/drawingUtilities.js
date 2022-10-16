@@ -17,13 +17,13 @@ export function drawCanvas(
   }
 
   switch (filter) {
-    case '2':
-      return drawSkeleton(poses[0].keypoints, canvasRef);
     case '1':
       return drawSomeRandomPointsClusteredAtKeypoint(
         poses[0].keypoints,
         canvasRef
       );
+    case '2':
+      return drawSkeleton(poses[0].keypoints, canvasRef);
     case '3':
       return geometricFilter(poses[0].keypoints, canvasRef);
     case '4':
@@ -80,6 +80,48 @@ function drawKeypointInGeo(keypoint, canvasRef) {
   }
 }
 
+
+function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
+  const ctx = canvasRef.current.getContext('2d');
+  const score1 = kpStart.score != null ? kpStart.score : 1;
+  const score2 = kpEnd.score != null ? kpEnd.score : 1;
+  const scoreThreshold = 0.2;
+  if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
+    ctx.beginPath(); // Start a new path
+    ctx.moveTo(kpStart.x, kpStart.y); // Move the pen to (30, 50)
+    ctx.lineTo(kpEnd.x, kpEnd.y); // Draw a line to (150, 100)
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.stroke(); // Render the path
+  }
+}
+
+export function drawKeypoints(keypoints, canvasRef) {
+  //keypoints is an array of 17 objects of the keypoints
+
+  const ctx = canvasRef.current.getContext('2d');
+  const keypointInd = poseDetection.util.getKeypointIndexBySide('MoveNet');
+  // object with keys: left, middle, right ---> value is an array of the key points (body parts)
+  ctx.fillStyle = 'White';
+  ctx.strokeStyle = 'White';
+  ctx.lineWidth = 2;
+
+  //middle points will be white (just nose)
+  for (const i of keypointInd.middle) {
+    drawKeypoint(keypoints[i], canvasRef);
+  }
+  //left points will be green... note your actual left side (technically right side when looking at video)
+  ctx.fillStyle = '#7ea09b';
+  for (const i of keypointInd.left) {
+    drawKeypoint(keypoints[i], canvasRef);
+    //looping through all the left points & drawing a outline filled circle
+  }
+  //right points will be orange... note your actual right side (technically left side when looking at video)
+  ctx.fillStyle = '#db4855';
+  for (const i of keypointInd.right) {
+    drawKeypoint(keypoints[i], canvasRef);
+  }
+}
 function geometricFilter(keypoints, canvasRef) {
   // const ctx = canvasRef.current.getContext("2d");
   const gkp1 = {
@@ -218,48 +260,6 @@ function geometricFilter(keypoints, canvasRef) {
   drawLineFromTo(canvasRef, gkp13, gkp15, '7ea09b', 3);
   for (let i = 0; i < arrayOfVerticies.length; i++) {
     drawKeypointInGeo(arrayOfVerticies[i], canvasRef);
-  }
-}
-
-function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
-  const ctx = canvasRef.current.getContext('2d');
-  const score1 = kpStart.score != null ? kpStart.score : 1;
-  const score2 = kpEnd.score != null ? kpEnd.score : 1;
-  const scoreThreshold = 0.2;
-  if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
-    ctx.beginPath(); // Start a new path
-    ctx.moveTo(kpStart.x, kpStart.y); // Move the pen to (30, 50)
-    ctx.lineTo(kpEnd.x, kpEnd.y); // Draw a line to (150, 100)
-    ctx.strokeStyle = color;
-    ctx.lineWidth = width;
-    ctx.stroke(); // Render the path
-  }
-}
-
-export function drawKeypoints(keypoints, canvasRef) {
-  //keypoints is an array of 17 objects of the keypoints
-
-  const ctx = canvasRef.current.getContext('2d');
-  const keypointInd = poseDetection.util.getKeypointIndexBySide('MoveNet');
-  // object with keys: left, middle, right ---> value is an array of the key points (body parts)
-  ctx.fillStyle = 'White';
-  ctx.strokeStyle = 'White';
-  ctx.lineWidth = 2;
-
-  //middle points will be white (just nose)
-  for (const i of keypointInd.middle) {
-    drawKeypoint(keypoints[i], canvasRef);
-  }
-  //left points will be green... note your actual left side (technically right side when looking at video)
-  ctx.fillStyle = '#7ea09b';
-  for (const i of keypointInd.left) {
-    drawKeypoint(keypoints[i], canvasRef);
-    //looping through all the left points & drawing a outline filled circle
-  }
-  //right points will be orange... note your actual right side (technically left side when looking at video)
-  ctx.fillStyle = '#db4855';
-  for (const i of keypointInd.right) {
-    drawKeypoint(keypoints[i], canvasRef);
   }
 }
 
@@ -441,4 +441,8 @@ export function radiate(keypoints, canvasRef) {
   for (let i = 0; i < keypoints.length; i++) {
     drawLineFromTo(canvasRef, center, keypoints[i], 'yellow', 2);
   }
+}
+
+export function x(){
+
 }
