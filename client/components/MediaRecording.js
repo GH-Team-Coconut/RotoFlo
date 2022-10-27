@@ -19,7 +19,6 @@ export default function MediaRecordingCanvasMoveNet() {
   const [secureUrl, setSecureUrl] = useState("");
   const [projectTitle, setProjectTitle] = useState("");
   const [countDown, setCountDown] = useState();
-
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const mediaRecorderCanvasRef = useRef(null);
@@ -329,12 +328,12 @@ export default function MediaRecordingCanvasMoveNet() {
                   className="fancyButton"
                   type="submit"
                 >
-                  <DownloadIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
+                  <DownloadIcon className="heroicons" style={{height: '20px', width: '20px'}}/>
                 </button>
               )}
 
               <button className="fancyButton" onClick={resetStateValues}>
-                <TrashIcon className="heroicons" style={{height: '20px', width: '20px'}}/> 
+                <TrashIcon className="heroicons" style={{height: '20px', width: '20px'}}/>
               </button>
             </div>
           </Modal>

@@ -80,7 +80,6 @@ function drawKeypointInGeo(keypoint, canvasRef) {
   }
 }
 
-
 function drawLineFromTo(canvasRef, kpStart, kpEnd, color, width) {
   const ctx = canvasRef.current.getContext('2d');
   const score1 = kpStart.score != null ? kpStart.score : 1;
