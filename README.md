@@ -52,9 +52,9 @@ Becoming a user of RotoFlo is quick and easy. Upon clicking the link above you w
 <img src="./public/singleProject.png" width="350"/>
 
 ## Tech Stack
- RotoFlo utilized a wide variety of technologies to help actualize our vision. The most prevalent of these being TenserFlow.js, ReactWebcam and html5Canvas.
+ RotoFlo utilized a wide variety of technologies to help actualize our vision. The most prevalent of these being TensorFlow.js, ReactWebcam and html5Canvas.
 
-- TenserFlow: TensorFlow is a free and open-source software library for machine learning and artificial intelligence. It can be used across a range of tasks but has a particular focus on training and inference of deep neural networks.
+- TensorFlow: TensorFlow is a free and open-source software library for machine learning and artificial intelligence. It can be used across a range of tasks but has a particular focus on training and inference of deep neural networks.
 
 - The canvas element is part of HTML5 and allows for dynamic, scriptable rendering of 2D shapes and bitmap images. It is a low level, procedural model that updates a bitmap. HTML5 Canvas also helps in making 2D games.
 
@@ -83,7 +83,7 @@ We are very proud of what we have accomplished so far with RotoFlo, and are very
 
 ## Special Thanks
 
-We’d like to give a special thanks to Joe Alves, our lead Instructor, and Josephine Wang our mentor and Project Manager. Thank you Jason Mayes and Sam Hannan who very graciously consulted with us on our use of TenserFlow. We’d also like to thank our friends in the industry, Morgan Pierson, Bryan Clark, Eugene Chung, and Deanna Dune for help with debugging and moral support. Thank you to everyone in our excellent team of Grace Hopper mentors and teachers for all of your time, enthusiasm and insight. We deeply appreciate you all, thank you so much!
+We’d like to give a special thanks to Joe Alves, our lead Instructor, and Josephine Wang our mentor and Project Manager. Thank you Jason Mayes and Sam Hannan who very graciously consulted with us on our use of TensorFlow. We’d also like to thank our friends in the industry, Morgan Pierson, Bryan Clark, Eugene Chung, and Deanna Dune for help with debugging and moral support. Thank you to everyone in our excellent team of Grace Hopper mentors and teachers for all of your time, enthusiasm and insight. We deeply appreciate you all, thank you so much!
 
 
 
